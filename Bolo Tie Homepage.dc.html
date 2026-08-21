@@ -421,12 +421,27 @@ class Component extends DCLogic {
   componentDidMount() {
     window.addEventListener("scroll", this.onScroll, { passive: true });
     window.addEventListener("resize", this.onResize);
-    this.mount3D();
+    const stage = this.stageRef.current;
+    if (stage && "IntersectionObserver" in window) {
+      this.stageObserver = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            this.stageObserver.disconnect();
+            this.mount3D();
+          }
+        },
+        { rootMargin: "600px" }
+      );
+      this.stageObserver.observe(stage);
+    } else {
+      this.mount3D();
+    }
   }
 
   componentWillUnmount() {
     window.removeEventListener("scroll", this.onScroll);
     window.removeEventListener("resize", this.onResize);
+    if (this.stageObserver) this.stageObserver.disconnect();
   }
 
   async mount3D() {

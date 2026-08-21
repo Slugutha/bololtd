@@ -67,7 +67,7 @@
           </div>
 
           <sc-if value="{{ denseSpecs }}" hint-placeholder-val="{{ true }}">
-            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:0;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.02em;color:#B8B6AC;border-top:1px solid #3D3D3D;">
+            <div style="display:grid;grid-template-columns:{{ specsColumns }};gap:0;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.02em;color:#B8B6AC;border-top:1px solid #3D3D3D;">
               <sc-for list="{{ specs }}" as="spec" hint-placeholder-count="5">
                 <div style="padding:12px 20px 12px 0;border-bottom:1px solid #3D3D3D;white-space:nowrap;">{{ spec }}</div>
               </sc-for>
@@ -246,7 +246,7 @@
       </sc-if>
       <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
         <div style="display:flex;gap:0;">
-          <input type="email" required="true" value="{{ email }}" onChange="{{ handleEmailChange }}" placeholder="you@email.com" style="flex:1;background:#1A1A1A;border:1px solid #3D3D3D;color:#FFFFFF;font-family:'Inter',sans-serif;font-size:1rem;padding:14px 16px;outline:none;border-radius:0;">
+          <input type="email" required="true" value="{{ email }}" onChange="{{ handleEmailChange }}" placeholder="you@email.com" style="flex:1;min-width:0;background:#1A1A1A;border:1px solid #3D3D3D;color:#FFFFFF;font-family:'Inter',sans-serif;font-size:1rem;padding:14px 16px;outline:none;border-radius:0;">
           <button type="submit" style="background:#FFFFFF;color:#0A0A0A;border:1px solid #FFFFFF;font-family:'Oswald',sans-serif;font-weight:600;font-size:0.8125rem;letter-spacing:0.08em;text-transform:uppercase;padding:14px 24px;cursor:pointer;white-space:nowrap;">{{ ctaLabel }}</button>
         </div>
       </sc-if>
@@ -537,6 +537,7 @@ class Component extends DCLogic {
       footerAlign: isNarrow ? "flex-start" : "center",
       denseSpecs: denseSpecs,
       notDenseSpecs: !denseSpecs,
+      specsColumns: isNarrow ? "1fr" : "repeat(2,1fr)",
       configSectionHeight: `${this.rawConfigs.length * 55}vh`,
       configGridColumns: isNarrow ? "24px 1fr" : "24px 1fr 1fr",
       configGridRows: isNarrow ? "minmax(0,1fr) minmax(170px,1fr)" : "minmax(0,1fr)",

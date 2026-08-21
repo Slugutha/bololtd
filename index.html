@@ -19,6 +19,11 @@
     a:hover { color: #FFFFFF; }
     ::placeholder { color: #6E6E6E; }
     three-d-stage:not(:defined) { visibility: hidden; }
+    /* image-slot's internal img has touch-action:none for its (editor-only,
+       inert on the published site) drag-to-reframe gesture — that also
+       blocks the native vertical swipe-to-scroll a visitor expects when
+       their finger lands on a photo. Restore it via the exposed part. */
+    image-slot::part(image) { touch-action: pan-y; }
   </style>
   <script type="importmap">
   {
@@ -153,6 +158,7 @@
           </sc-for>
         </div>
 
+        <sc-if value="{{ showConfigImage }}" hint-placeholder-val="{{ true }}">
         <div style="grid-area:{{ configImageGridArea }};position:relative;width:100%;max-width:{{ configImageMaxWidth }};aspect-ratio:1/1.05;max-height:100%;overflow:hidden;border:1px solid #3D3D3D;margin:{{ configImageMargin }};align-self:{{ configImageAlignSelf }};">
           <sc-for list="{{ configSteps }}" as="step" hint-placeholder-count="6">
             <div style="position:absolute;inset:0;transform:{{ step.imgTransform }};opacity:{{ step.imgOpacity }};transition:transform 0.6s cubic-bezier(0.65,0,0.35,1),opacity 0.6s ease;">
@@ -160,6 +166,7 @@
             </div>
           </sc-for>
         </div>
+        </sc-if>
 
         <div style="grid-area:{{ configBlurbGridArea }};position:relative;min-height:{{ configBlurbMinHeight }};display:flex;align-items:center;overflow:hidden;">
           <sc-for list="{{ configSteps }}" as="step" hint-placeholder-count="6">
@@ -264,7 +271,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900},&quot;showCommunity&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;},&quot;imageSide&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;right&quot;,&quot;options&quot;:[&quot;right&quot;,&quot;left&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Layout&quot;},&quot;denseSpecs&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Layout&quot;},&quot;launchWindow&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Coming Autumn 2026&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;ctaLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Join Waitlist&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;priceLine&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Get in touch for questions, information and orders&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 class Component extends DCLogic {
-  state = { email: "", submitted: false, scrolled: false, activeSlide: 0, openFeature: 0, configStep: 0, viewportWidth: typeof window !== "undefined" ? window.innerWidth : 1440, passwordInput: "", gateError: false, unlocked: typeof window !== "undefined" && window.localStorage && window.localStorage.getItem("bolo-unlocked") === "1" };
+  state = { email: "", submitted: false, scrolled: false, activeSlide: 0, openFeature: 0, configStep: 0, viewportWidth: typeof window !== "undefined" ? window.innerWidth : 1440, viewportHeight: typeof window !== "undefined" ? window.innerHeight : 900, passwordInput: "", gateError: false, unlocked: typeof window !== "undefined" && window.localStorage && window.localStorage.getItem("bolo-unlocked") === "1" };
 
   onPasswordChange = (e) => this.setState({ passwordInput: e.target.value, gateError: false });
 
@@ -272,10 +279,28 @@ class Component extends DCLogic {
     e.preventDefault();
     if (this.state.passwordInput === "2026") {
       if (window.localStorage) window.localStorage.setItem("bolo-unlocked", "1");
+      this.lockBodyScroll(false);
+      window.scrollTo(0, 0);
       this.setState({ unlocked: true });
     } else {
       this.setState({ gateError: true });
     }
+  };
+
+  // Body is pinned via position:fixed (not just overflow:hidden) while the
+  // gate is up — on iOS Safari, focusing the password input inside a fixed
+  // overlay makes the browser "helpfully" scroll the underlying document to
+  // bring it into view even though it's already visible, which desyncs the
+  // fixed overlay from the (now-scrolled) page and exposes content below it.
+  // A scrollable body is a precondition for that scroll, so remove it.
+  lockBodyScroll = (locked) => {
+    const s = document.body.style;
+    s.position = locked ? "fixed" : "";
+    s.top = locked ? "0" : "";
+    s.left = locked ? "0" : "";
+    s.right = locked ? "0" : "";
+    s.overflow = locked ? "hidden" : "";
+    document.documentElement.style.overflow = locked ? "hidden" : "";
   };
 
   rawFeatures = [
@@ -414,11 +439,12 @@ class Component extends DCLogic {
     }
   };
 
-  onResize = () => this.setState({ viewportWidth: window.innerWidth });
+  onResize = () => this.setState({ viewportWidth: window.innerWidth, viewportHeight: window.innerHeight });
 
   componentDidMount() {
     window.addEventListener("scroll", this.onScroll, { passive: true });
     window.addEventListener("resize", this.onResize);
+    this.lockBodyScroll(!this.state.unlocked);
     const stage = this.stageRef.current;
     if (stage && "IntersectionObserver" in window) {
       this.stageObserver = new IntersectionObserver(
@@ -440,6 +466,7 @@ class Component extends DCLogic {
     window.removeEventListener("scroll", this.onScroll);
     window.removeEventListener("resize", this.onResize);
     if (this.stageObserver) this.stageObserver.disconnect();
+    this.lockBodyScroll(false);
   }
 
   async mount3D() {
@@ -473,8 +500,10 @@ class Component extends DCLogic {
     const denseSpecs = this.props.denseSpecs ?? true;
     const count = this.rawSlides.length;
     const w = this.state.viewportWidth;
+    const h = this.state.viewportHeight;
     const isNarrow = w < 860;
     const isTiny = w < 520;
+    const isShort = h < 720;
     const sectionPad = isNarrow ? "40px 24px" : "64px 48px";
     const sectionGap = isNarrow ? "32px" : "64px";
     const arrowOffset = isNarrow ? "6px" : "-56px";
@@ -555,13 +584,14 @@ class Component extends DCLogic {
       specsColumns: isNarrow ? "1fr" : "repeat(2,1fr)",
       configSectionHeight: `${this.rawConfigs.length * 55}vh`,
       configGridColumns: isNarrow ? "1fr" : "24px 1fr 1fr",
-      configGridRows: isNarrow ? "auto auto auto minmax(0,1fr)" : "auto auto minmax(0,1fr)",
+      configGridRows: isNarrow ? (isShort ? "auto auto minmax(0,1fr)" : "auto auto auto minmax(0,1fr)") : "auto auto minmax(0,1fr)",
       configDotsDisplay: isNarrow ? "none" : "flex",
       configArrowDisplay: isNarrow ? "none" : "flex",
+      showConfigImage: !(isNarrow && isShort),
       configTitleGridArea: isNarrow ? "1 / 1 / 2 / 2" : "1 / 2 / 2 / 3",
       configTagsGridArea: isNarrow ? "2 / 1 / 3 / 2" : "2 / 2 / 3 / 3",
       configImageGridArea: isNarrow ? "3 / 1 / 4 / 2" : "1 / 3 / 4 / 4",
-      configBlurbGridArea: isNarrow ? "4 / 1 / 5 / 2" : "3 / 2 / 4 / 3",
+      configBlurbGridArea: isNarrow ? (isShort ? "3 / 1 / 4 / 2" : "4 / 1 / 5 / 2") : "3 / 2 / 4 / 3",
       configImageMaxWidth: isNarrow ? "320px" : "720px",
       configImageMargin: "0 auto",
       configImageAlignSelf: "center",

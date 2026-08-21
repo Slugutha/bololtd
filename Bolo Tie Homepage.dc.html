@@ -59,7 +59,7 @@
 
     <main style="flex:1;display:grid;grid-template-columns:{{ mainColumns }};gap:{{ mainGap }};align-items:center;padding:{{ mainPad }};max-width:1440px;width:100%;margin:0 auto;">
       <sc-if value="{{ imageOnRight }}" hint-placeholder-val="{{ true }}">
-        <section style="display:flex;flex-direction:column;gap:32px;order:{{ copyOrder }};">
+        <section style="display:flex;flex-direction:column;gap:32px;order:{{ copyOrder }};min-width:0;">
           <div>
             <div style="font-family:'Oswald',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;margin-bottom:16px;">Introducing the Bolo Tie</div>
             <h1 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:{{ heroTitleSize }};line-height:1.05;letter-spacing:0.01em;text-transform:uppercase;margin:0 0 20px;">BOLEX, LIKE NEVER BEFORE</h1>
@@ -80,7 +80,7 @@
           </sc-if>
         </section>
 
-        <section style="order:{{ imageOrder }};position:relative;width:100%;aspect-ratio:4/5;border:1px solid #3D3D3D;">
+        <section style="order:{{ imageOrder }};position:relative;width:100%;min-width:0;aspect-ratio:4/5;border:1px solid #3D3D3D;">
           <image-slot id="bolo-tie-hero-shot" shape="rect" placeholder="Product shot — BOLO TIE mounted on Bolex H16"></image-slot>
         </section>
       </sc-if>
@@ -88,12 +88,12 @@
   </section>
 
   <section style="min-height:100vh;display:grid;grid-template-columns:{{ productColumns }};gap:{{ productGap }};align-items:center;padding:{{ productPad }};max-width:1440px;width:100%;margin:0 auto;border-top:1px solid #3D3D3D;">
-    <div style="order:{{ productStageOrder }};display:flex;flex-direction:column;gap:8px;">
+    <div style="order:{{ productStageOrder }};display:flex;flex-direction:column;gap:8px;min-width:0;">
       <div style="position:relative;width:100%;aspect-ratio:4/5;border:1px solid #3D3D3D;">
         <three-d-stage ref="{{ stageRef }}" name="bolo-tie" background="#0A0A0A" autorotate="true" no-toolbar="true" style="width:100%;height:100%;--stage-bg:#0A0A0A;"></three-d-stage>
       </div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:24px;order:{{ productTextOrder }};">
+    <div style="display:flex;flex-direction:column;gap:24px;order:{{ productTextOrder }};min-width:0;">
       <div>
         <div style="font-family:'Oswald',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;margin-bottom:4px;">FEATURES</div>
         <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:2.5rem;line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">SHOOT HOW YOU WANT</h2>

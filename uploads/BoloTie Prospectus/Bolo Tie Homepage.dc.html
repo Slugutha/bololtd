@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <title>BOLO TIE — Coming Autumn 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    a { color: #B8B6AC; text-decoration: underline; }
+    a:hover { color: #FFFFFF; }
+    ::placeholder { color: #6E6E6E; }
+    three-d-stage:not(:defined) { visibility: hidden; }
+  </style>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.184.0/build/three.module.js",
+      "three/addons/controls/OrbitControls.js": "https://unpkg.com/three@0.184.0/examples/jsm/controls/OrbitControls.js",
+      "three/addons/exporters/OBJExporter.js": "https://unpkg.com/three@0.184.0/examples/jsm/exporters/OBJExporter.js",
+      "three/addons/exporters/GLTFExporter.js": "https://unpkg.com/three@0.184.0/examples/jsm/exporters/GLTFExporter.js",
+      "three/addons/loaders/GLTFLoader.js": "https://unpkg.com/three@0.184.0/examples/jsm/loaders/GLTFLoader.js",
+      "three/addons/loaders/DRACOLoader.js": "https://unpkg.com/three@0.184.0/examples/jsm/loaders/DRACOLoader.js"
+    }
+  }
+  </script>
+  <script src="./image-slot.js"></script>
+  <script src="./three-d-stage.js?v=5"></script>
+</helmet>
+
+<div style="width:100%;background:#0A0A0A;color:#FFFFFF;font-family:'Inter',-apple-system,sans-serif;">
+
+  <section style="min-height:100vh;display:flex;flex-direction:column;">
+    <div style="height:{{ headerSpacerHeight }};"></div>
+    <header style="display:flex;align-items:center;justify-content:{{ headerJustify }};padding:{{ headerPadding }};border-bottom:1px solid #3D3D3D;position:fixed;top:0;left:0;right:0;z-index:10;background:#0A0A0A;transition:padding 0.25s ease;">
+      <img src="./assets/Bolo_Logo_Name.svg" alt="Bolo Ltd" style="height:{{ headerLogoHeight }};width:auto;filter:invert(1);transition:height 0.25s ease;">
+      <sc-if value="{{ scrolled }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ scrollToContact }}" style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:#A8A8A8;letter-spacing:0.02em;cursor:pointer;">{{ launchWindow }}</div>
+      </sc-if>
+    </header>
+
+    <main style="flex:1;display:grid;grid-template-columns:{{ mainColumns }};gap:{{ mainGap }};align-items:center;padding:{{ mainPad }};max-width:1440px;width:100%;margin:0 auto;">
+      <sc-if value="{{ imageOnRight }}" hint-placeholder-val="{{ true }}">
+        <section style="display:flex;flex-direction:column;gap:32px;order:{{ copyOrder }};">
+          <div>
+            <div style="font-family:'Oswald',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;margin-bottom:16px;">Introducing the Bolo Tie</div>
+            <h1 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:{{ heroTitleSize }};line-height:1.05;letter-spacing:0.01em;text-transform:uppercase;margin:0 0 20px;">BOLEX, LIKE NEVER BEFORE</h1>
+            <p style="font-family:'Inter',sans-serif;font-size:1.25rem;line-height:1.6;color:#E4E4E2;max-width:44ch;margin:0;">Put on your Bolo Tie, the next-generation digitally-controlled motor for Bolex cameras. Sync speeds. Continuous running. Anything else you can imagine.</p>
+          </div>
+
+          <sc-if value="{{ denseSpecs }}" hint-placeholder-val="{{ true }}">
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:0;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.02em;color:#B8B6AC;border-top:1px solid #3D3D3D;">
+              <sc-for list="{{ specs }}" as="spec" hint-placeholder-count="5">
+                <div style="padding:12px 20px 12px 0;border-bottom:1px solid #3D3D3D;white-space:nowrap;">{{ spec }}</div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ notDenseSpecs }}" hint-placeholder-val="{{ false }}">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:0.8125rem;letter-spacing:0.02em;color:#B8B6AC;border-top:1px solid #3D3D3D;padding-top:12px;">
+              Electronic speed control · Incident light meter · Dual power
+            </div>
+          </sc-if>
+        </section>
+
+        <section style="order:{{ imageOrder }};position:relative;width:100%;aspect-ratio:4/5;border:1px solid #3D3D3D;">
+          <image-slot id="bolo-tie-hero-shot" shape="rect" placeholder="Product shot — BOLO TIE mounted on Bolex H16"></image-slot>
+        </section>
+      </sc-if>
+    </main>
+  </section>
+
+  <section style="min-height:100vh;display:grid;grid-template-columns:{{ productColumns }};gap:{{ productGap }};align-items:center;padding:{{ productPad }};max-width:1440px;width:100%;margin:0 auto;border-top:1px solid #3D3D3D;">
+    <div style="order:{{ productStageOrder }};display:flex;flex-direction:column;gap:8px;">
+      <div style="position:relative;width:100%;aspect-ratio:4/5;border:1px solid #3D3D3D;">
+        <three-d-stage ref="{{ stageRef }}" name="bolo-tie" background="#0A0A0A" autorotate="true" no-toolbar="true" style="width:100%;height:100%;--stage-bg:#0A0A0A;"></three-d-stage>
+      </div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:0.625rem;color:#6E6E6E;letter-spacing:0.02em;">"Caméra 16 mm Paillard Bolex H16 REX-5" by TECHNÈS, licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer" style="color:#6E6E6E;text-decoration:underline;">CC BY-SA 4.0</a>. Source: <a href="https://sketchfab.com/3d-models/camera-16-mm-paillard-bolex-h16-rex-5-5600b2ba1678425b9542be339d3bfb42" target="_blank" rel="noopener noreferrer" style="color:#6E6E6E;text-decoration:underline;">Sketchfab</a>.</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:24px;order:{{ productTextOrder }};">
+      <div>
+        <div style="font-family:'Oswald',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;margin-bottom:4px;">FEATURES</div>
+        <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:2.5rem;line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">SHOOT HOW YOU WANT</h2>
+      </div>
+
+      <div style="border-top:1px solid #3D3D3D;">
+        <sc-for list="{{ features }}" as="feature" hint-placeholder-count="5">
+          <div style="border-bottom:1px solid #3D3D3D;">
+            <button onClick="{{ feature.toggle }}" style="display:flex;align-items:center;justify-content:space-between;width:100%;background:transparent;border:0;padding:18px 0;cursor:pointer;color:#FFFFFF;text-align:left;" style-hover="color:#B8B6AC;">
+              <span style="font-family:'Oswald',sans-serif;font-weight:500;font-size:1.25rem;letter-spacing:0.01em;text-transform:uppercase;transition:letter-spacing 0.2s ease,color 0.2s ease;" style-hover="letter-spacing:0.04em;color:#D8D6CC;">{{ feature.title }}</span>
+              <span style="font-family:'Inter',sans-serif;font-size:1.25rem;color:#B8B6AC;transform:{{ feature.iconRotate }};transition:transform 0.2s ease,color 0.2s ease;">+</span>
+            </button>
+            <div style="overflow:hidden;max-height:{{ feature.maxHeight }};transition:max-height 0.3s ease;">
+              <ul style="list-style:none;margin:0 0 20px;padding:0;max-width:44ch;display:flex;flex-direction:column;gap:10px;">
+                <sc-for list="{{ feature.bullets }}" as="bullet" hint-placeholder-count="3">
+                  <li style="display:flex;gap:12px;font-family:'Inter',sans-serif;font-size:1rem;line-height:1.5;color:#E4E4E2;">
+                    <span style="font-family:'IBM Plex Mono',monospace;color:#B8B6AC;flex-shrink:0;">—</span>
+                    <span>
+                      <sc-for list="{{ bullet.segments }}" as="seg" hint-placeholder-count="1">
+                        <sc-if value="{{ seg.italic }}" hint-placeholder-val="{{ false }}"><i>{{ seg.text }}</i></sc-if>
+                        <sc-if value="{{ seg.plain }}" hint-placeholder-val="{{ true }}">{{ seg.text }}</sc-if>
+                      </sc-for>
+                    </span>
+                  </li>
+                </sc-for>
+              </ul>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:0.8125rem;color:#6E6E6E;margin:0;">Drag to orbit · Shift+scroll to zoom · Double-click to reset view</p>
+    </div>
+  </section>
+
+  <div id="bolo-config-scroll" style="position:relative;height:{{ configSectionHeight }};">
+    <div style="position:sticky;top:0;height:100vh;display:flex;flex-direction:column;overflow:hidden;border-top:1px solid #3D3D3D;background:#0A0A0A;">
+      <button onClick="{{ skipConfigBack }}" aria-label="Skip to previous section" style="position:absolute;top:96px;right:16px;background:transparent;border:1px solid #837F74;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:#E4E4E2;font-size:1.25rem;cursor:pointer;padding:0;z-index:11;transition:border-color 0.2s ease,color 0.2s ease;" style-hover="border-color:#E4E4E2;color:#FFFFFF;">↑</button>
+      <button onClick="{{ skipConfigForward }}" aria-label="Skip to next section" style="position:absolute;bottom:16px;right:16px;background:transparent;border:1px solid #837F74;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:#E4E4E2;font-size:1.25rem;cursor:pointer;padding:0;z-index:11;transition:border-color 0.2s ease,color 0.2s ease;" style-hover="border-color:#E4E4E2;color:#FFFFFF;">↓</button>
+      <div style="flex:1;min-height:0;display:grid;grid-template-columns:{{ configGridColumns }};grid-template-rows:{{ configGridRows }};align-items:stretch;gap:{{ configSectionGap }};padding:{{ configSectionPad }};max-width:1440px;width:100%;margin:0 auto;overflow:hidden;">
+        <div style="grid-area:{{ configDotsGridArea }};display:flex;flex-direction:column;align-items:center;gap:0;">
+          <sc-for list="{{ configSteps }}" as="step" hint-placeholder-count="6">
+            <button onClick="{{ step.select }}" style="display:flex;align-items:center;justify-content:center;background:transparent;border:0;padding:8px 0;cursor:pointer;flex:1;">
+              <span style="width:{{ step.dotSize }};height:{{ step.dotSize }};border-radius:50%;border:1px solid #837F74;background:{{ step.dotColor }};transition:all 0.3s ease;display:block;"></span>
+            </button>
+          </sc-for>
+        </div>
+
+        <div style="grid-area:{{ configTextGridArea }};display:flex;flex-direction:column;gap:12px;min-height:0;overflow-y:auto;">
+          <div style="flex-shrink:0;">
+            <div style="font-family:'Oswald',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;margin-bottom:8px;">Configurations</div>
+            <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:2rem;line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">A Bolo Tie for every occasion</h2>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0;">
+            <sc-for list="{{ configSteps }}" as="step" hint-placeholder-count="6">
+              <button onClick="{{ step.select }}" style="display:block;text-align:left;background:transparent;border:0;padding:2px 0;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:0.625rem;letter-spacing:0.08em;text-transform:uppercase;color:{{ step.tagColor }};transition:color 0.3s ease;">{{ step.tag }}</button>
+            </sc-for>
+          </div>
+
+          <div style="position:relative;flex:1;min-height:{{ configBlurbMinHeight }};display:flex;align-items:center;">
+            <sc-for list="{{ configSteps }}" as="step" hint-placeholder-count="6">
+              <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:12px;opacity:{{ step.textOpacity }};transition:opacity 0.5s ease;pointer-events:none;overflow:hidden;">
+                <h3 style="font-family:'Oswald',sans-serif;font-weight:500;font-size:1.25rem;letter-spacing:0.01em;text-transform:uppercase;margin:0;">{{ step.title }}</h3>
+                <p style="font-family:'Inter',sans-serif;font-size:0.9375rem;line-height:1.45;color:#B8B6AC;max-width:44ch;margin:0;">{{ step.blurb }}</p>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="grid-area:{{ configImageGridArea }};position:relative;width:100%;max-width:720px;aspect-ratio:1/1.05;max-height:100%;overflow:hidden;border:1px solid #3D3D3D;margin:0 auto;align-self:center;">
+          <sc-for list="{{ configSteps }}" as="step" hint-placeholder-count="6">
+            <div style="position:absolute;inset:0;transform:{{ step.imgTransform }};opacity:{{ step.imgOpacity }};transition:transform 0.6s cubic-bezier(0.65,0,0.35,1),opacity 0.6s ease;">
+              <image-slot id="config-step-{{ $index }}" shape="rect" placeholder="{{ step.title }} — product shot"></image-slot>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section style="border-top:1px solid #3D3D3D;padding:{{ sectionPad }};max-width:1440px;width:100%;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:40px;">
+      <div style="font-family:'Oswald',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;margin-bottom:12px;">In the field</div>
+      <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:2.5rem;line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">From the community</h2>
+    </div>
+
+    <div style="position:relative;max-width:900px;margin:0 auto;">
+      <div style="overflow:hidden;">
+        <div style="display:flex;transition:transform 0.5s cubic-bezier(0.65,0,0.35,1);transform:translateX({{ trackOffset }});width:{{ trackWidth }};">
+          <sc-for list="{{ slides }}" as="slide" hint-placeholder-count="3">
+            <div style="flex:0 0 {{ slideWidth }};box-sizing:border-box;padding:0 4px;">
+              <div style="position:relative;aspect-ratio:16/9;background:#1A1A1A;border:1px solid #3D3D3D;overflow:hidden;">
+                <sc-if value="{{ slide.hasVideo }}" hint-placeholder-val="{{ false }}">
+                  <iframe src="{{ slide.embedUrl }}" title="{{ slide.title }}" style="width:100%;height:100%;border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true"></iframe>
+                </sc-if>
+                <sc-if value="{{ slide.noVideo }}" hint-placeholder-val="{{ true }}">
+                  <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#6E6E6E;">
+                    <div style="width:56px;height:56px;border:1px solid #837F74;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.25rem;color:#B8B6AC;">▶</div>
+                    <div style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.02em;">{{ slide.title }} — video coming soon</div>
+                  </div>
+                </sc-if>
+              </div>
+              <div style="margin-top:28px;text-align:center;max-width:640px;margin-left:auto;margin-right:auto;">
+                <p style="font-family:'Inter',sans-serif;font-size:1.125rem;line-height:1.6;color:#E4E4E2;margin:0 0 12px;">{{ slide.quote }}</p>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:#6E6E6E;letter-spacing:0.02em;">{{ slide.author }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <button onClick="{{ prevSlide }}" aria-label="Previous video" style="position:absolute;top:0;bottom:0;left:{{ arrowOffset }};margin:auto;width:40px;height:40px;background:{{ arrowBg }};border:1px solid #3D3D3D;color:#FFFFFF;font-size:1.25rem;cursor:pointer;">‹</button>
+      <button onClick="{{ nextSlide }}" aria-label="Next video" style="position:absolute;top:0;bottom:0;right:{{ arrowOffset }};margin:auto;width:40px;height:40px;background:{{ arrowBg }};border:1px solid #3D3D3D;color:#FFFFFF;font-size:1.25rem;cursor:pointer;">›</button>
+
+      <div style="display:flex;justify-content:center;gap:10px;margin-top:24px;">
+        <sc-for list="{{ slides }}" as="slide" hint-placeholder-count="3">
+          <button onClick="{{ slide.select }}" aria-label="Go to slide" style="width:{{ slide.dotSize }};height:{{ slide.dotSize }};padding:0;border-radius:50%;border:1px solid #837F74;background:{{ slide.dotColor }};cursor:pointer;"></button>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-top:1px solid #3D3D3D;padding:{{ sectionPad }};max-width:1440px;width:100%;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:32px;">
+      <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:2rem;line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">Pricing</h2>
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.02em;color:#7A7870;margin:8px 0 0;">Final release prices subject to change</p>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;max-width:900px;margin:0 auto;font-family:'IBM Plex Mono',monospace;font-size:0.875rem;letter-spacing:0.02em;color:#B8B6AC;border-top:1px solid #3D3D3D;">
+      <sc-for list="{{ pricing }}" as="item" hint-placeholder-count="6">
+        <div style="display:flex;justify-content:space-between;gap:16px;padding:14px 20px 14px 0;border-bottom:1px solid #3D3D3D;flex:1 1 100%;">
+          <span>{{ item.name }}</span>
+          <span style="color:#FFFFFF;">{{ item.price }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="bolo-contact-section" style="min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;border-top:1px solid #3D3D3D;padding:{{ sectionPad }};text-align:center;">
+    <div>
+      <div style="font-family:'Oswald',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;margin-bottom:12px;">Coming Autumn 2026</div>
+      <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:2rem;line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">Reserve yours</h2>
+    </div>
+
+    <form style="display:flex;flex-direction:column;gap:12px;max-width:420px;width:100%;" onSubmit="{{ handleSubmit }}">
+      <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:0.875rem;color:#FFFFFF;border:1px solid #837F74;padding:14px 16px;">You're on the list. We'll be in touch before launch.</div>
+      </sc-if>
+      <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;gap:0;">
+          <input type="email" required="true" value="{{ email }}" onChange="{{ handleEmailChange }}" placeholder="you@email.com" style="flex:1;background:#1A1A1A;border:1px solid #3D3D3D;color:#FFFFFF;font-family:'Inter',sans-serif;font-size:1rem;padding:14px 16px;outline:none;border-radius:0;">
+          <button type="submit" style="background:#FFFFFF;color:#0A0A0A;border:1px solid #FFFFFF;font-family:'Oswald',sans-serif;font-weight:600;font-size:0.8125rem;letter-spacing:0.08em;text-transform:uppercase;padding:14px 24px;cursor:pointer;white-space:nowrap;">{{ ctaLabel }}</button>
+        </div>
+      </sc-if>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:#6E6E6E;">{{ priceLine }}</div>
+    </form>
+  </section>
+
+  <footer style="display:flex;flex-direction:{{ footerDirection }};align-items:{{ footerAlign }};justify-content:space-between;gap:{{ footerGap }};padding:20px 48px;border-top:1px solid #3D3D3D;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:#6E6E6E;letter-spacing:0.02em;">
+    <span style="display:flex;flex-direction:column;gap:4px;">
+      <span>Copyright Bolo Ltd., 2026</span>
+      <a href="mailto:info@bolo.ltd" style="color:#6E6E6E;">info@bolo.ltd</a>
+    </span>
+    <img src="./assets/Bolo_Logo_Full.svg" alt="Bolo Ltd" style="height:80px;width:auto;filter:invert(1);opacity:0.85;">
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900},&quot;imageSide&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;right&quot;,&quot;options&quot;:[&quot;right&quot;,&quot;left&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Layout&quot;},&quot;denseSpecs&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Layout&quot;},&quot;launchWindow&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Coming Autumn 2026&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;ctaLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Join Waitlist&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;priceLine&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Get in touch for questions, information and orders&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { email: "", submitted: false, scrolled: false, activeSlide: 0, openFeature: 0, configStep: 0, viewportWidth: typeof window !== "undefined" ? window.innerWidth : 1440 };
+
+  rawFeatures = [
+    { title: "Run like a pro", bullets: [
+      "Crystal-referenced framerates from 0 to 64 fps, always in sync",
+      "Continuous running over full roll length",
+      "Intervalometer with programmable exposure time, frequency, and duration",
+    ], view: [1, 0.55, 1.25] },
+    { title: "Get experimental", bullets: [
+      "Frame-accurate superimpositions with auto-rewind-last-shot",
+      "Run at any speed, forward *and* backward",
+      "Single-frame animation mode",
+      "Programmable runs and ramps, with roll-out protection",
+    ], view: [-1, 0.3, 1] },
+    { title: "Extra features", bullets: [
+      "3.5mm sync-tone jack for triggering sync sound recording",
+      "Front-facing light meter, switchable between reflective and incident modes",
+    ], view: [0, 0.15, 1.6] },
+    { title: "Room TO GROW", bullets: [
+      "Onboard WiFi and Bluetooth for future remote integration",
+      "Programmable 2.5mm I/O jack — remote trigger, flash sync, and more",
+      "Open-source firmware for community expansion",
+    ], view: [1.3, 0.85, -0.6] },
+    { title: "Smart power", bullets: [
+      "Dual power inputs: LEMO 2 (7.2 - 14.4V) + USB-C PD",
+      "Auto-switching and hot-swappable sources",
+      "Intelligent power handling to maximize runtime",
+    ], view: [0, -0.9, 1.4] },
+    { title: "MADE FROM THE BEST", bullets: [
+      "Ultra-compact and lightweight",
+      "Aircraft-grade anodized aluminum body",
+      "Precision stainless steel drive shaft with zero play ",
+      "Breakaway coupler protects the camera's internal mechanism",
+      "Top shelf, industry-standard components and connectors — good for the long run",
+    ], view: [0.2, 0.2, 1.6] },
+  ];
+
+  rawSlides = [
+    { videoId: "", title: "Example video 1", quote: "Replace with a real testimonial from a filmmaker using BOLO TIE.", author: "Name, Role — Production" },
+    { videoId: "", title: "Example video 2", quote: "Replace with a real testimonial from a filmmaker using BOLO TIE.", author: "Name, Role — Production" },
+    { videoId: "", title: "Example video 3", quote: "Replace with a real testimonial from a filmmaker using BOLO TIE.", author: "Name, Role — Production" },
+  ];
+  stageRef = React.createRef();
+  configRef = React.createRef();
+
+  rawConfigs = [
+    { tag: "Standard", title: "Standard Speed Configuration", blurb: "The base BOLO TIE — precise electronic speed control for everyday production and experimental work, mounted with the compact standard plate." },
+    { tag: "High Speed", title: "High Speed", blurb: "The same precision electronics tuned for elevated frame rates — built for high-speed and slow-motion capture." },
+    { tag: "Standard + Plate", title: "Pro Plate SS", blurb: "Standard Speed Configuration paired with our larger accessory plate — a cheese-plate style mount with room to rig." },
+    { tag: "High Speed + Plate", title: "Pro Plate HS", blurb: "High Speed Configuration paired with the accessory plate, for rigs that need both speed and mounting flexibility." },
+    { tag: "Accessory", title: "Accessory Arm", blurb: "An articulating arm for mounting monitors, lights, or other accessories alongside the camera." },
+    { tag: "Accessory", title: "Back Plate", blurb: "An additional mounting surface at the rear of the camera for batteries, receivers, or other add-ons." },
+  ];
+
+  scrollToContact = () => {
+    const el = document.getElementById("bolo-contact-section");
+    if (el) this.animateScrollTo(el.getBoundingClientRect().top + window.scrollY, 1600);
+  };
+
+  // Builds a t(0..1) -> scrollY lookup that compresses the time spent crossing any sticky
+  // "dead zone" (e.g. the pinned configurations section) so it doesn't visually stall mid-scroll.
+  buildScrollPath = (startY, targetY) => {
+    const lo = Math.min(startY, targetY), hi = Math.max(startY, targetY);
+    const configEl = document.getElementById("bolo-config-scroll");
+    let dzStart = null, dzEnd = null;
+    if (configEl) {
+      const rect = configEl.getBoundingClientRect();
+      const top = rect.top + window.scrollY;
+      const bottom = top + configEl.offsetHeight;
+      const s = Math.max(lo, top), e = Math.min(hi, bottom);
+      if (e > s) { dzStart = s; dzEnd = e; }
+    }
+    const dir = targetY >= startY ? 1 : -1;
+    const segs = [];
+    if (dzStart == null) {
+      segs.push({ y0: startY, y1: targetY, w: Math.abs(targetY - startY) || 1 });
+    } else {
+      const a = dir === 1 ? startY : targetY;
+      const before = dzStart - a;
+      const zone = dzEnd - dzStart;
+      const after = (dir === 1 ? targetY : startY) - dzEnd;
+      let cursor = a;
+      if (before > 0) { segs.push({ y0: cursor, y1: cursor + before, w: before }); cursor += before; }
+      if (zone > 0) { segs.push({ y0: cursor, y1: cursor + zone, w: zone * 0.15 }); cursor += zone; }
+      if (after > 0) { segs.push({ y0: cursor, y1: cursor + after, w: after }); }
+      if (dir === -1) { segs.reverse(); segs.forEach(s => { const t = s.y0; s.y0 = s.y1; s.y1 = t; }); }
+    }
+    const totalW = segs.reduce((sum, s) => sum + s.w, 0) || 1;
+    let acc = 0;
+    segs.forEach(s => { s.t0 = acc / totalW; acc += s.w; s.t1 = acc / totalW; });
+    return (t) => {
+      const seg = segs.find(s => t <= s.t1) || segs[segs.length - 1];
+      const span = seg.t1 - seg.t0;
+      const local = span > 0 ? (t - seg.t0) / span : 0;
+      return seg.y0 + (seg.y1 - seg.y0) * Math.min(1, Math.max(0, local));
+    };
+  };
+
+  animateScrollTo = (targetY, duration = 700) => {
+    const startY = window.scrollY;
+    const path = this.buildScrollPath(startY, targetY);
+    const startTime = performance.now();
+    const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+    this.isAnimatingScroll = true;
+    const step = (now) => {
+      const elapsed = now - startTime;
+      const t = Math.min(1, elapsed / duration);
+      window.scrollTo(0, path(easeOutQuart(t)));
+      if (t < 1) {
+        requestAnimationFrame(step);
+      } else {
+        this.isAnimatingScroll = false;
+        this.onScroll();
+      }
+    };
+    requestAnimationFrame(step);
+  };
+
+  onScroll = () => {
+    const y = window.scrollY;
+    if (!this.state.scrolled && y > 80) this.setState({ scrolled: true });
+    else if (this.state.scrolled && y < 20) this.setState({ scrolled: false });
+
+    if (this.isAnimatingScroll) return;
+    const configEl = document.getElementById("bolo-config-scroll");
+    if (configEl) {
+      const rect = configEl.getBoundingClientRect();
+      const scrollable = rect.height - window.innerHeight;
+      const progress = scrollable > 0 ? Math.min(1, Math.max(0, -rect.top / scrollable)) : 0;
+      const step = Math.min(this.rawConfigs.length - 1, Math.floor(progress * this.rawConfigs.length));
+      if (step !== this.state.configStep) this.setState({ configStep: step });
+    }
+  };
+
+  onResize = () => this.setState({ viewportWidth: window.innerWidth });
+
+  componentDidMount() {
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+    window.addEventListener("resize", this.onResize);
+    this.mount3D();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.onScroll);
+    window.removeEventListener("resize", this.onResize);
+  }
+
+  async mount3D() {
+    const stage = this.stageRef.current;
+    if (!stage) return;
+    if (stage.shadowRoot) {
+      const tb = stage.shadowRoot.querySelector(".toolbar");
+      if (tb) tb.remove();
+    }
+    const { THREE } = await stage.ready;
+    if (stage.shadowRoot) {
+      const tb = stage.shadowRoot.querySelector(".toolbar");
+      if (tb) tb.remove();
+    }
+    const { GLTFLoader } = await import("three/addons/loaders/GLTFLoader.js");
+    const { DRACOLoader } = await import("three/addons/loaders/DRACOLoader.js");
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
+    const loader = new GLTFLoader();
+    loader.setDRACOLoader(dracoLoader);
+    loader.load(
+      "./assets/bolo-tie-model.glb",
+      (gltf) => stage.setObject(gltf.scene),
+      undefined,
+      (err) => console.error("Failed to load bolo-tie-model.glb", err)
+    );
+  }
+
+  renderVals() {
+    const imageSide = this.props.imageSide ?? "right";
+    const denseSpecs = this.props.denseSpecs ?? true;
+    const count = this.rawSlides.length;
+    const w = this.state.viewportWidth;
+    const isNarrow = w < 860;
+    const isTiny = w < 520;
+    const sectionPad = isNarrow ? "40px 24px" : "64px 48px";
+    const sectionGap = isNarrow ? "32px" : "64px";
+    const arrowOffset = isNarrow ? "6px" : "-56px";
+    const slides = this.rawSlides.map((s, i) => ({
+      title: s.title,
+      quote: s.quote,
+      author: s.author,
+      hasVideo: !!s.videoId,
+      noVideo: !s.videoId,
+      embedUrl: `https://www.youtube.com/embed/${s.videoId}`,
+      dotSize: i === this.state.activeSlide ? "10px" : "8px",
+      dotColor: i === this.state.activeSlide ? "#FFFFFF" : "transparent",
+      select: () => this.setState({ activeSlide: i }),
+    }));
+    return {
+      stageRef: this.stageRef,
+      scrolled: this.state.scrolled,
+      slides: slides,
+      trackWidth: `${count * 100}%`,
+      slideWidth: `${100 / count}%`,
+      trackOffset: `-${(this.state.activeSlide * 100) / count}%`,
+      prevSlide: () => this.setState({ activeSlide: (this.state.activeSlide - 1 + count) % count }),
+      nextSlide: () => this.setState({ activeSlide: (this.state.activeSlide + 1) % count }),
+      headerJustify: this.state.scrolled ? "space-between" : "center",
+      headerPadding: this.state.scrolled ? (isNarrow ? "12px 24px" : "16px 48px") : (isNarrow ? "24px" : "40px 48px"),
+      headerLogoHeight: this.state.scrolled ? (isNarrow ? "36px" : "48px") : (isNarrow ? "110px" : "200px"),
+      headerSpacerHeight: isNarrow ? "160px" : "280px",
+      launchWindow: this.props.launchWindow ?? "Coming Autumn 2026",
+      scrollToContact: this.scrollToContact,
+      ctaLabel: this.props.ctaLabel ?? "Join Waitlist",
+      priceLine: this.props.priceLine ?? "Get in touch for questions, information and orders",
+      mainColumns: isNarrow ? "1fr" : (imageSide === "right" ? "1.1fr 1fr" : "1fr 1.1fr"),
+      mainGap: sectionGap,
+      mainPad: sectionPad,
+      imageOnRight: true,
+      copyOrder: isNarrow ? 1 : (imageSide === "right" ? 1 : 2),
+      imageOrder: isNarrow ? 2 : (imageSide === "right" ? 2 : 1),
+      heroTitleSize: isTiny ? "2rem" : isNarrow ? "2.375rem" : "3.0518rem",
+      productColumns: isNarrow ? "1fr" : "1.1fr 1fr",
+      productPad: sectionPad,
+      productGap: sectionGap,
+      productStageOrder: isNarrow ? 2 : 1,
+      productTextOrder: isNarrow ? 1 : 2,
+      features: this.rawFeatures.map((f, i) => ({
+        title: f.title,
+        bullets: f.bullets.map((b) => ({
+          segments: b.split(/\*(.+?)\*/).map((part, i) => ({ text: part, italic: i % 2 === 1, plain: i % 2 === 0 })),
+        })),
+        iconRotate: this.state.openFeature === i ? "rotate(45deg)" : "rotate(0deg)",
+        maxHeight: this.state.openFeature === i ? `${f.bullets.length * 56 + 24}px` : "0px",
+        toggle: () => {
+          const opening = this.state.openFeature !== i;
+          this.setState({ openFeature: opening ? i : null });
+          if (opening && this.stageRef.current && this.stageRef.current.setView) {
+            this.stageRef.current.setView(...f.view);
+          }
+        },
+      })),
+      sectionPad: sectionPad,
+      arrowOffset: arrowOffset,
+      arrowBg: isNarrow ? "rgba(10,10,10,0.7)" : "transparent",
+      footerDirection: isNarrow ? "column" : "row",
+      footerGap: isNarrow ? "16px" : "0px",
+      footerAlign: isNarrow ? "flex-start" : "center",
+      denseSpecs: denseSpecs,
+      notDenseSpecs: !denseSpecs,
+      configSectionHeight: `${this.rawConfigs.length * 55}vh`,
+      configGridColumns: isNarrow ? "24px 1fr" : "24px 1fr 1fr",
+      configGridRows: isNarrow ? "minmax(0,1fr) minmax(170px,1fr)" : "minmax(0,1fr)",
+      configDotsGridArea: isNarrow ? "1 / 1 / 3 / 2" : "1 / 1 / 2 / 2",
+      configTextGridArea: isNarrow ? "1 / 2 / 2 / 3" : "1 / 2 / 2 / 3",
+      configImageGridArea: isNarrow ? "2 / 2 / 3 / 3" : "1 / 3 / 2 / 4",
+      configSectionPad: isNarrow ? "72px 24px 16px" : "96px 48px 16px",
+      configSectionGap: isNarrow ? "16px" : sectionGap,
+      configBlurbMinHeight: isNarrow ? "120px" : "200px",
+      skipConfigForward: () => {
+        const el = document.getElementById("bolo-config-scroll");
+        const next = el.nextElementSibling;
+        if (next) this.animateScrollTo(next.getBoundingClientRect().top + window.scrollY);
+      },
+      skipConfigBack: () => {
+        const el = document.getElementById("bolo-config-scroll");
+        const prev = el.previousElementSibling;
+        if (prev) this.animateScrollTo(prev.getBoundingClientRect().top + window.scrollY);
+      },
+      configSteps: this.rawConfigs.map((c, i) => {
+        const rel = i - this.state.configStep;
+        return {
+          tag: c.tag,
+          title: c.title,
+          blurb: c.blurb,
+          textOpacity: i === this.state.configStep ? 1 : 0,
+          imgTransform: rel === 0 ? "translateX(0)" : rel > 0 ? "translateX(100%)" : "translateX(-100%)",
+          imgOpacity: i === this.state.configStep ? 1 : 0,
+          dotSize: i === this.state.configStep ? "10px" : "8px",
+          dotColor: i === this.state.configStep ? "#FFFFFF" : "transparent",
+          tagColor: i === this.state.configStep ? "#FFFFFF" : "#6E6E6E",
+          select: () => this.setState({ configStep: i }),
+        };
+      }),
+      pricing: [
+        { name: "Standard Speed Configuration", price: "$800/€800 +tax" },
+        { name: "High Speed", price: "$1,000/€1,000 +tax" },
+        { name: "Pro Plate SS", price: "$1,100/€1,100 +tax" },
+        { name: "Pro Plate HS", price: "$1,400/€1,400 +tax" },
+        { name: "Accessory arm", price: "$100/€100 +tax" },
+        { name: "Back plate", price: "$150/€150 +tax" },
+      ],
+      specs: [
+        "CRYSTAL-REF SPEED: 0.01–64.00 FPS",
+        "SINGLE-FRAME + INTERVALOMETER",
+        "AUTO-REWIND SUPERIMPOSITION",
+        "INTEGRATED LIGHT METER",
+        "LEMO + USB C POWER",
+        "MACHINED 6061-T6 ALUMINUM BODY",
+      ],
+      email: this.state.email,
+      submitted: this.state.submitted,
+      notSubmitted: !this.state.submitted,
+      handleEmailChange: (e) => this.setState({ email: e.target.value }),
+      handleSubmit: (e) => {
+        e.preventDefault();
+        if (this.state.email.includes("@")) this.setState({ submitted: true });
+      },
+    };
+  }
+}
+
+</script>
+</body>
+</html>

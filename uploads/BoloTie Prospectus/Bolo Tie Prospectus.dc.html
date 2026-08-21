@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <title>BOLOTIE — Features and capacities · A Re:Voir project</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    a { color: #B8B6AC; text-decoration: underline; }
+    a:hover { color: #FFFFFF; }
+    ::placeholder { color: #6E6E6E; }
+    three-d-stage:not(:defined) { visibility: hidden; }
+  </style>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.184.0/build/three.module.js",
+      "three/addons/controls/OrbitControls.js": "https://unpkg.com/three@0.184.0/examples/jsm/controls/OrbitControls.js",
+      "three/addons/exporters/OBJExporter.js": "https://unpkg.com/three@0.184.0/examples/jsm/exporters/OBJExporter.js",
+      "three/addons/exporters/GLTFExporter.js": "https://unpkg.com/three@0.184.0/examples/jsm/exporters/GLTFExporter.js",
+      "three/addons/loaders/GLTFLoader.js": "https://unpkg.com/three@0.184.0/examples/jsm/loaders/GLTFLoader.js",
+      "three/addons/loaders/DRACOLoader.js": "https://unpkg.com/three@0.184.0/examples/jsm/loaders/DRACOLoader.js",
+      "three/addons/libs/meshopt_decoder.module.js": "https://unpkg.com/three@0.184.0/examples/jsm/libs/meshopt_decoder.module.js",
+      "three/addons/utils/BufferGeometryUtils.js": "https://unpkg.com/three@0.184.0/examples/jsm/utils/BufferGeometryUtils.js",
+      "three/addons/environments/RoomEnvironment.js": "https://unpkg.com/three@0.184.0/examples/jsm/environments/RoomEnvironment.js"
+    }
+  }
+  </script>
+  <script src="./image-slot.js"></script>
+  <script src="./three-d-stage.js?v=5"></script>
+</helmet>
+
+<div style="width:100%;background:#0A0A0A;color:#FFFFFF;font-family:'Inter',-apple-system,sans-serif;">
+
+  <section style="min-height:100vh;display:flex;flex-direction:column;">
+    <div style="height:{{ headerSpacerHeight }};"></div>
+    <header style="display:flex;align-items:center;justify-content:{{ headerJustify }};padding:{{ headerPadding }};border-bottom:1px solid #3D3D3D;position:fixed;top:0;left:0;right:0;z-index:10;background:#0A0A0A;transition:padding 0.25s ease;">
+      <div style="display:flex;flex-direction:column;align-items:{{ headerBrandAlign }};gap:8px;">
+        <img src="./assets/Bolo_Logo_Name.svg" alt="BOLOTIE" style="height:{{ headerLogoHeight }};width:auto;filter:invert(1);transition:height 0.25s ease;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:0.6875rem;letter-spacing:0.08em;text-transform:uppercase;color:#7A7870;white-space:nowrap;">A project by</span>
+          <img src="./assets/revoir-logo.png" alt="Re:Voir" style="height:{{ revoirLogoHeight }};width:auto;opacity:0.9;transition:height 0.25s ease;">
+        </div>
+      </div>
+      <sc-if value="{{ scrolled }}" hint-placeholder-val="{{ false }}">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:#A8A8A8;letter-spacing:0.02em;">{{ launchWindow }}</div>
+      </sc-if>
+    </header>
+
+    <main style="flex:1;display:grid;grid-template-columns:{{ mainColumns }};gap:{{ mainGap }};align-items:center;padding:{{ mainPad }};max-width:1440px;width:100%;margin:0 auto;">
+      <sc-if value="{{ imageOnRight }}" hint-placeholder-val="{{ true }}">
+        <section style="display:flex;flex-direction:column;gap:32px;order:{{ copyOrder }};">
+          <div>
+            <div style="font-family:'Oswald',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;margin-bottom:16px;">Project overview</div>
+            <h1 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:{{ heroTitleSize }};line-height:1.05;letter-spacing:0.01em;text-transform:uppercase;margin:0 0 20px;">A digital motor drive for the Bolex H16</h1>
+            <p style="font-family:'Inter',sans-serif;font-size:1.25rem;line-height:1.6;color:#E4E4E2;max-width:44ch;margin:0;">BOLOTIE replaces the spring-wound motor mechanism of the Bolex H16 with a digitally controlled external motor mounted on the side of the camera. Any Rex 1–Rex 5 or SB/SBM body becomes a fully motorised, crystal-sync camera: continuous running for the length of the roll, continuous speeds up to 64 fps, and operating modes no existing accessory combines in a single unit.</p>
+          </div>
+
+          <sc-if value="{{ denseSpecs }}" hint-placeholder-val="{{ true }}">
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:0;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.02em;color:#B8B6AC;border-top:1px solid #3D3D3D;">
+              <sc-for list="{{ specs }}" as="spec" hint-placeholder-count="5">
+                <div style="padding:12px 20px 12px 0;border-bottom:1px solid #3D3D3D;white-space:nowrap;">{{ spec }}</div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ notDenseSpecs }}" hint-placeholder-val="{{ false }}">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:0.8125rem;letter-spacing:0.02em;color:#B8B6AC;border-top:1px solid #3D3D3D;padding-top:12px;">
+              Crystal-sync running · Integrated light meter · Dual power inputs
+            </div>
+          </sc-if>
+        </section>
+
+        <section style="order:{{ imageOrder }};position:relative;width:100%;aspect-ratio:4/5;border:1px solid #3D3D3D;">
+          <image-slot id="bolo-tie-hero-shot" shape="rect" placeholder="Fig. 1 — BOLOTIE mounted on a Bolex H16 Rex 5"></image-slot>
+        </section>
+      </sc-if>
+    </main>
+  </section>
+
+  <section style="min-height:100vh;display:grid;grid-template-columns:{{ productColumns }};gap:{{ productGap }};align-items:center;padding:{{ productPad }};max-width:1440px;width:100%;margin:0 auto;border-top:1px solid #3D3D3D;">
+    <div style="order:{{ productStageOrder }};display:flex;flex-direction:column;gap:8px;">
+      <div style="position:relative;width:100%;aspect-ratio:4/5;border:1px solid #3D3D3D;">
+        <three-d-stage ref="{{ stageRef }}" name="bolo-tie" background="#0A0A0A" no-toolbar="true" style="width:100%;height:100%;--stage-bg:#0A0A0A;"></three-d-stage>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:0.625rem;color:#6E6E6E;letter-spacing:0.02em;">
+        <span>view</span>
+        <span style="color:#E4E4E2;">{{ viewReadout }}</span>
+        <button onClick="{{ copyView }}" style="font-family:'IBM Plex Mono',monospace;font-size:0.625rem;text-transform:uppercase;letter-spacing:0.08em;color:#0A0A0A;background:#B8B6AC;border:none;padding:2px 7px;cursor:pointer;">{{ copyLabel }}</button>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:24px;order:{{ productTextOrder }};">
+      <div>
+        <div style="font-family:'Oswald',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;margin-bottom:4px;">Capacities</div>
+        <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:2.5rem;line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">What the unit does</h2>
+      </div>
+
+      <div style="border-top:1px solid #3D3D3D;">
+        <sc-for list="{{ features }}" as="feature" hint-placeholder-count="5">
+          <div style="border-bottom:1px solid #3D3D3D;">
+            <button onClick="{{ feature.toggle }}" style="display:flex;align-items:center;justify-content:space-between;width:100%;background:transparent;border:0;padding:18px 0;cursor:pointer;color:#FFFFFF;text-align:left;" style-hover="color:#B8B6AC;">
+              <span style="font-family:'Oswald',sans-serif;font-weight:500;font-size:1.25rem;letter-spacing:0.01em;text-transform:uppercase;transition:letter-spacing 0.2s ease,color 0.2s ease;" style-hover="letter-spacing:0.04em;color:#D8D6CC;">{{ feature.title }}</span>
+              <span style="font-family:'Inter',sans-serif;font-size:1.25rem;color:#B8B6AC;transform:{{ feature.iconRotate }};transition:transform 0.2s ease,color 0.2s ease;">+</span>
+            </button>
+            <div style="display:grid;grid-template-rows:{{ feature.rowSize }};transition:grid-template-rows 0.3s ease;">
+              <div style="overflow:hidden;min-height:0;">
+              <ul style="list-style:none;margin:0 0 20px;padding:0;max-width:44ch;display:flex;flex-direction:column;gap:10px;">
+                <sc-for list="{{ feature.bullets }}" as="bullet" hint-placeholder-count="3">
+                  <li style="display:flex;gap:12px;font-family:'Inter',sans-serif;font-size:1rem;line-height:1.5;color:#E4E4E2;">
+                    <span style="font-family:'IBM Plex Mono',monospace;color:#B8B6AC;flex-shrink:0;">—</span>
+                    <span>
+                      <sc-for list="{{ bullet.segments }}" as="seg" hint-placeholder-count="1">
+                        <sc-if value="{{ seg.italic }}" hint-placeholder-val="{{ false }}"><i>{{ seg.text }}</i></sc-if>
+                        <sc-if value="{{ seg.plain }}" hint-placeholder-val="{{ true }}">{{ seg.text }}</sc-if>
+                      </sc-for>
+                    </span>
+                  </li>
+                </sc-for>
+              </ul>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:0.8125rem;color:#6E6E6E;margin:0;">Select a heading to bring that part of the unit into view · Drag to orbit · Shift+scroll to zoom · Double-click to reset</p>
+    </div>
+  </section>
+
+  <div id="bolo-config-scroll" style="position:relative;height:{{ configSectionHeight }};">
+    <div style="position:sticky;top:0;height:100vh;display:flex;flex-direction:column;overflow:hidden;border-top:1px solid #3D3D3D;background:#0A0A0A;">
+      <button onClick="{{ skipConfigBack }}" aria-label="Skip to previous section" style="position:absolute;top:96px;right:16px;background:transparent;border:1px solid #837F74;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:#E4E4E2;font-size:1.25rem;cursor:pointer;padding:0;z-index:11;transition:border-color 0.2s ease,color 0.2s ease;" style-hover="border-color:#E4E4E2;color:#FFFFFF;">↑</button>
+      <button onClick="{{ skipConfigForward }}" aria-label="Skip to next section" style="position:absolute;bottom:16px;right:16px;background:transparent;border:1px solid #837F74;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:#E4E4E2;font-size:1.25rem;cursor:pointer;padding:0;z-index:11;transition:border-color 0.2s ease,color 0.2s ease;" style-hover="border-color:#E4E4E2;color:#FFFFFF;">↓</button>
+      <div style="flex:1;min-height:0;display:grid;grid-template-columns:{{ configGridColumns }};grid-template-rows:{{ configGridRows }};align-items:stretch;gap:{{ configSectionGap }};padding:{{ configSectionPad }};max-width:1440px;width:100%;margin:0 auto;overflow:hidden;">
+        <div style="grid-area:{{ configDotsGridArea }};display:flex;flex-direction:column;align-items:center;gap:0;">
+          <sc-for list="{{ configSteps }}" as="step" hint-placeholder-count="6">
+            <button onClick="{{ step.select }}" style="display:flex;align-items:center;justify-content:center;background:transparent;border:0;padding:8px 0;cursor:pointer;flex:1;">
+              <span style="width:{{ step.dotSize }};height:{{ step.dotSize }};border-radius:50%;border:1px solid #837F74;background:{{ step.dotColor }};transition:all 0.3s ease;display:block;"></span>
+            </button>
+          </sc-for>
+        </div>
+
+        <div style="grid-area:{{ configTextGridArea }};display:flex;flex-direction:column;gap:12px;min-height:0;overflow-y:auto;">
+          <div style="flex-shrink:0;">
+            <div style="font-family:'Oswald',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;margin-bottom:8px;">The range</div>
+            <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:2rem;line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">Configurations and mounting options</h2>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0;">
+            <sc-for list="{{ configSteps }}" as="step" hint-placeholder-count="6">
+              <button onClick="{{ step.select }}" style="display:block;text-align:left;background:transparent;border:0;padding:2px 0;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:0.625rem;letter-spacing:0.08em;text-transform:uppercase;color:{{ step.tagColor }};transition:color 0.3s ease;">{{ step.tag }}</button>
+            </sc-for>
+          </div>
+
+          <div style="position:relative;flex:1;min-height:{{ configBlurbMinHeight }};display:flex;align-items:center;">
+            <sc-for list="{{ configSteps }}" as="step" hint-placeholder-count="6">
+              <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:12px;opacity:{{ step.textOpacity }};transition:opacity 0.5s ease;pointer-events:none;overflow:hidden;">
+                <h3 style="font-family:'Oswald',sans-serif;font-weight:500;font-size:1.25rem;letter-spacing:0.01em;text-transform:uppercase;margin:0;">{{ step.title }}</h3>
+                <p style="font-family:'Inter',sans-serif;font-size:0.9375rem;line-height:1.45;color:#B8B6AC;max-width:44ch;margin:0;">{{ step.blurb }}</p>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="grid-area:{{ configImageGridArea }};position:relative;width:100%;max-width:720px;aspect-ratio:1/1.05;max-height:100%;overflow:hidden;border:1px solid #3D3D3D;margin:0 auto;align-self:center;">
+          <sc-for list="{{ configSteps }}" as="step" hint-placeholder-count="6">
+            <div style="position:absolute;inset:0;transform:{{ step.imgTransform }};opacity:{{ step.imgOpacity }};transition:transform 0.6s cubic-bezier(0.65,0,0.35,1),opacity 0.6s ease;">
+              <image-slot id="config-step-{{ $index }}" shape="rect" placeholder="{{ step.title }}"></image-slot>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section style="border-top:1px solid #3D3D3D;padding:{{ sectionPad }};max-width:1440px;width:100%;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:40px;">
+      <div style="font-family:'Oswald',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;margin-bottom:12px;">Demonstration</div>
+      <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:2.5rem;line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">The unit in operation</h2>
+    </div>
+
+    <div style="position:relative;max-width:900px;margin:0 auto;">
+      <div style="overflow:hidden;">
+        <div style="display:flex;transition:transform 0.5s cubic-bezier(0.65,0,0.35,1);transform:translateX({{ trackOffset }});width:{{ trackWidth }};">
+          <sc-for list="{{ slides }}" as="slide" hint-placeholder-count="3">
+            <div style="flex:0 0 {{ slideWidth }};box-sizing:border-box;padding:0 4px;">
+              <div style="position:relative;aspect-ratio:16/9;background:#1A1A1A;border:1px solid #3D3D3D;overflow:hidden;">
+                <sc-if value="{{ slide.hasVideo }}" hint-placeholder-val="{{ false }}">
+                  <iframe src="{{ slide.embedUrl }}" title="{{ slide.title }}" style="width:100%;height:100%;border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true"></iframe>
+                </sc-if>
+                <sc-if value="{{ slide.noVideo }}" hint-placeholder-val="{{ true }}">
+                  <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#6E6E6E;">
+                    <div style="width:56px;height:56px;border:1px solid #837F74;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.25rem;color:#B8B6AC;">▶</div>
+                    <div style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.02em;">{{ slide.title }}</div>
+                  </div>
+                </sc-if>
+              </div>
+              <div style="margin-top:28px;text-align:center;max-width:640px;margin-left:auto;margin-right:auto;">
+                <p style="font-family:'Inter',sans-serif;font-size:1.125rem;line-height:1.6;color:#E4E4E2;margin:0 0 12px;">{{ slide.quote }}</p>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:#6E6E6E;letter-spacing:0.02em;">{{ slide.author }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <button onClick="{{ prevSlide }}" aria-label="Previous video" style="position:absolute;top:0;bottom:0;left:{{ arrowOffset }};margin:auto;width:40px;height:40px;background:{{ arrowBg }};border:1px solid #3D3D3D;color:#FFFFFF;font-size:1.25rem;cursor:pointer;">‹</button>
+      <button onClick="{{ nextSlide }}" aria-label="Next video" style="position:absolute;top:0;bottom:0;right:{{ arrowOffset }};margin:auto;width:40px;height:40px;background:{{ arrowBg }};border:1px solid #3D3D3D;color:#FFFFFF;font-size:1.25rem;cursor:pointer;">›</button>
+
+      <div style="display:flex;justify-content:center;gap:10px;margin-top:24px;">
+        <sc-for list="{{ slides }}" as="slide" hint-placeholder-count="3">
+          <button onClick="{{ slide.select }}" aria-label="Go to slide" style="width:{{ slide.dotSize }};height:{{ slide.dotSize }};padding:0;border-radius:50%;border:1px solid #837F74;background:{{ slide.dotColor }};cursor:pointer;"></button>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-top:1px solid #3D3D3D;padding:{{ sectionPad }};max-width:1440px;width:100%;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:32px;">
+      <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:2rem;line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">Timeline</h2>
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.02em;color:#7A7870;margin:8px 0 0;">Development schedule. Dates indicative.</p>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;max-width:900px;margin:0 auto;font-family:'IBM Plex Mono',monospace;font-size:0.875rem;letter-spacing:0.02em;color:#B8B6AC;border-top:1px solid #3D3D3D;">
+      <sc-for list="{{ timeline }}" as="item" hint-placeholder-count="5">
+        <div style="display:flex;justify-content:space-between;gap:16px;padding:14px 20px 14px 0;border-bottom:1px solid #3D3D3D;flex:1 1 100%;">
+          <span>{{ item.name }}</span>
+          <span style="color:#FFFFFF;white-space:nowrap;">{{ item.dates }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <footer style="display:flex;flex-direction:{{ footerDirection }};align-items:{{ footerAlign }};justify-content:space-between;gap:{{ footerGap }};padding:20px 48px;border-top:1px solid #3D3D3D;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:#6E6E6E;letter-spacing:0.02em;">
+    <span style="display:flex;flex-direction:column;gap:4px;">
+      <span style="color:#B8B6AC;">BOLOTIE is developed and produced by Re:Voir SARL, Paris</span>
+      <a href="mailto:info@bolo.ltd" style="color:#6E6E6E;">info@bolo.ltd</a>
+      <span>© Re:Voir SARL, 2026</span>
+    </span>
+    <span style="display:flex;align-items:center;gap:32px;">
+      <img src="./assets/revoir-logo.png" alt="Re:Voir" style="height:34px;width:auto;opacity:0.9;">
+      <img src="./assets/Bolo_Logo_Full.svg" alt="BOLOTIE" style="height:80px;width:auto;filter:invert(1);opacity:0.85;">
+    </span>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900},&quot;imageSide&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;right&quot;,&quot;options&quot;:[&quot;right&quot;,&quot;left&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Layout&quot;},&quot;denseSpecs&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Layout&quot;},&quot;launchWindow&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;First units expected 2027&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { scrolled: false, activeSlide: 0, openFeature: 0, configStep: 0, viewReadout: "[—, —, —, —]", copied: false, viewportWidth: typeof window !== "undefined" ? window.innerWidth : 1440 };
+
+  rawFeatures = [
+    { title: "Synchronous running", bullets: [
+      "Crystal-referenced framerates, continuous from 0.01 to 64 fps",
+      "Uninterrupted running over the full length of the roll",
+      "Intervalometer with programmable exposure time, frequency, and duration",
+    ], view: [0, -0.1, 1.6, 0.81] },
+    { title: "Experimental and manual modes", bullets: [
+      "Frame-accurate superimpositions with auto-rewind-last-shot",
+      "Run at any speed, forward *and* backward",
+      "Single-frame animation mode",
+      "Programmable runs and ramps, with roll-out protection",
+    ], view: [0.57, -1.1, 1.02, 0.86] },
+    { title: "Sound sync and metering", bullets: [
+      "3.5mm sync-tone jack for triggering sync sound recording",
+      "Front-facing light meter, switchable between reflective and incident modes",
+    ], view: [1.53, -0.46, 0.09, 0.64] },
+    { title: "Open-source and expandable", bullets: [
+      "Onboard WiFi and Bluetooth for future remote integration",
+      "Programmable 2.5mm I/O jack — remote trigger, flash sync, and more",
+      "Open-source firmware, published under MIT licence for community expansion",
+    ], view: [-1.12, 0.06, 1.14, 0.86] },
+    { title: "Power system", bullets: [
+      "Dual power inputs: LEMO 2 (7.2 - 14.4V) + USB-C PD",
+      "Auto-switching and hot-swappable sources",
+      "Intelligent power handling to maximize runtime",
+    ], view: [-1.57, 0.25, 0.16, 0.64] },
+    { title: "Materials and construction", bullets: [
+      "Ultra-compact and lightweight",
+      "Aircraft-grade anodized aluminum body",
+      "Precision stainless steel drive shaft with zero play ",
+      "Breakaway coupler protects the camera's internal mechanism",
+      "Industry-standard, automotive-grade components and connectors throughout",
+    ], view: [0.69, 0.02, -1.45, 0.78] },
+  ];
+
+  rawSlides = [
+    { videoId: "", title: "Footage to follow", quote: "Crystal-sync running at 24 fps over a full 100 ft roll, recorded on a Bolex Rex 5.", author: "Fig. 4 — Synchronous running" },
+    { videoId: "", title: "Footage to follow", quote: "Reverse running and frame-accurate superimposition using the auto-rewind-last-shot function.", author: "Fig. 5 — Experimental modes" },
+    { videoId: "", title: "Footage to follow", quote: "Programmed time-lapse and single-frame animation with variable exposure period.", author: "Fig. 6 — Intervalometer and animation" },
+  ];
+  stageRef = React.createRef();
+  configRef = React.createRef();
+
+  rawConfigs = [
+    { tag: "Standard", title: "Standard Speed Configuration", blurb: "The base unit. Fits all Rex 1–Rex 5 and SB/SBM bodies via the 8:1 drive shaft. Compact mounting plate carrying a single ¼-20 point with Arri-standard locking pins." },
+    { tag: "High Speed", title: "High Speed Configuration", blurb: "The same electronics and case, geared for the upper part of the speed range. Continuous crystal-referenced running to 64 fps." },
+    { tag: "Standard + Plate", title: "Standard Speed, accessory plate", blurb: "Standard Speed Configuration with the extended plate, which populates the operator side of the camera with the Arri-standard hole pattern in ⅜-16 and ¼-20 with corresponding locking pins." },
+    { tag: "High Speed + Plate", title: "High Speed, accessory plate", blurb: "High Speed Configuration with the extended plate. Motor and run/stop controls are integrated in the unit, leaving the camera face free for mounting without interfering with camera function." },
+    { tag: "Accessory", title: "Accessory arm", blurb: "Articulating arm for monitors, lights or other on-board accessories, anchored to the plate rather than to the camera door mechanism." },
+    { tag: "Accessory", title: "Back plate", blurb: "Additional mounting surface at the rear of the camera for battery systems, receivers and other on-board components." },
+  ];
+
+  // Builds a t(0..1) -> scrollY lookup that compresses the time spent crossing any sticky
+  // "dead zone" (e.g. the pinned configurations section) so it doesn't visually stall mid-scroll.
+  buildScrollPath = (startY, targetY) => {
+    const lo = Math.min(startY, targetY), hi = Math.max(startY, targetY);
+    const configEl = document.getElementById("bolo-config-scroll");
+    let dzStart = null, dzEnd = null;
+    if (configEl) {
+      const rect = configEl.getBoundingClientRect();
+      const top = rect.top + window.scrollY;
+      const bottom = top + configEl.offsetHeight;
+      const s = Math.max(lo, top), e = Math.min(hi, bottom);
+      if (e > s) { dzStart = s; dzEnd = e; }
+    }
+    const dir = targetY >= startY ? 1 : -1;
+    const segs = [];
+    if (dzStart == null) {
+      segs.push({ y0: startY, y1: targetY, w: Math.abs(targetY - startY) || 1 });
+    } else {
+      const a = dir === 1 ? startY : targetY;
+      const before = dzStart - a;
+      const zone = dzEnd - dzStart;
+      const after = (dir === 1 ? targetY : startY) - dzEnd;
+      let cursor = a;
+      if (before > 0) { segs.push({ y0: cursor, y1: cursor + before, w: before }); cursor += before; }
+      if (zone > 0) { segs.push({ y0: cursor, y1: cursor + zone, w: zone * 0.15 }); cursor += zone; }
+      if (after > 0) { segs.push({ y0: cursor, y1: cursor + after, w: after }); }
+      if (dir === -1) { segs.reverse(); segs.forEach(s => { const t = s.y0; s.y0 = s.y1; s.y1 = t; }); }
+    }
+    const totalW = segs.reduce((sum, s) => sum + s.w, 0) || 1;
+    let acc = 0;
+    segs.forEach(s => { s.t0 = acc / totalW; acc += s.w; s.t1 = acc / totalW; });
+    return (t) => {
+      const seg = segs.find(s => t <= s.t1) || segs[segs.length - 1];
+      const span = seg.t1 - seg.t0;
+      const local = span > 0 ? (t - seg.t0) / span : 0;
+      return seg.y0 + (seg.y1 - seg.y0) * Math.min(1, Math.max(0, local));
+    };
+  };
+
+  animateScrollTo = (targetY, duration = 700) => {
+    const startY = window.scrollY;
+    const path = this.buildScrollPath(startY, targetY);
+    const startTime = performance.now();
+    const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+    this.isAnimatingScroll = true;
+    const step = (now) => {
+      const elapsed = now - startTime;
+      const t = Math.min(1, elapsed / duration);
+      window.scrollTo(0, path(easeOutQuart(t)));
+      if (t < 1) {
+        requestAnimationFrame(step);
+      } else {
+        this.isAnimatingScroll = false;
+        this.onScroll();
+      }
+    };
+    requestAnimationFrame(step);
+  };
+
+  onScroll = () => {
+    const y = window.scrollY;
+    if (!this.state.scrolled && y > 80) this.setState({ scrolled: true });
+    else if (this.state.scrolled && y < 20) this.setState({ scrolled: false });
+
+    if (this.isAnimatingScroll) return;
+    const configEl = document.getElementById("bolo-config-scroll");
+    if (configEl) {
+      const rect = configEl.getBoundingClientRect();
+      const scrollable = rect.height - window.innerHeight;
+      const progress = scrollable > 0 ? Math.min(1, Math.max(0, -rect.top / scrollable)) : 0;
+      const step = Math.min(this.rawConfigs.length - 1, Math.floor(progress * this.rawConfigs.length));
+      if (step !== this.state.configStep) this.setState({ configStep: step });
+    }
+  };
+
+  onResize = () => this.setState({ viewportWidth: window.innerWidth });
+
+  componentDidMount() {
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+    window.addEventListener("resize", this.onResize);
+    this.mount3D();
+    this.viewTimer = setInterval(this.pollView, 200);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.onScroll);
+    window.removeEventListener("resize", this.onResize);
+    clearInterval(this.viewTimer);
+    clearTimeout(this.copyTimer);
+  }
+
+  // Temporary authoring aid: reads the live camera direction so view vectors
+  // can be dialled in by eye and pasted into rawFeatures.
+  pollView = () => {
+    const stage = this.stageRef.current;
+    if (!stage || !stage._camera || !stage._frameCenter) return;
+    const p = stage._camera.position, c = stage._frameCenter;
+    const x = p.x - c.x, y = p.y - c.y, z = p.z - c.z;
+    const len = Math.hypot(x, y, z) || 1;
+    const r = (n) => (Math.round((n / len) * 1.6 * 100) / 100).toString();
+    const zoom = Math.round((len / (stage._frameDist || len)) * 100) / 100;
+    const next = `[${r(x)}, ${r(y)}, ${r(z)}, ${zoom}]`;
+    if (next !== this.state.viewReadout) this.setState({ viewReadout: next });
+  };
+
+  copyView = () => {
+    if (navigator.clipboard) navigator.clipboard.writeText(this.state.viewReadout || "");
+    this.setState({ copied: true });
+    clearTimeout(this.copyTimer);
+    this.copyTimer = setTimeout(() => this.setState({ copied: false }), 1200);
+  };
+
+  async mount3D() {
+    const stage = this.stageRef.current;
+    if (!stage) return;
+    if (stage.shadowRoot) {
+      const tb = stage.shadowRoot.querySelector(".toolbar");
+      if (tb) tb.remove();
+    }
+    const { THREE } = await stage.ready;
+    if (stage.shadowRoot) {
+      const tb = stage.shadowRoot.querySelector(".toolbar");
+      if (tb) tb.remove();
+    }
+    const { GLTFLoader } = await import("three/addons/loaders/GLTFLoader.js");
+    const { DRACOLoader } = await import("three/addons/loaders/DRACOLoader.js");
+    const { MeshoptDecoder } = await import("three/addons/libs/meshopt_decoder.module.js");
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
+    const loader = new GLTFLoader();
+    loader.setDRACOLoader(dracoLoader);
+    loader.setMeshoptDecoder(MeshoptDecoder);
+    loader.load(
+      "./assets/bolo-tie-model-v3.glb",
+      (gltf) => this.installModel(stage, THREE, gltf.scene),
+      undefined,
+      (err) => console.error("Failed to load bolo-tie-model-v3.glb", err)
+    );
+  }
+
+  // The CAD export arrives as thousands of separate meshes; merging by material
+  // collapses draw calls, and the shadow pass / 2x pixel ratio are dropped so the
+  // viewer stays interactive at this triangle count.
+  async installModel(stage, THREE, scene) {
+    let object = scene;
+    try {
+      const { mergeGeometries } = await import("three/addons/utils/BufferGeometryUtils.js");
+      scene.updateMatrixWorld(true);
+      const groups = new Map();
+      scene.traverse((o) => {
+        if (!o.isMesh || !o.geometry || Array.isArray(o.material)) return;
+        const g = o.geometry.clone();
+        for (const name of Object.keys(g.attributes)) {
+          if (name !== "position" && name !== "normal" && name !== "uv") g.deleteAttribute(name);
+        }
+        if (!g.attributes.normal) g.computeVertexNormals();
+        if (!g.attributes.uv) {
+          g.setAttribute("uv", new THREE.BufferAttribute(new Float32Array(g.attributes.position.count * 2), 2));
+        }
+        g.applyMatrix4(o.matrixWorld);
+        const key = o.material.uuid + "|" + (g.index ? "i" : "n");
+        if (!groups.has(key)) groups.set(key, { mat: o.material, geos: [] });
+        groups.get(key).geos.push(g);
+      });
+      const merged = new THREE.Group();
+      for (const { mat, geos } of groups.values()) {
+        let combined = null;
+        if (geos.length > 1) { try { combined = mergeGeometries(geos, false); } catch (e) { combined = null; } }
+        if (combined) merged.add(new THREE.Mesh(combined, mat));
+        else geos.forEach((g) => merged.add(new THREE.Mesh(g, mat)));
+      }
+      if (merged.children.length) object = merged;
+    } catch (e) {
+      console.warn("Mesh merge skipped", e);
+    }
+
+    stage.setObject(object);
+
+    const renderer = stage._renderer;
+    if (renderer) {
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.15;
+      try {
+        const { RoomEnvironment } = await import("three/addons/environments/RoomEnvironment.js");
+        const pmrem = new THREE.PMREMGenerator(renderer);
+        const env = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+        if (stage._scene) {
+          stage._scene.environment = env;
+          stage._scene.environmentIntensity = 1.15;
+        }
+        pmrem.dispose();
+      } catch (e) {
+        console.warn("Environment map skipped", e);
+      }
+      object.traverse((o) => { if (o.isMesh) { o.material.needsUpdate = true; } });
+    }
+  }
+
+  renderVals() {
+    const imageSide = this.props.imageSide ?? "right";
+    const denseSpecs = this.props.denseSpecs ?? true;
+    const count = this.rawSlides.length;
+    const w = this.state.viewportWidth;
+    const isNarrow = w < 860;
+    const isTiny = w < 520;
+    const sectionPad = isNarrow ? "40px 24px" : "64px 48px";
+    const sectionGap = isNarrow ? "32px" : "64px";
+    const arrowOffset = isNarrow ? "6px" : "-56px";
+    const slides = this.rawSlides.map((s, i) => ({
+      title: s.title,
+      quote: s.quote,
+      author: s.author,
+      hasVideo: !!s.videoId,
+      noVideo: !s.videoId,
+      embedUrl: `https://www.youtube.com/embed/${s.videoId}`,
+      dotSize: i === this.state.activeSlide ? "10px" : "8px",
+      dotColor: i === this.state.activeSlide ? "#FFFFFF" : "transparent",
+      select: () => this.setState({ activeSlide: i }),
+    }));
+    return {
+      stageRef: this.stageRef,
+      scrolled: this.state.scrolled,
+      slides: slides,
+      trackWidth: `${count * 100}%`,
+      slideWidth: `${100 / count}%`,
+      trackOffset: `-${(this.state.activeSlide * 100) / count}%`,
+      prevSlide: () => this.setState({ activeSlide: (this.state.activeSlide - 1 + count) % count }),
+      nextSlide: () => this.setState({ activeSlide: (this.state.activeSlide + 1) % count }),
+      headerJustify: this.state.scrolled ? "space-between" : "center",
+      headerPadding: this.state.scrolled ? (isNarrow ? "12px 24px" : "16px 48px") : (isNarrow ? "24px" : "40px 48px"),
+      headerLogoHeight: this.state.scrolled ? (isNarrow ? "36px" : "48px") : (isNarrow ? "110px" : "200px"),
+      headerSpacerHeight: isNarrow ? "160px" : "280px",
+      headerBrandAlign: this.state.scrolled ? "flex-start" : "center",
+      revoirLogoHeight: this.state.scrolled ? "13px" : "20px",
+      launchWindow: this.props.launchWindow ?? "First units expected 2027",
+      mainColumns: isNarrow ? "1fr" : (imageSide === "right" ? "1.1fr 1fr" : "1fr 1.1fr"),
+      mainGap: sectionGap,
+      mainPad: sectionPad,
+      imageOnRight: true,
+      copyOrder: isNarrow ? 1 : (imageSide === "right" ? 1 : 2),
+      imageOrder: isNarrow ? 2 : (imageSide === "right" ? 2 : 1),
+      heroTitleSize: isTiny ? "2rem" : isNarrow ? "2.375rem" : "3.0518rem",
+      productColumns: isNarrow ? "1fr" : "1.1fr 1fr",
+      productPad: sectionPad,
+      productGap: sectionGap,
+      productStageOrder: isNarrow ? 2 : 1,
+      productTextOrder: isNarrow ? 1 : 2,
+      features: this.rawFeatures.map((f, i) => ({
+        title: f.title,
+        bullets: f.bullets.map((b) => ({
+          segments: b.split(/\*(.+?)\*/).map((part, i) => ({ text: part, italic: i % 2 === 1, plain: i % 2 === 0 })),
+        })),
+        iconRotate: this.state.openFeature === i ? "rotate(45deg)" : "rotate(0deg)",
+        rowSize: this.state.openFeature === i ? "1fr" : "0fr",
+        toggle: () => {
+          const opening = this.state.openFeature !== i;
+          this.setState({ openFeature: opening ? i : null });
+          if (opening && this.stageRef.current && this.stageRef.current.setView) {
+            this.stageRef.current.setView(...f.view);
+          }
+        },
+      })),
+      viewReadout: this.state.viewReadout,
+      copyView: this.copyView,
+      copyLabel: this.state.copied ? "Copied" : "Copy",
+      sectionPad: sectionPad,
+      arrowOffset: arrowOffset,
+      arrowBg: isNarrow ? "rgba(10,10,10,0.7)" : "transparent",
+      footerDirection: isNarrow ? "column" : "row",
+      footerGap: isNarrow ? "16px" : "0px",
+      footerAlign: isNarrow ? "flex-start" : "center",
+      denseSpecs: denseSpecs,
+      notDenseSpecs: !denseSpecs,
+      configSectionHeight: `${this.rawConfigs.length * 55}vh`,
+      configGridColumns: isNarrow ? "24px 1fr" : "24px 1fr 1fr",
+      configGridRows: isNarrow ? "minmax(0,1fr) minmax(170px,1fr)" : "minmax(0,1fr)",
+      configDotsGridArea: isNarrow ? "1 / 1 / 3 / 2" : "1 / 1 / 2 / 2",
+      configTextGridArea: isNarrow ? "1 / 2 / 2 / 3" : "1 / 2 / 2 / 3",
+      configImageGridArea: isNarrow ? "2 / 2 / 3 / 3" : "1 / 3 / 2 / 4",
+      configSectionPad: isNarrow ? "72px 24px 16px" : "96px 48px 16px",
+      configSectionGap: isNarrow ? "16px" : sectionGap,
+      configBlurbMinHeight: isNarrow ? "120px" : "200px",
+      skipConfigForward: () => {
+        const el = document.getElementById("bolo-config-scroll");
+        const next = el.nextElementSibling;
+        if (next) this.animateScrollTo(next.getBoundingClientRect().top + window.scrollY);
+      },
+      skipConfigBack: () => {
+        const el = document.getElementById("bolo-config-scroll");
+        const prev = el.previousElementSibling;
+        if (prev) this.animateScrollTo(prev.getBoundingClientRect().top + window.scrollY);
+      },
+      configSteps: this.rawConfigs.map((c, i) => {
+        const rel = i - this.state.configStep;
+        return {
+          tag: c.tag,
+          title: c.title,
+          blurb: c.blurb,
+          textOpacity: i === this.state.configStep ? 1 : 0,
+          imgTransform: rel === 0 ? "translateX(0)" : rel > 0 ? "translateX(100%)" : "translateX(-100%)",
+          imgOpacity: i === this.state.configStep ? 1 : 0,
+          dotSize: i === this.state.configStep ? "10px" : "8px",
+          dotColor: i === this.state.configStep ? "#FFFFFF" : "transparent",
+          tagColor: i === this.state.configStep ? "#FFFFFF" : "#6E6E6E",
+          select: () => this.setState({ configStep: i }),
+        };
+      }),
+      timeline: [
+        { name: "Phase 0 — Feasibility, electronics and case tested (complete)", dates: "Dec 2025 – Sept 2026" },
+        { name: "Phase 1 — Prototype development", dates: "Oct – Dec 2026" },
+        { name: "Phase 2 — Testing with collaborating filmmakers", dates: "Jan – Apr 2027" },
+        { name: "Phase 3 — First production batch, 50–100 units", dates: "May – Sept 2027" },
+        { name: "Commercialisation", dates: "From Oct 2027" },
+      ],
+      specs: [
+        "CRYSTAL-REF SPEED: 0.01–64.00 FPS",
+        "SINGLE-FRAME + INTERVALOMETER",
+        "AUTO-REWIND SUPERIMPOSITION",
+        "INTEGRATED LIGHT METER",
+        "LEMO + USB C POWER",
+        "MACHINED 6061-T6 ALUMINUM BODY",
+      ],
+    };
+  }
+}
+
+</script>
+</body>
+</html>

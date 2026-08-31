@@ -1,9 +1,10 @@
-# This site is unlisted, not public. Please don't index, crawl, or train on it.
+# This site is public. Search engines are welcome to index it.
+# AI crawlers used for training data / model ingestion are not.
 
 User-agent: *
-Disallow: /
+Allow: /
 
-# Known AI crawlers / training-data bots (in addition to the wildcard above)
+# Known AI crawlers / training-data bots
 User-agent: GPTBot
 Disallow: /
 
@@ -25,9 +26,6 @@ Disallow: /
 User-agent: Google-Extended
 Disallow: /
 
-User-agent: GoogleOther
-Disallow: /
-
 User-agent: Bytespider
 Disallow: /
 
@@ -40,16 +38,10 @@ Disallow: /
 User-agent: Amazonbot
 Disallow: /
 
-User-agent: Applebot
-Disallow: /
-
 User-agent: Applebot-Extended
 Disallow: /
 
 User-agent: meta-externalagent
-Disallow: /
-
-User-agent: FacebookBot
 Disallow: /
 
 User-agent: Diffbot
@@ -63,3 +55,5 @@ Disallow: /
 
 User-agent: YouBot
 Disallow: /
+
+Sitemap: https://bolo.ltd/sitemap.xml

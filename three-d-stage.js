@@ -184,10 +184,12 @@
 
     connectedCallback() {
       if (this._booted) {
-        // Re-attached after a removal — resume what disconnected stopped.
+        // Re-attached after a removal — resume what disconnected stopped,
+        // but only actually render if still in view / tab visible.
         if (this._renderer) {
-          this._renderer.setAnimationLoop(this._loop);
           this._ro && this._ro.observe(this);
+          this._io && this._io.observe(this);
+          this._syncLoop && this._syncLoop();
         }
         return;
       }
@@ -292,12 +294,32 @@
         controls.update();
         renderer.render(scene, camera);
       };
+      // Rendering forever once mounted burns real GPU/CPU (a turntable
+      // model with autorotate never stops on its own). Only actually
+      // render while the stage is on-screen *and* the tab is visible;
+      // _syncLoop reconciles both with the connected/disconnected state.
+      this._inView = true;
+      this._pageVisible = typeof document === 'undefined' || !document.hidden;
+      this._syncLoop = () => {
+        if (!this._renderer) return;
+        const active = this.isConnected && this._inView && this._pageVisible;
+        this._renderer.setAnimationLoop(active ? this._loop : null);
+      };
+      this._io = new IntersectionObserver((entries) => {
+        this._inView = entries[entries.length - 1].isIntersecting;
+        this._syncLoop();
+      }, { threshold: 0 });
+      document.addEventListener('visibilitychange', () => {
+        this._pageVisible = !document.hidden;
+        this._syncLoop();
+      });
       // Detached while three.js was fetching? Stay idle — the
-      // connectedCallback resume starts the loop and observer on
+      // connectedCallback resume starts the loop and observers on
       // reattach.
       if (this.isConnected) {
         this._ro.observe(this);
-        renderer.setAnimationLoop(this._loop);
+        this._io.observe(this);
+        this._syncLoop();
       }
 
       this._readyResolve({ THREE });
@@ -309,6 +331,7 @@
       // document must not rebuild the scene.)
       if (this._renderer) this._renderer.setAnimationLoop(null);
       if (this._ro) this._ro.disconnect();
+      if (this._io) this._io.disconnect();
     }
 
     /** Animate the camera to a saved view direction (relative unit vector

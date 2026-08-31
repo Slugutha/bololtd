@@ -321,11 +321,10 @@ class Component extends DCLogic {
   // every submission to a Google Sheet. Replace after deploying.
   sheetLogUrl = "https://script.google.com/macros/s/AKfycbwlnwgsMwQ5h6V_PNxAwAXKqOQCUpoK9fIcLzH4ulfKejnq1a4gt_Vmb0tBxWexKIA/exec";
 
-  // FormSubmit.co forwards each submission to info@bolo.ltd by email. No
-  // signup/API key — the first live submission triggers a one-time
-  // confirmation email FormSubmit sends to info@bolo.ltd; click it to
-  // activate forwarding for every submission after that.
-  contactEmailEndpoint = "https://formsubmit.co/ajax/info@bolo.ltd";
+  // FormSubmit.co forwards each submission to info@bolo.ltd by email.
+  // Uses the activation token FormSubmit issued (instead of the naked
+  // email address) so the address isn't sitting in plain text client-side.
+  contactEmailEndpoint = "https://formsubmit.co/ajax/b53c4d56426895614c90909beb255920";
 
   rawFeatures = [
     { title: "Run like a pro", bullets: [

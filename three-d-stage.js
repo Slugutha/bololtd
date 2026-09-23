@@ -55,12 +55,11 @@
  * inherit the scene's units and orientation. The stage fills its own box;
  * size it with ordinary CSS (default 100vw/100vh page hero).
  *
- * Default setup: neutral studio lighting (hemisphere + key + fill), a
- * soft ground shadow, and NO environment map — so high metalness has
- * nothing to reflect and renders near-black. Cap metalness around
- * 0.3–0.4 and carry a metal look with a brighter base color. The copied
- * file is yours: adjust the lights, shadow, or background in _boot()
- * when the object needs a different look.
+ * Lighting (tuned for a dark page): a RoomEnvironment studio map for
+ * reflections and ambient, ACES filmic tone mapping, a shadow-casting
+ * key, a cool rim light from behind, a camera-following headlight, and
+ * a soft ground shadow. Adjust in _boot(). Requires the importmap to
+ * map three/addons/environments/RoomEnvironment.js.
  */
 /* END USAGE */
 
@@ -208,9 +207,10 @@
     async _boot() {
       const bg = this.getAttribute('background');
       if (bg) this.style.setProperty('--stage-bg', bg);
-      const [THREE, controlsMod] = await Promise.all([
+      const [THREE, controlsMod, roomEnvMod] = await Promise.all([
         import('three'),
         import('three/addons/controls/OrbitControls.js'),
+        import('three/addons/environments/RoomEnvironment.js'),
       ]);
       this._THREE = THREE;
       // preserveDrawingBuffer keeps the last frame readable after
@@ -224,6 +224,10 @@
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
       renderer.shadowMap.enabled = true;
       renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      // Filmic tone mapping rolls off bright highlights instead of
+      // clipping them; exposure is the overall brightness knob.
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.0;
       this._renderer = renderer;
       this.shadowRoot.insertBefore(renderer.domElement, this._err);
 
@@ -240,23 +244,40 @@
       controls.enableZoom = false;
       this._controls = controls;
 
-      // Neutral studio: soft sky/ground wash, a shadow-casting key light,
-      // and a dim fill from behind so silhouettes never go black.
-      scene.add(new THREE.HemisphereLight(0xffffff, 0xd8d2c4, 1.0));
-      const key = new THREE.DirectionalLight(0xffffff, 2.2);
-      key.position.set(4, 7, 5);
+      // Studio environment map: gives metals something to reflect (dark
+      // anodized aluminum renders near-black without it) and supplies
+      // soft all-round light, so no side of the model sits in shadow.
+      const pmrem = new THREE.PMREMGenerator(renderer);
+      scene.environment = pmrem.fromScene(new roomEnvMod.RoomEnvironment(), 0.04).texture;
+      scene.environmentIntensity = 0.3;
+      pmrem.dispose();
+
+      // Low sky/ground wash; the environment does most of the ambient work.
+      scene.add(new THREE.HemisphereLight(0xffffff, 0x3a3833, 0.35));
+      // Shadow-casting key from above-front.
+      const key = new THREE.DirectionalLight(0xffffff, 1.8);
+      key.position.set(-3, 7, 6);
       key.castShadow = true;
       key.shadow.mapSize.set(2048, 2048);
       key.shadow.bias = -0.0002;
       this._key = key;
       scene.add(key);
-      const fill = new THREE.DirectionalLight(0xfff4e6, 0.5);
-      fill.position.set(-5, 3, -4);
-      scene.add(fill);
+      // Cool rim light from behind to pull the silhouette off the dark page.
+      const rim = new THREE.DirectionalLight(0xdfe8ff, 1.1);
+      rim.position.set(2, 4, -7);
+      scene.add(rim);
+      // Soft headlight that follows the camera, so whichever face the
+      // turntable or the viewer brings forward is lit.
+      const head = new THREE.DirectionalLight(0xfff4e6, 0.35);
+      head.position.set(0, 0, 1);
+      camera.add(head);
+      camera.add(head.target);
+      head.target.position.set(0, 0, -1);
+      scene.add(camera);
 
       const ground = new THREE.Mesh(
         new THREE.PlaneGeometry(200, 200),
-        new THREE.ShadowMaterial({ opacity: 0.18 })
+        new THREE.ShadowMaterial({ opacity: 0.45 })
       );
       ground.rotation.x = -Math.PI / 2;
       ground.receiveShadow = true;

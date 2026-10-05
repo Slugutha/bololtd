@@ -223,7 +223,7 @@
       });
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
       renderer.shadowMap.enabled = true;
-      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      renderer.shadowMap.type = THREE.PCFShadowMap;
       // Filmic tone mapping rolls off bright highlights instead of
       // clipping them; exposure is the overall brightness knob.
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -242,6 +242,10 @@
       controls.enableDamping = true;
       controls.dampingFactor = 0.08;
       controls.enableZoom = false;
+      // OrbitControls sets touch-action:none, which traps phone users who
+      // start a scroll on the viewer. Let vertical swipes scroll the page;
+      // horizontal drags still orbit.
+      renderer.domElement.style.touchAction = 'pan-y';
       this._controls = controls;
 
       // Studio environment map: gives metals something to reflect (dark
@@ -284,7 +288,9 @@
       this._ground = ground;
       scene.add(ground);
 
-      this._autorotate = this.hasAttribute('autorotate');
+      const reduceMotion =
+        window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      this._autorotate = this.hasAttribute('autorotate') && !reduceMotion;
       controls.autoRotate = this._autorotate;
       controls.autoRotateSpeed = 1.2;
       controls.addEventListener('start', () => {

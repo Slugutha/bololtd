@@ -65,7 +65,7 @@
 
   /* Film grain: an oversized noise tile nudged around with transforms only,
      so it stays on the compositor instead of repainting the page. */
-  .grain { position: fixed; inset: -50%; width: 200%; height: 200%; pointer-events: none; z-index: 50; opacity: 0.11;
+  .grain { position: fixed; inset: -50%; width: 200%; height: 200%; pointer-events: none; z-index: 50; opacity: 0.07;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 2.2 0 0 0 -0.75'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     animation: grain 0.9s steps(6) infinite; }
   @keyframes grain {
@@ -112,7 +112,7 @@
     <p>BoloTie is the next-generation digitally-controlled motor for Bolex cameras: crystal-referenced speeds from 0.01 to 64 fps, continuous running over a full roll, single-frame animation, intervalometer, auto-rewind superimpositions, an integrated light meter, and dual LEMO + USB-C power.</p>
     <img src="./assets/bolo-tie-hero-shot.webp" alt="BoloTie mounted on a Bolex H16 Reflex camera" style="width:100%;height:auto;border:1px solid #3D3D3D;margin:16px 0;">
     <h2 style="font-family:'Oswald',sans-serif;text-transform:uppercase;color:#FFFFFF;">Pricing</h2>
-    <p>Standard Speed: under $1000. High Speed, accessory plate and other accessories: pricing available soon.</p>
+    <p>BoloTie with standard plate: under $1000. Accessory plate and accessory arm: pricing available soon.</p>
     <h2 style="font-family:'Oswald',sans-serif;text-transform:uppercase;color:#FFFFFF;">Coming late 2026</h2>
     <p>To join the waitlist or ask a question, email <a href="mailto:info@bolo.ltd">info@bolo.ltd</a>.</p>
   </div>
@@ -218,47 +218,34 @@
   </section>
 
   <div id="bolo-config-scroll" style="position:relative;height:{{ configSectionHeight }};">
-    <div style="position:sticky;top:0;height:100vh;display:flex;flex-direction:column;overflow:hidden;border-top:1px solid #3D3D3D;background:#0A0A0A;">
-      <button type="button" onClick="{{ skipConfigBack }}" aria-label="Skip to previous section" style="display:{{ configArrowUpDisplay }};position:absolute;top:96px;right:16px;background:transparent;border:1px solid #837F74;border-radius:50%;width:36px;height:36px;align-items:center;justify-content:center;color:#E4E4E2;font-size:1.25rem;cursor:pointer;padding:0;z-index:11;transition:border-color 0.2s ease,color 0.2s ease;" style-hover="border-color:#E4E4E2;color:#FFFFFF;">↑</button>
-      <button type="button" onClick="{{ skipConfigForward }}" aria-label="Skip to next section" style="display:flex;position:absolute;bottom:16px;right:16px;background:transparent;border:1px solid #837F74;border-radius:50%;width:36px;height:36px;align-items:center;justify-content:center;color:#E4E4E2;font-size:1.25rem;cursor:pointer;padding:0;z-index:11;transition:border-color 0.2s ease,color 0.2s ease;" style-hover="border-color:#E4E4E2;color:#FFFFFF;">↓</button>
-      <div style="flex:1;min-height:0;display:grid;grid-template-columns:{{ configGridColumns }};grid-template-rows:{{ configGridRows }};align-items:stretch;row-gap:{{ configRowGap }};column-gap:{{ configSectionGap }};padding:{{ configSectionPad }};max-width:1440px;width:100%;margin:0 auto;overflow:hidden;">
-        <div style="display:{{ configDotsDisplay }};grid-area:1 / 1 / 4 / 2;flex-direction:column;align-items:center;gap:0;">
-          <sc-for list="{{ configSteps }}" as="step" hint-placeholder-count="6">
-            <button type="button" onClick="{{ step.select }}" aria-label="{{ step.dotLabel }}" aria-current="{{ step.current }}" style="display:flex;align-items:center;justify-content:center;background:transparent;border:0;padding:8px 0;cursor:pointer;flex:1;">
-              <span style="width:{{ step.dotSize }};height:{{ step.dotSize }};border-radius:50%;border:1px solid #837F74;background:{{ step.dotColor }};transition:all 0.3s ease;display:block;"></span>
-            </button>
+    <div style="position:sticky;top:0;height:100vh;display:flex;flex-direction:column;align-items:center;overflow:hidden;background:#0A0A0A;padding:{{ configPad }};">
+      <div style="text-align:center;flex:none;">
+        <div style="font-family:'Oswald',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;margin-bottom:10px;">A BoloTie for every occasion</div>
+        <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:{{ configTitleSize }};line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">Configurations</h2>
+      </div>
+
+      <div style="flex:1;min-height:0;width:100%;max-width:1100px;display:flex;align-items:center;justify-content:center;margin:{{ configStageMargin }};">
+        <div style="position:relative;height:100%;max-height:640px;aspect-ratio:3/2;max-width:100%;-webkit-mask-image:linear-gradient(to right,transparent,#000 9%,#000 91%,transparent),linear-gradient(to bottom,transparent,#000 9%,#000 91%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(to right,transparent,#000 9%,#000 91%,transparent),linear-gradient(to bottom,transparent,#000 9%,#000 91%,transparent);mask-composite:intersect;">
+          <sc-for list="{{ configSteps }}" as="step" hint-placeholder-count="3">
+            <img src="{{ step.img }}" alt="BoloTie with {{ step.title }}" aria-hidden="{{ step.hidden }}" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:{{ step.imgOpacity }};transform:scale({{ step.imgScale }});transition:opacity 0.8s ease,transform 1.2s cubic-bezier(0.2,0.7,0.2,1);">
           </sc-for>
         </div>
+      </div>
 
-        <div style="grid-area:{{ configTitleGridArea }};text-align:{{ configTextAlign }};">
-          <div style="font-family:'Oswald',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;margin-bottom:8px;">Configurations</div>
-          <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:2rem;line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">A BoloTie for every occasion</h2>
-        </div>
+      <div style="position:relative;flex:none;width:100%;max-width:560px;height:{{ configCaptionHeight }};">
+        <sc-for list="{{ configSteps }}" as="step" hint-placeholder-count="3">
+          <div aria-hidden="{{ step.hidden }}" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;opacity:{{ step.textOpacity }};transform:translateY({{ step.textShift }});transition:opacity 0.6s ease,transform 0.6s ease;pointer-events:none;">
+            <h3 style="font-family:'Oswald',sans-serif;font-weight:500;font-size:1.375rem;letter-spacing:0.02em;text-transform:uppercase;margin:0;">{{ step.title }}</h3>
+            <p style="font-family:'Inter',sans-serif;font-size:0.9375rem;line-height:1.55;color:#B8B6AC;max-width:44ch;margin:0;">{{ step.blurb }}</p>
+          </div>
+        </sc-for>
+      </div>
 
-        <div style="grid-area:{{ configTagsGridArea }};display:flex;flex-direction:{{ configTagsDirection }};flex-wrap:{{ configTagsWrap }};justify-content:{{ configTagsJustify }};gap:{{ configTagsGap }};min-height:0;overflow-y:auto;">
-          <sc-for list="{{ configSteps }}" as="step" hint-placeholder-count="6">
-            <button type="button" onClick="{{ step.select }}" aria-current="{{ step.current }}" style="display:block;text-align:{{ configTextAlign }};background:transparent;border:0;padding:{{ configTagPadding }};cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:0.625rem;letter-spacing:0.08em;text-transform:uppercase;color:{{ step.tagColor }};transition:color 0.3s ease;">{{ step.tag }}</button>
-          </sc-for>
-        </div>
-
-        <sc-if value="{{ showConfigImage }}" hint-placeholder-val="{{ true }}">
-        <div style="grid-area:{{ configImageGridArea }};position:relative;width:100%;max-width:{{ configImageMaxWidth }};aspect-ratio:1/1.05;max-height:100%;overflow:hidden;border:1px solid #3D3D3D;margin:{{ configImageMargin }};align-self:{{ configImageAlignSelf }};">
-          <sc-for list="{{ configSteps }}" as="step" hint-placeholder-count="6">
-            <div style="position:absolute;inset:0;transform:{{ step.imgTransform }};opacity:{{ step.imgOpacity }};transition:transform 0.6s cubic-bezier(0.65,0,0.35,1),opacity 0.6s ease;">
-              <img src="{{ step.img }}" alt="BoloTie {{ step.title }} configuration" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-            </div>
-          </sc-for>
-        </div>
-        </sc-if>
-
-        <div style="grid-area:{{ configBlurbGridArea }};position:relative;min-height:{{ configBlurbMinHeight }};display:flex;align-items:center;overflow:hidden;">
-          <sc-for list="{{ configSteps }}" as="step" hint-placeholder-count="6">
-            <div aria-hidden="{{ step.hidden }}" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:{{ configBlurbAlignItems }};justify-content:center;gap:12px;opacity:{{ step.textOpacity }};transition:opacity 0.5s ease;pointer-events:none;overflow:hidden;">
-              <h3 style="font-family:'Oswald',sans-serif;font-weight:500;font-size:1.25rem;letter-spacing:0.01em;text-transform:uppercase;margin:0;text-align:{{ configTextAlign }};">{{ step.title }}</h3>
-              <p style="font-family:'Inter',sans-serif;font-size:0.9375rem;line-height:1.45;color:#B8B6AC;max-width:44ch;margin:{{ configBlurbPMargin }};text-align:{{ configTextAlign }};">{{ step.blurb }}</p>
-            </div>
-          </sc-for>
-        </div>
+      <div role="group" aria-label="Choose a configuration" style="position:relative;flex:none;display:grid;grid-template-columns:repeat({{ configCount }},1fr);padding:4px;border:1px solid #3D3D3D;border-radius:999px;background:rgba(255,255,255,0.03);margin-top:20px;">
+        <span aria-hidden="true" style="position:absolute;top:4px;bottom:4px;left:4px;width:calc((100% - 8px) / {{ configCount }});border-radius:999px;background:#FFFFFF;transform:translateX({{ configPillOffset }});transition:transform 0.5s cubic-bezier(0.2,0.7,0.2,1);"></span>
+        <sc-for list="{{ configSteps }}" as="step" hint-placeholder-count="3">
+          <button type="button" onClick="{{ step.select }}" aria-pressed="{{ step.current }}" style="position:relative;background:transparent;border:0;border-radius:999px;padding:{{ configPillPad }};cursor:pointer;white-space:nowrap;font-family:'IBM Plex Mono',monospace;font-size:0.6875rem;letter-spacing:0.08em;text-transform:uppercase;color:{{ step.pillColor }};transition:color 0.4s ease;">{{ step.label }}</button>
+        </sc-for>
       </div>
     </div>
   </div>
@@ -428,17 +415,11 @@ class Component extends DCLogic {
   stageRef = React.createRef();
   configRef = React.createRef();
 
-  // `hidden` steps are kept for when real product shots exist (their images
-  // currently duplicate other steps); `img` keeps each step tied to its file.
-  allConfigs = [
-    { tag: "Standard", title: "Standard Speed Configuration", img: "./assets/config-step-0.webp", blurb: "The base BoloTie — precise electronic speed control for everyday production and experimental work, mounted with the compact standard plate." },
-    { tag: "High Speed", title: "High Speed", img: "./assets/config-step-1.webp", hidden: true, blurb: "The same precision electronics tuned for elevated frame rates — built for high-speed and slow-motion capture." },
-    { tag: "Standard + Plate", title: "Pro Plate SS", img: "./assets/config-step-2.webp", blurb: "Standard Speed Configuration paired with our larger accessory plate — a cheese-plate style mount with room to rig." },
-    { tag: "High Speed + Plate", title: "Pro Plate HS", img: "./assets/config-step-3.webp", blurb: "High Speed Configuration paired with the accessory plate, for rigs that need both speed and mounting flexibility." },
-    { tag: "Accessory Arm", title: "Accessory Arm", img: "./assets/config-step-4.webp", blurb: "An articulating arm for mounting monitors, lights, or other accessories alongside the camera." },
-    { tag: "Back Plate", title: "Back Plate", img: "./assets/config-step-5.webp", hidden: true, blurb: "An additional mounting surface at the rear of the camera for batteries, receivers, or other add-ons." },
+  rawConfigs = [
+    { label: "Standard plate", short: "Standard", title: "Standard plate", img: "./assets/config-step-0.webp", blurb: "The base BoloTie — precise electronic speed control for everyday production and experimental work, on the compact standard plate." },
+    { label: "Accessory plate", short: "Plate", title: "Accessory plate", img: "./assets/config-step-2.webp", blurb: "Swap in our larger cheese-plate style mount, with room to rig monitors, receivers and more." },
+    { label: "Accessory arm", short: "Arm", title: "Accessory arm", img: "./assets/config-step-4.webp", blurb: "An articulating arm for mounting monitors, lights, or other accessories alongside the camera." },
   ];
-  rawConfigs = this.allConfigs.filter((c) => !c.hidden);
 
   reducedMotion = typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   coarsePointer = typeof window !== "undefined" && window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
@@ -532,6 +513,15 @@ class Component extends DCLogic {
       const step = Math.min(this.rawConfigs.length - 1, Math.floor(progress * this.rawConfigs.length));
       if (step !== this.state.configStep) this.setState({ configStep: step });
     }
+  };
+
+  selectConfig = (i) => {
+    const el = document.getElementById("bolo-config-scroll");
+    this.setState({ configStep: i });
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    const scrollable = el.offsetHeight - window.innerHeight;
+    this.animateScrollTo(top + ((i + 0.5) / this.rawConfigs.length) * scrollable, 700);
   };
 
   onResize = () => this.setState({ viewportWidth: window.innerWidth, viewportHeight: window.innerHeight });
@@ -711,69 +701,36 @@ class Component extends DCLogic {
       denseSpecs: denseSpecs,
       notDenseSpecs: !denseSpecs,
       specsColumns: isNarrow ? "1fr" : "repeat(2,1fr)",
-      configSectionHeight: `${100 + this.rawConfigs.length * 40}vh`,
-      configGridColumns: isNarrow ? "1fr" : "24px 1fr 1fr",
-      configGridRows: isNarrow ? (isShort ? "auto auto minmax(0,1fr)" : "auto auto auto minmax(0,1fr)") : "auto auto minmax(0,1fr)",
-      configDotsDisplay: isNarrow ? "none" : "flex",
-      configArrowUpDisplay: isNarrow ? "none" : "flex",
-      showConfigImage: !(isNarrow && isShort),
-      configTitleGridArea: isNarrow ? "1 / 1 / 2 / 2" : "1 / 2 / 2 / 3",
-      configTagsGridArea: isNarrow ? "2 / 1 / 3 / 2" : "2 / 2 / 3 / 3",
-      configImageGridArea: isNarrow ? "3 / 1 / 4 / 2" : "1 / 3 / 4 / 4",
-      configBlurbGridArea: isNarrow ? (isShort ? "3 / 1 / 4 / 2" : "4 / 1 / 5 / 2") : "3 / 2 / 4 / 3",
-      configImageMaxWidth: isNarrow ? "320px" : "720px",
-      configImageMargin: "0 auto",
-      configImageAlignSelf: "center",
-      configTextAlign: isNarrow ? "center" : "left",
-      configTagsDirection: isNarrow ? "row" : "column",
-      configTagsWrap: isNarrow ? "wrap" : "nowrap",
-      configTagsJustify: isNarrow ? "center" : "flex-start",
-      configTagsGap: isNarrow ? "8px 20px" : "4px",
-      configTagPadding: isNarrow ? "4px 2px" : "2px 0",
-      configBlurbAlignItems: isNarrow ? "center" : "flex-start",
-      configBlurbPMargin: isNarrow ? "0 auto" : "0",
-      configRowGap: isNarrow ? "20px" : "12px",
-      configSectionPad: isNarrow ? "72px 24px 60px" : "96px 48px 16px",
-      configSectionGap: isNarrow ? "16px" : sectionGap,
-      configBlurbMinHeight: isNarrow ? "140px" : "200px",
-      skipConfigForward: () => {
-        const el = document.getElementById("bolo-config-scroll");
-        const next = el.nextElementSibling;
-        const header = document.querySelector("header");
-        const offset = header ? header.offsetHeight : 0;
-        if (next) this.animateScrollTo(next.getBoundingClientRect().top + window.scrollY - offset);
-      },
-      skipConfigBack: () => {
-        const el = document.getElementById("bolo-config-scroll");
-        const prev = el.previousElementSibling;
-        const header = document.querySelector("header");
-        const offset = header ? header.offsetHeight : 0;
-        if (prev) this.animateScrollTo(prev.getBoundingClientRect().top + window.scrollY - offset);
-      },
+      configSectionHeight: `${100 + this.rawConfigs.length * 50}vh`,
+      configCount: this.rawConfigs.length,
+      configPad: isNarrow ? "84px 20px 28px" : "112px 48px 40px",
+      configTitleSize: isNarrow ? "1.75rem" : "2.5rem",
+      configStageMargin: isShort ? "8px 0" : "24px 0",
+      configCaptionHeight: isNarrow ? "120px" : "116px",
+      configPillPad: isTiny ? "9px 14px" : "10px 22px",
+      configPillOffset: `${this.state.configStep * 100}%`,
       configSteps: this.rawConfigs.map((c, i) => {
         const rel = i - this.state.configStep;
+        const active = rel === 0;
         return {
-          tag: c.tag,
+          label: isTiny ? c.short : c.label,
           title: c.title,
           blurb: c.blurb,
           img: c.img,
-          current: i === this.state.configStep ? "true" : "false",
-          hidden: i === this.state.configStep ? "false" : "true",
-          dotLabel: `Show ${c.title}`,
-          textOpacity: i === this.state.configStep ? 1 : 0,
-          imgTransform: rel === 0 ? "translateX(0)" : rel > 0 ? "translateX(100%)" : "translateX(-100%)",
-          imgOpacity: i === this.state.configStep ? 1 : 0,
-          dotSize: i === this.state.configStep ? "10px" : "8px",
-          dotColor: i === this.state.configStep ? "#FFFFFF" : "transparent",
-          tagColor: i === this.state.configStep ? "#FFFFFF" : "#8C8A82",
-          select: () => this.setState({ configStep: i }),
+          current: active ? "true" : "false",
+          hidden: active ? "false" : "true",
+          imgOpacity: active ? 1 : 0,
+          imgScale: active ? 1 : rel > 0 ? 1.06 : 0.96,
+          textOpacity: active ? 1 : 0,
+          textShift: active ? "0" : rel > 0 ? "12px" : "-12px",
+          pillColor: active ? "#0A0A0A" : "#B8B6AC",
+          select: () => this.selectConfig(i),
         };
       }),
       pricing: [
-        { name: "Standard Speed", price: "Under $1000" },
-        { name: "High Speed", price: "Pricing available soon" },
+        { name: "BoloTie, standard plate", price: "Under $1000" },
         { name: "Accessory plate", price: "Pricing available soon" },
-        { name: "Additional accessories", price: "TBA" },
+        { name: "Accessory arm", price: "Pricing available soon" },
       ],
       specs: [
         "CRYSTAL-REF SPEED: 0.01–64.00 FPS",

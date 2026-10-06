@@ -62,8 +62,29 @@
   :focus-visible { outline: 2px solid #FFFFFF; outline-offset: 3px; }
   input:focus-visible, textarea:focus-visible { outline-offset: 0; border-color: #837F74 !important; }
   button:disabled { opacity: 0.6; cursor: progress !important; }
+
+  /* Film grain: an oversized noise tile nudged around with transforms only,
+     so it stays on the compositor instead of repainting the page. */
+  .grain { position: fixed; inset: -50%; width: 200%; height: 200%; pointer-events: none; z-index: 50; opacity: 0.11;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 2.2 0 0 0 -0.75'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation: grain 0.9s steps(6) infinite; }
+  @keyframes grain {
+    0% { transform: translate(0, 0); } 17% { transform: translate(-4%, 3%); } 33% { transform: translate(3%, -5%); }
+    50% { transform: translate(-6%, -2%); } 67% { transform: translate(5%, 4%); } 83% { transform: translate(-2%, 6%); } 100% { transform: translate(0, 0); }
+  }
+
+  /* Hero entrance */
+  .rise { opacity: 0; animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) forwards; }
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+  /* Scroll reveal: only armed once JS has run, so nothing hides without it. */
+  .reveal-armed .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .reveal-armed .reveal.is-in { opacity: 1; transform: none; }
+
   @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; scroll-behavior: auto !important; }
+    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+    .grain { animation: none !important; }
+    .rise { animation: none !important; opacity: 1; }
   }
 </style>
 <script type="importmap">
@@ -99,6 +120,7 @@
 <x-dc>
 
   <div style="width:100%;background:#0A0A0A;color:#FFFFFF;font-family:'Inter',-apple-system,sans-serif;">
+  <div class="grain" aria-hidden="true"></div>
 
   <section style="min-height:100vh;display:flex;flex-direction:column;">
     <div style="height:{{ headerSpacerHeight }};"></div>
@@ -120,17 +142,17 @@
       <sc-if value="{{ imageOnRight }}" hint-placeholder-val="{{ true }}">
         <section style="display:flex;flex-direction:column;gap:32px;order:{{ copyOrder }};min-width:0;">
           <div>
-            <div style="font-family:'Oswald',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;margin-bottom:16px;">Introducing BoloTie</div>
-            <h1 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:{{ heroTitleSize }};line-height:1.05;letter-spacing:0.01em;text-transform:uppercase;margin:0 0 20px;">BOLEX, LIKE NEVER BEFORE</h1>
-            <p style="font-family:'Inter',sans-serif;font-size:1.25rem;line-height:1.6;color:#E4E4E2;max-width:44ch;margin:0;">Put on your BoloTie, the next-generation digitally-controlled motor for Bolex cameras. Sync speeds. Continuous running. Anything else you can imagine.</p>
-            <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:28px;">
+            <div style="font-family:'Oswald',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;margin-bottom:16px;animation-delay:0.15s;" class="rise">Introducing BoloTie</div>
+            <h1 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:{{ heroTitleSize }};line-height:1.05;letter-spacing:0.01em;text-transform:uppercase;margin:0 0 20px;animation-delay:0.3s;" class="rise">BOLEX, LIKE NEVER BEFORE</h1>
+            <p style="font-family:'Inter',sans-serif;font-size:1.25rem;line-height:1.6;color:#E4E4E2;max-width:44ch;margin:0;animation-delay:0.5s;" class="rise">Put on your BoloTie, the next-generation digitally-controlled motor for Bolex cameras. Sync speeds. Continuous running. Anything else you can imagine.</p>
+            <div class="rise" style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:28px;animation-delay:0.7s;">
               <a href="#bolo-contact-section" onClick="{{ scrollToContact }}" style="background:#FFFFFF;color:#0A0A0A;border:1px solid #FFFFFF;font-family:'Oswald',sans-serif;font-weight:600;font-size:0.8125rem;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;padding:14px 24px;transition:background 0.2s ease,color 0.2s ease;" style-hover="background:transparent;color:#FFFFFF;">Reserve yours</a>
               <span style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.02em;color:#B8B6AC;">From under $1000 · {{ launchWindow }}</span>
             </div>
           </div>
 
           <sc-if value="{{ denseSpecs }}" hint-placeholder-val="{{ true }}">
-            <div style="display:grid;grid-template-columns:{{ specsColumns }};gap:0;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.02em;color:#B8B6AC;border-top:1px solid #3D3D3D;">
+            <div class="rise" style="display:grid;grid-template-columns:{{ specsColumns }};gap:0;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.02em;color:#B8B6AC;border-top:1px solid #3D3D3D;animation-delay:0.9s;">
               <sc-for list="{{ specs }}" as="spec" hint-placeholder-count="5">
                 <div style="padding:12px 20px 12px 0;border-bottom:1px solid #3D3D3D;white-space:nowrap;">{{ spec }}</div>
               </sc-for>
@@ -151,7 +173,7 @@
   </section>
 
   <section style="min-height:100vh;display:grid;grid-template-columns:{{ productColumns }};gap:{{ productGap }};align-items:center;padding:{{ productPad }};max-width:1440px;width:100%;margin:0 auto;border-top:1px solid #3D3D3D;">
-    <div style="order:{{ productStageOrder }};display:flex;flex-direction:column;gap:8px;min-width:0;">
+    <div class="reveal" style="order:{{ productStageOrder }};display:flex;flex-direction:column;gap:8px;min-width:0;">
       <div style="position:relative;width:100%;aspect-ratio:4/5;border:1px solid #3D3D3D;">
         <three-d-stage ref="{{ stageRef }}" name="bolo-tie" background="#0A0A0A" autorotate="true" no-toolbar="true" aria-label="Interactive 3D model of BoloTie" style="width:100%;height:100%;visibility:{{ stageVisibility }};--stage-bg:#0A0A0A;"></three-d-stage>
         <sc-if value="{{ modelLoading }}" hint-placeholder-val="{{ false }}">
@@ -159,7 +181,7 @@
         </sc-if>
       </div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:24px;order:{{ productTextOrder }};min-width:0;">
+    <div class="reveal" style="display:flex;flex-direction:column;gap:24px;order:{{ productTextOrder }};min-width:0;">
       <div>
         <div style="font-family:'Oswald',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;margin-bottom:4px;">FEATURES</div>
         <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:2.5rem;line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">SHOOT HOW YOU WANT</h2>
@@ -286,11 +308,11 @@
   </sc-if>
 
   <section style="border-top:1px solid #3D3D3D;padding:{{ sectionPad }};max-width:1440px;width:100%;margin:0 auto;">
-    <div style="text-align:center;margin-bottom:32px;">
+    <div class="reveal" style="text-align:center;margin-bottom:32px;">
       <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:2rem;line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">Pricing</h2>
       <p style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.02em;color:#8C8A82;margin:8px 0 0;">Final release prices subject to change</p>
     </div>
-    <div style="display:flex;flex-wrap:wrap;max-width:900px;margin:0 auto;font-family:'IBM Plex Mono',monospace;font-size:0.875rem;letter-spacing:0.02em;color:#B8B6AC;border-top:1px solid #3D3D3D;">
+    <div class="reveal" style="display:flex;flex-wrap:wrap;max-width:900px;margin:0 auto;font-family:'IBM Plex Mono',monospace;font-size:0.875rem;letter-spacing:0.02em;color:#B8B6AC;border-top:1px solid #3D3D3D;">
       <sc-for list="{{ pricing }}" as="item" hint-placeholder-count="4">
         <div style="display:flex;justify-content:space-between;gap:16px;padding:14px 20px 14px 0;border-bottom:1px solid #3D3D3D;flex:1 1 100%;">
           <span>{{ item.name }}</span>
@@ -301,12 +323,12 @@
   </section>
 
   <section id="bolo-contact-section" style="min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;border-top:1px solid #3D3D3D;padding:{{ sectionPad }};text-align:center;">
-    <div>
+    <div class="reveal">
       <div style="font-family:'Oswald',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;margin-bottom:12px;">Coming Late 2026</div>
       <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:2rem;line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">Reserve yours</h2>
     </div>
 
-    <form style="display:flex;flex-direction:column;gap:12px;max-width:420px;width:100%;" onSubmit="{{ handleSubmit }}">
+    <form class="reveal" style="display:flex;flex-direction:column;gap:12px;max-width:420px;width:100%;" onSubmit="{{ handleSubmit }}">
       <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
         <div role="status" style="font-family:'IBM Plex Mono',monospace;font-size:0.875rem;color:#FFFFFF;border:1px solid #837F74;padding:14px 16px;">{{ confirmationMessage }}</div>
       </sc-if>
@@ -516,6 +538,19 @@ class Component extends DCLogic {
 
   componentDidMount() {
     window.addEventListener("scroll", this.onScroll, { passive: true });
+    if (!this.reducedMotion && "IntersectionObserver" in window) {
+      this.revealObserver = new IntersectionObserver(
+        (entries) => entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-in");
+            this.revealObserver.unobserve(e.target);
+          }
+        }),
+        { rootMargin: "0px 0px -12% 0px" }
+      );
+      document.querySelectorAll(".reveal").forEach((el) => this.revealObserver.observe(el));
+      document.documentElement.classList.add("reveal-armed");
+    }
     window.addEventListener("resize", this.onResize);
     const stage = this.stageRef.current;
     if (stage && "IntersectionObserver" in window) {
@@ -538,6 +573,7 @@ class Component extends DCLogic {
     window.removeEventListener("scroll", this.onScroll);
     window.removeEventListener("resize", this.onResize);
     if (this.stageObserver) this.stageObserver.disconnect();
+    if (this.revealObserver) this.revealObserver.disconnect();
   }
 
   async mount3D() {

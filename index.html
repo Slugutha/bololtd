@@ -124,7 +124,7 @@
 
   <section style="min-height:100vh;display:flex;flex-direction:column;">
     <div style="height:{{ headerSpacerHeight }};"></div>
-    <header style="display:flex;align-items:center;justify-content:{{ headerJustify }};padding:{{ headerPadding }};border-bottom:1px solid #3D3D3D;position:fixed;top:0;left:0;right:0;z-index:10;background:#0A0A0A;transition:padding 0.25s ease;">
+    <header style="display:flex;align-items:center;justify-content:{{ headerJustify }};padding:{{ headerPadding }};border-bottom:1px solid {{ headerBorder }};position:fixed;top:0;left:0;right:0;z-index:10;background:{{ headerBg }};-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);transition:padding 0.25s ease,background 0.3s ease,border-color 0.3s ease;">
       <a href="#" onClick="{{ scrollToTop }}" aria-label="Bolo Ltd — back to top" style="display:flex;cursor:{{ logoCursor }};">
         <img src="./assets/Bolo_Logo_Name.svg" alt="Bolo Ltd" style="height:{{ headerLogoHeight }};width:auto;filter:invert(1);transition:height 0.25s ease;">
       </a>
@@ -138,7 +138,7 @@
       </sc-if>
     </header>
 
-    <main style="flex:1;display:grid;grid-template-columns:{{ mainColumns }};gap:{{ mainGap }};align-items:center;padding:{{ mainPad }};max-width:1440px;width:100%;margin:0 auto;">
+    <main style="flex:1;display:grid;grid-template-columns:{{ mainColumns }};gap:{{ mainGap }};align-items:center;padding:{{ mainPad }};max-width:{{ contentMax }};width:100%;margin:0 auto;">
       <sc-if value="{{ imageOnRight }}" hint-placeholder-val="{{ true }}">
         <section style="display:flex;flex-direction:column;gap:32px;order:{{ copyOrder }};min-width:0;">
           <div>
@@ -152,9 +152,9 @@
           </div>
 
           <sc-if value="{{ denseSpecs }}" hint-placeholder-val="{{ true }}">
-            <div class="rise" style="display:grid;grid-template-columns:{{ specsColumns }};gap:0;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.02em;color:#B8B6AC;border-top:1px solid #3D3D3D;animation-delay:0.9s;">
+            <div class="rise" style="display:grid;grid-template-columns:{{ specsColumns }};gap:0;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.02em;color:#B8B6AC;border-top:1px solid #262624;animation-delay:0.9s;">
               <sc-for list="{{ specs }}" as="spec" hint-placeholder-count="5">
-                <div style="padding:12px 20px 12px 0;border-bottom:1px solid #3D3D3D;white-space:nowrap;">{{ spec }}</div>
+                <div style="padding:12px 20px 12px 0;border-bottom:1px solid #262624;white-space:nowrap;">{{ spec }}</div>
               </sc-for>
             </div>
           </sc-if>
@@ -165,16 +165,16 @@
           </sc-if>
         </section>
 
-        <section style="order:{{ imageOrder }};position:relative;width:100%;min-width:0;aspect-ratio:4/5;border:1px solid #3D3D3D;">
+        <section style="order:{{ imageOrder }};position:relative;width:100%;min-width:0;aspect-ratio:4/5;border-radius:20px;overflow:hidden;">
           <img src="./assets/bolo-tie-hero-shot.webp" alt="BoloTie mounted on a Bolex H16 Reflex camera" width="1082" height="721" fetchpriority="high" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
         </section>
       </sc-if>
     </main>
   </section>
 
-  <section style="min-height:100vh;display:grid;grid-template-columns:{{ productColumns }};gap:{{ productGap }};align-items:center;padding:{{ productPad }};max-width:1440px;width:100%;margin:0 auto;border-top:1px solid #3D3D3D;">
+  <section style="min-height:100vh;display:grid;grid-template-columns:{{ productColumns }};gap:{{ productGap }};align-items:center;padding:{{ productPad }};max-width:{{ contentMax }};width:100%;margin:0 auto;">
     <div class="reveal" style="order:{{ productStageOrder }};display:flex;flex-direction:column;gap:8px;min-width:0;">
-      <div style="position:relative;width:100%;aspect-ratio:4/5;border:1px solid #3D3D3D;">
+      <div style="position:relative;width:100%;aspect-ratio:4/5;">
         <three-d-stage ref="{{ stageRef }}" name="bolo-tie" background="#0A0A0A" autorotate="true" no-toolbar="true" aria-label="Interactive 3D model of BoloTie" style="width:100%;height:100%;visibility:{{ stageVisibility }};--stage-bg:#0A0A0A;"></three-d-stage>
         <sc-if value="{{ modelLoading }}" hint-placeholder-val="{{ false }}">
           <div role="status" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.02em;color:#8C8A82;pointer-events:none;">{{ modelStatus }}</div>
@@ -187,9 +187,9 @@
         <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:2.5rem;line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">SHOOT HOW YOU WANT</h2>
       </div>
 
-      <div style="border-top:1px solid #3D3D3D;">
+      <div style="border-top:1px solid #262624;">
         <sc-for list="{{ features }}" as="feature" hint-placeholder-count="5">
-          <div style="border-bottom:1px solid #3D3D3D;">
+          <div style="border-bottom:1px solid #262624;">
             <button type="button" onClick="{{ feature.toggle }}" aria-expanded="{{ feature.expanded }}" aria-controls="{{ feature.panelId }}" style="display:flex;align-items:center;justify-content:space-between;width:100%;background:transparent;border:0;padding:18px 0;cursor:pointer;color:#FFFFFF;text-align:left;" style-hover="color:#B8B6AC;">
               <span style="font-family:'Oswald',sans-serif;font-weight:500;font-size:1.25rem;letter-spacing:0.01em;text-transform:uppercase;transition:letter-spacing 0.2s ease,color 0.2s ease;" style-hover="letter-spacing:0.04em;color:#D8D6CC;">{{ feature.title }}</span>
               <span aria-hidden="true" style="font-family:'Inter',sans-serif;font-size:1.25rem;color:#B8B6AC;transform:{{ feature.iconRotate }};transition:transform 0.2s ease,color 0.2s ease;">+</span>
@@ -251,7 +251,7 @@
   </div>
 
   <sc-if value="{{ showCommunity }}" hint-placeholder-val="{{ false }}">
-  <section style="border-top:1px solid #3D3D3D;padding:{{ sectionPad }};max-width:1440px;width:100%;margin:0 auto;">
+  <section style="padding:{{ sectionPad }};max-width:{{ contentMax }};width:100%;margin:0 auto;">
     <div style="text-align:center;margin-bottom:40px;">
       <div style="font-family:'Oswald',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;margin-bottom:12px;">In the field</div>
       <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:2.5rem;line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">From the community</h2>
@@ -294,14 +294,14 @@
   </section>
   </sc-if>
 
-  <section style="border-top:1px solid #3D3D3D;padding:{{ sectionPad }};max-width:1440px;width:100%;margin:0 auto;">
-    <div class="reveal" style="text-align:center;margin-bottom:32px;">
-      <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:2rem;line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">Pricing</h2>
+  <section style="padding:{{ sectionPad }};max-width:{{ contentMax }};width:100%;margin:0 auto;">
+    <div class="reveal" style="text-align:center;margin-bottom:48px;">
+      <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:{{ sectionTitleSize }};line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">Pricing</h2>
       <p style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.02em;color:#8C8A82;margin:8px 0 0;">Final release prices subject to change</p>
     </div>
-    <div class="reveal" style="display:flex;flex-wrap:wrap;max-width:900px;margin:0 auto;font-family:'IBM Plex Mono',monospace;font-size:0.875rem;letter-spacing:0.02em;color:#B8B6AC;border-top:1px solid #3D3D3D;">
+    <div class="reveal" style="display:flex;flex-wrap:wrap;max-width:720px;margin:0 auto;font-family:'IBM Plex Mono',monospace;font-size:0.875rem;letter-spacing:0.02em;color:#B8B6AC;">
       <sc-for list="{{ pricing }}" as="item" hint-placeholder-count="4">
-        <div style="display:flex;justify-content:space-between;gap:16px;padding:14px 20px 14px 0;border-bottom:1px solid #3D3D3D;flex:1 1 100%;">
+        <div style="display:flex;justify-content:space-between;gap:16px;padding:18px 0;border-bottom:1px solid #262624;flex:1 1 100%;">
           <span>{{ item.name }}</span>
           <span style="color:#FFFFFF;">{{ item.price }}</span>
         </div>
@@ -309,10 +309,10 @@
     </div>
   </section>
 
-  <section id="bolo-contact-section" style="min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;border-top:1px solid #3D3D3D;padding:{{ sectionPad }};text-align:center;">
+  <section id="bolo-contact-section" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:36px;padding:{{ sectionPad }};text-align:center;">
     <div class="reveal">
       <div style="font-family:'Oswald',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;margin-bottom:12px;">Coming Late 2026</div>
-      <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:2rem;line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">Reserve yours</h2>
+      <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:{{ sectionTitleSize }};line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">Reserve yours</h2>
     </div>
 
     <form class="reveal" style="display:flex;flex-direction:column;gap:12px;max-width:420px;width:100%;" onSubmit="{{ handleSubmit }}">
@@ -349,7 +349,7 @@
     </form>
   </section>
 
-  <footer style="display:flex;flex-direction:{{ footerDirection }};align-items:{{ footerAlign }};justify-content:{{ footerJustify }};gap:{{ footerGap }};padding:20px 48px;border-top:1px solid #3D3D3D;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:#8C8A82;letter-spacing:0.02em;">
+  <footer style="display:flex;flex-direction:{{ footerDirection }};align-items:{{ footerAlign }};justify-content:{{ footerJustify }};gap:{{ footerGap }};padding:{{ footerPad }};border-top:1px solid #1C1C1B;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:#8C8A82;letter-spacing:0.02em;">
     <span style="display:flex;flex-direction:column;gap:4px;text-align:{{ footerTextAlign }};">
       <span>&copy; 2026 Bolo Ltd.</span>
       <a href="mailto:info@bolo.ltd" style="color:#8C8A82;">info@bolo.ltd</a>
@@ -617,8 +617,11 @@ class Component extends DCLogic {
     const isNarrow = w < 860;
     const isTiny = w < 520;
     const isShort = h < 720;
-    const sectionPad = isNarrow ? "40px 24px" : "64px 48px";
-    const sectionGap = isNarrow ? "32px" : "64px";
+    const sectionPad = isNarrow ? "72px 24px" : "120px 48px";
+    const sectionGap = isNarrow ? "40px" : "96px";
+    // Side padding that keeps full-width bars (header, footer) aligned with
+    // the 1200px content column on wide screens.
+    const edgePad = isNarrow ? "24px" : "max(48px, calc((100% - 1104px) / 2))";
     const arrowOffset = isNarrow ? "6px" : "-56px";
     const slides = this.rawSlides.map((s, i) => ({
       title: s.title,
@@ -641,7 +644,12 @@ class Component extends DCLogic {
       prevSlide: () => this.setState({ activeSlide: (this.state.activeSlide - 1 + count) % count }),
       nextSlide: () => this.setState({ activeSlide: (this.state.activeSlide + 1) % count }),
       headerJustify: this.state.scrolled ? "space-between" : "center",
-      headerPadding: this.state.scrolled ? (isNarrow ? "12px 24px" : "16px 48px") : (isNarrow ? "24px" : "40px 48px"),
+      headerPadding: this.state.scrolled ? (isNarrow ? `12px ${edgePad}` : `16px ${edgePad}`) : (isNarrow ? "24px" : `40px ${edgePad}`),
+      headerBg: this.state.scrolled ? "rgba(10,10,10,0.72)" : "#0A0A0A",
+      headerBorder: this.state.scrolled ? "rgba(255,255,255,0.08)" : "transparent",
+      contentMax: "1200px",
+      sectionTitleSize: isNarrow ? "2rem" : "2.5rem",
+      footerPad: `40px ${edgePad}`,
       headerLogoHeight: this.state.scrolled ? (isNarrow ? "36px" : "48px") : (isNarrow ? "110px" : "200px"),
       headerSpacerHeight: isNarrow ? "160px" : "280px",
       showCommunity: this.props.showCommunity ?? false,
@@ -660,7 +668,7 @@ class Component extends DCLogic {
       priceLine: this.props.priceLine ?? "Get in touch for questions, information and orders",
       mainColumns: isNarrow ? "1fr" : (imageSide === "right" ? "1.1fr 1fr" : "1fr 1.1fr"),
       mainGap: sectionGap,
-      mainPad: sectionPad,
+      mainPad: isNarrow ? "24px 24px 72px" : "40px 48px 120px",
       imageOnRight: true,
       copyOrder: isNarrow ? 1 : (imageSide === "right" ? 1 : 2),
       imageOrder: isNarrow ? 2 : (imageSide === "right" ? 2 : 1),

@@ -45,9 +45,8 @@
 <meta name="twitter:description" content="BoloTie: a digitally-controlled motor for Bolex cameras &mdash; crystal-sync speeds, continuous running and programmable exposure. Coming late 2026.">
 <meta name="twitter:image" content="https://bolo.ltd/assets/og-image.jpg">
 <meta name="twitter:image:alt" content="BoloTie motor mounted on a Bolex H16 Reflex camera">
-<link rel="preconnect" href="https://unpkg.com" crossorigin>
-<link rel="preload" as="script" href="https://unpkg.com/react@18.3.1/umd/react.production.min.js" integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z" crossorigin="anonymous">
-<link rel="preload" as="script" href="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1" crossorigin="anonymous">
+<link rel="preload" as="script" href="./vendor/react/react.production.min.js" integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z" crossorigin="anonymous">
+<link rel="preload" as="script" href="./vendor/react/react-dom.production.min.js" integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1" crossorigin="anonymous">
 <link rel="preload" as="image" href="./assets/bolo-tie-hero-shot.webp" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -90,18 +89,18 @@
 <script type="importmap">
 {
   "imports": {
-    "three": "https://unpkg.com/three@0.184.0/build/three.module.js",
-    "three/addons/controls/OrbitControls.js": "https://unpkg.com/three@0.184.0/examples/jsm/controls/OrbitControls.js",
-    "three/addons/environments/RoomEnvironment.js": "https://unpkg.com/three@0.184.0/examples/jsm/environments/RoomEnvironment.js",
-    "three/addons/exporters/OBJExporter.js": "https://unpkg.com/three@0.184.0/examples/jsm/exporters/OBJExporter.js",
-    "three/addons/exporters/GLTFExporter.js": "https://unpkg.com/three@0.184.0/examples/jsm/exporters/GLTFExporter.js",
-    "three/addons/loaders/GLTFLoader.js": "https://unpkg.com/three@0.184.0/examples/jsm/loaders/GLTFLoader.js",
-    "three/addons/loaders/DRACOLoader.js": "https://unpkg.com/three@0.184.0/examples/jsm/loaders/DRACOLoader.js"
+    "three": "./vendor/three/build/three.module.min.js",
+    "three/addons/controls/OrbitControls.js": "./vendor/three/examples/jsm/controls/OrbitControls.js",
+    "three/addons/environments/RoomEnvironment.js": "./vendor/three/examples/jsm/environments/RoomEnvironment.js",
+    "three/addons/exporters/OBJExporter.js": "./vendor/three/examples/jsm/exporters/OBJExporter.js",
+    "three/addons/exporters/GLTFExporter.js": "./vendor/three/examples/jsm/exporters/GLTFExporter.js",
+    "three/addons/loaders/GLTFLoader.js": "./vendor/three/examples/jsm/loaders/GLTFLoader.js",
+    "three/addons/loaders/DRACOLoader.js": "./vendor/three/examples/jsm/loaders/DRACOLoader.js"
   }
 }
 </script>
 <script src="./three-d-stage.js?v=7" defer></script>
-<script src="./support.js?v=2"></script>
+<script src="./support.js?v=3"></script>
 </head>
 <body style="background:#0A0A0A;">
 <noscript>
@@ -591,7 +590,7 @@ class Component extends DCLogic {
     const { GLTFLoader } = await import("three/addons/loaders/GLTFLoader.js");
     const { DRACOLoader } = await import("three/addons/loaders/DRACOLoader.js");
     const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
+    dracoLoader.setDecoderPath("./vendor/draco/");
     const loader = new GLTFLoader();
     loader.setDRACOLoader(dracoLoader);
     loader.load(

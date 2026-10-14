@@ -109,12 +109,13 @@
     <img src="./assets/Bolo_Logo_Name.svg" alt="Bolo Ltd" style="height:64px;width:auto;filter:invert(1);">
     <p style="font-family:'Oswald',sans-serif;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;font-size:0.75rem;margin:48px 0 8px;">Introducing BoloTie</p>
     <h1 style="font-family:'Oswald',sans-serif;text-transform:uppercase;color:#FFFFFF;margin:0 0 16px;">Bolex, like never before</h1>
-    <p>BoloTie is the next-generation digitally-controlled motor for Bolex cameras: crystal-referenced speeds from 0.01 to 64 fps, continuous running over a full roll, single-frame animation, intervalometer, auto-rewind superimpositions, an integrated light meter, and dual LEMO + USB-C power.</p>
+    <p>BoloTie is the next-generation digitally-controlled motor for Bolex cameras: TCXO-referenced crystal-sync speeds from 0.01 to 64 fps, continuous running over a full roll, single-frame animation, intervalometer, auto-rewind superimpositions, an integrated light meter, and dual LEMO + USB-C power.</p>
     <img src="./assets/bolo-tie-hero-shot.webp" alt="BoloTie mounted on a Bolex H16 Reflex camera" style="width:100%;height:auto;border:1px solid #3D3D3D;margin:16px 0;">
     <h2 style="font-family:'Oswald',sans-serif;text-transform:uppercase;color:#FFFFFF;">Pricing</h2>
-    <p>BoloTie with standard plate: under $1000. Accessory plate and accessory arm: pricing available soon.</p>
+    <p>BoloTie with standard plate: under $1000. Accessory plate: pricing available soon.</p>
     <h2 style="font-family:'Oswald',sans-serif;text-transform:uppercase;color:#FFFFFF;">Coming late 2026</h2>
     <p>To join the waitlist or ask a question, email <a href="mailto:info@bolo.ltd">info@bolo.ltd</a>.</p>
+    <p style="font-size:0.75rem;color:#8C8A82;"><a href="./privacy.html">Privacy</a> · Bolex is a trademark of its owner. Not affiliated.</p>
   </div>
 </noscript>
 <x-dc>
@@ -133,7 +134,7 @@
           <sc-if value="{{ showHeaderLaunch }}" hint-placeholder-val="{{ true }}">
             <span style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:#A8A8A8;letter-spacing:0.02em;">{{ launchWindow }}</span>
           </sc-if>
-          <a href="#bolo-contact-section" onClick="{{ scrollToContact }}" style="font-family:'Oswald',sans-serif;font-weight:600;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:#FFFFFF;text-decoration:none;border:1px solid #837F74;padding:8px 14px;transition:background 0.2s ease,color 0.2s ease;" style-hover="background:#FFFFFF;color:#0A0A0A;">Reserve</a>
+          <a href="#bolo-contact-section" onClick="{{ scrollToContact }}" style="font-family:'Oswald',sans-serif;font-weight:600;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:#FFFFFF;text-decoration:none;border:1px solid #837F74;padding:8px 14px;transition:background 0.2s ease,color 0.2s ease;" style-hover="background:#FFFFFF;color:#0A0A0A;">Join waitlist</a>
         </div>
       </sc-if>
     </header>
@@ -146,7 +147,7 @@
             <h1 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:{{ heroTitleSize }};line-height:1.05;letter-spacing:0.01em;text-transform:uppercase;margin:0 0 20px;animation-delay:0.3s;" class="rise">BOLEX, LIKE NEVER BEFORE</h1>
             <p style="font-family:'Inter',sans-serif;font-size:1.25rem;line-height:1.6;color:#E4E4E2;max-width:44ch;margin:0;animation-delay:0.5s;" class="rise">Put on your BoloTie, the next-generation digitally-controlled motor for Bolex cameras. Sync speeds. Continuous running. Anything else you can imagine.</p>
             <div class="rise" style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:28px;animation-delay:0.7s;">
-              <a href="#bolo-contact-section" onClick="{{ scrollToContact }}" style="background:#FFFFFF;color:#0A0A0A;border:1px solid #FFFFFF;font-family:'Oswald',sans-serif;font-weight:600;font-size:0.8125rem;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;padding:14px 24px;transition:background 0.2s ease,color 0.2s ease;" style-hover="background:transparent;color:#FFFFFF;">Reserve yours</a>
+              <a href="#bolo-contact-section" onClick="{{ scrollToContact }}" style="background:#FFFFFF;color:#0A0A0A;border:1px solid #FFFFFF;font-family:'Oswald',sans-serif;font-weight:600;font-size:0.8125rem;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;padding:14px 24px;transition:background 0.2s ease,color 0.2s ease;" style-hover="background:transparent;color:#FFFFFF;">Join the waitlist</a>
               <span style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.02em;color:#B8B6AC;">From under $1000 · {{ launchWindow }}</span>
             </div>
           </div>
@@ -226,14 +227,14 @@
 
       <div style="flex:1;min-height:0;width:100%;max-width:1100px;display:flex;align-items:center;justify-content:center;margin:{{ configStageMargin }};">
         <div style="position:relative;height:100%;max-height:640px;aspect-ratio:3/2;max-width:100%;-webkit-mask-image:linear-gradient(to right,transparent,#000 9%,#000 91%,transparent),linear-gradient(to bottom,transparent,#000 9%,#000 91%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(to right,transparent,#000 9%,#000 91%,transparent),linear-gradient(to bottom,transparent,#000 9%,#000 91%,transparent);mask-composite:intersect;">
-          <sc-for list="{{ configSteps }}" as="step" hint-placeholder-count="3">
+          <sc-for list="{{ configSteps }}" as="step" hint-placeholder-count="2">
             <img src="{{ step.img }}" alt="BoloTie with {{ step.title }}" aria-hidden="{{ step.hidden }}" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:{{ step.imgOpacity }};transform:scale({{ step.imgScale }});transition:opacity 0.8s ease,transform 1.2s cubic-bezier(0.2,0.7,0.2,1);">
           </sc-for>
         </div>
       </div>
 
       <div style="position:relative;flex:none;width:100%;max-width:560px;height:{{ configCaptionHeight }};">
-        <sc-for list="{{ configSteps }}" as="step" hint-placeholder-count="3">
+        <sc-for list="{{ configSteps }}" as="step" hint-placeholder-count="2">
           <div aria-hidden="{{ step.hidden }}" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;opacity:{{ step.textOpacity }};transform:translateY({{ step.textShift }});transition:opacity 0.6s ease,transform 0.6s ease;pointer-events:none;">
             <h3 style="font-family:'Oswald',sans-serif;font-weight:500;font-size:1.375rem;letter-spacing:0.02em;text-transform:uppercase;margin:0;">{{ step.title }}</h3>
             <p style="font-family:'Inter',sans-serif;font-size:0.9375rem;line-height:1.55;color:#B8B6AC;max-width:44ch;margin:0;">{{ step.blurb }}</p>
@@ -243,7 +244,7 @@
 
       <div role="group" aria-label="Choose a configuration" style="position:relative;flex:none;display:grid;grid-template-columns:repeat({{ configCount }},1fr);padding:4px;border:1px solid #3D3D3D;border-radius:999px;background:rgba(255,255,255,0.03);margin-top:20px;">
         <span aria-hidden="true" style="position:absolute;top:4px;bottom:4px;left:4px;width:calc((100% - 8px) / {{ configCount }});border-radius:999px;background:#FFFFFF;transform:translateX({{ configPillOffset }});transition:transform 0.5s cubic-bezier(0.2,0.7,0.2,1);"></span>
-        <sc-for list="{{ configSteps }}" as="step" hint-placeholder-count="3">
+        <sc-for list="{{ configSteps }}" as="step" hint-placeholder-count="2">
           <button type="button" onClick="{{ step.select }}" aria-pressed="{{ step.current }}" style="position:relative;background:transparent;border:0;border-radius:999px;padding:{{ configPillPad }};cursor:pointer;white-space:nowrap;font-family:'IBM Plex Mono',monospace;font-size:0.6875rem;letter-spacing:0.08em;text-transform:uppercase;color:{{ step.pillColor }};transition:color 0.4s ease;">{{ step.label }}</button>
         </sc-for>
       </div>
@@ -312,7 +313,7 @@
   <section id="bolo-contact-section" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:36px;padding:{{ sectionPad }};text-align:center;">
     <div class="reveal">
       <div style="font-family:'Oswald',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;margin-bottom:12px;">Coming Late 2026</div>
-      <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:{{ sectionTitleSize }};line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">Reserve yours</h2>
+      <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:{{ sectionTitleSize }};line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">Join the waitlist</h2>
     </div>
 
     <form class="reveal" style="display:flex;flex-direction:column;gap:12px;max-width:420px;width:100%;" onSubmit="{{ handleSubmit }}">
@@ -321,6 +322,7 @@
       </sc-if>
       <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
         <input type="email" name="email" autocomplete="email" aria-label="Email address" required="true" value="{{ email }}" onChange="{{ handleEmailChange }}" placeholder="you@email.com" style="background:#1A1A1A;border:1px solid #3D3D3D;color:#FFFFFF;font-family:'Inter',sans-serif;font-size:1rem;padding:14px 16px;outline:none;border-radius:0;width:100%;">
+        <input type="text" name="website" tabIndex="-1" autocomplete="off" aria-hidden="true" value="{{ honey }}" onChange="{{ handleHoneyChange }}" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
 
         <div style="display:flex;flex-direction:column;gap:12px;text-align:left;font-family:'IBM Plex Mono',monospace;font-size:0.875rem;color:#E4E4E2;border:1px solid #3D3D3D;padding:16px;">
           <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
@@ -345,14 +347,15 @@
         </sc-if>
         <button type="submit" disabled="{{ submitting }}" style="background:#FFFFFF;color:#0A0A0A;border:1px solid #FFFFFF;font-family:'Oswald',sans-serif;font-weight:600;font-size:0.8125rem;letter-spacing:0.08em;text-transform:uppercase;padding:14px 24px;cursor:pointer;">{{ ctaLabel }}</button>
       </sc-if>
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;line-height:1.6;color:#8C8A82;">{{ priceLine }}<br>We only use your email for BoloTie news. No spam.</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;line-height:1.6;color:#8C8A82;">{{ priceLine }}<br>We only use your email for BoloTie news, or to reply to you. No spam. <a href="./privacy.html" style="color:#8C8A82;">Privacy</a></div>
     </form>
   </section>
 
   <footer style="display:flex;flex-direction:{{ footerDirection }};align-items:{{ footerAlign }};justify-content:{{ footerJustify }};gap:{{ footerGap }};padding:{{ footerPad }};border-top:1px solid #1C1C1B;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:#8C8A82;letter-spacing:0.02em;">
     <span style="display:flex;flex-direction:column;gap:4px;text-align:{{ footerTextAlign }};">
       <span>&copy; 2026 Bolo Ltd.</span>
-      <a href="mailto:info@bolo.ltd" style="color:#8C8A82;">info@bolo.ltd</a>
+      <span><a href="mailto:info@bolo.ltd" style="color:#8C8A82;">info@bolo.ltd</a> · <a href="./privacy.html" style="color:#8C8A82;">Privacy</a></span>
+      <span style="font-size:0.6875rem;margin-top:8px;">Bolex is a trademark of its owner. Not affiliated.</span>
     </span>
     <img src="./assets/Bolo_Logo_Full.svg" alt="Bolo Ltd" loading="lazy" style="height:80px;width:auto;filter:invert(1);opacity:0.85;">
   </footer>
@@ -361,7 +364,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900},&quot;showCommunity&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;},&quot;imageSide&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;right&quot;,&quot;options&quot;:[&quot;right&quot;,&quot;left&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Layout&quot;},&quot;denseSpecs&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Layout&quot;},&quot;launchWindow&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Coming Late 2026&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;priceLine&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Get in touch for questions, information and orders&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 class Component extends DCLogic {
-  state = { email: "", contactReason: "waitlist", message: "", submitted: false, submitting: false, submitError: false, modelProgress: null, modelLoaded: false, modelFailed: false, scrolled: false, activeSlide: 0, openFeature: 0, configStep: 0, viewportWidth: typeof window !== "undefined" ? window.innerWidth : 1440, viewportHeight: typeof window !== "undefined" ? window.innerHeight : 900 };
+  state = { email: "", contactReason: "waitlist", message: "", honey: "", submitted: false, submitting: false, submitError: false, modelProgress: null, modelLoaded: false, modelFailed: false, scrolled: false, activeSlide: 0, openFeature: 0, configStep: 0, viewportWidth: typeof window !== "undefined" ? window.innerWidth : 1440, viewportHeight: typeof window !== "undefined" ? window.innerHeight : 900 };
 
   // Google Apps Script Web App URL (apps-script/waitlist-logger.gs) — logs
   // every submission to a Google Sheet. Replace after deploying.
@@ -374,7 +377,7 @@ class Component extends DCLogic {
 
   rawFeatures = [
     { title: "Run like a pro", bullets: [
-      "Crystal-referenced frame rates from 0.01 to 64 fps, always in sync",
+      "TCXO-referenced crystal-sync frame rates from 0.01 to 64 fps",
       "Continuous running over full roll length",
       "Intervalometer with programmable exposure time, frequency, and duration",
     ], view: [0, -0.1, 1.6, 0.81] },
@@ -418,7 +421,6 @@ class Component extends DCLogic {
   rawConfigs = [
     { label: "Standard plate", short: "Standard", title: "Standard plate", img: "./assets/config-step-0.webp", blurb: "The base BoloTie — precise electronic speed control for everyday production and experimental work, on the compact standard plate." },
     { label: "Accessory plate", short: "Plate", title: "Accessory plate", img: "./assets/config-step-2.webp", blurb: "Swap in our larger cheese-plate style mount, with room to rig monitors, receivers and more." },
-    { label: "Accessory arm", short: "Arm", title: "Accessory arm", img: "./assets/config-step-4.webp", blurb: "An articulating arm for mounting monitors, lights, or other accessories alongside the camera." },
   ];
 
   reducedMotion = typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -738,10 +740,9 @@ class Component extends DCLogic {
       pricing: [
         { name: "BoloTie, standard plate", price: "Under $1000" },
         { name: "Accessory plate", price: "Pricing available soon" },
-        { name: "Accessory arm", price: "Pricing available soon" },
       ],
       specs: [
-        "CRYSTAL-REF SPEED: 0.01–64.00 FPS",
+        "TCXO-REF SPEED: 0.01–64.00 FPS",
         "SINGLE-FRAME + INTERVALOMETER",
         "AUTO-REWIND SUPERIMPOSITION",
         "INTEGRATED LIGHT METER",
@@ -760,11 +761,20 @@ class Component extends DCLogic {
       handleEmailChange: (e) => this.setState({ email: e.target.value, submitError: false }),
       handleReasonChange: (e) => this.setState({ contactReason: e.target.value, submitError: false }),
       handleMessageChange: (e) => this.setState({ message: e.target.value, submitError: false }),
+      honey: this.state.honey,
+      handleHoneyChange: (e) => this.setState({ honey: e.target.value }),
       handleSubmit: async (e) => {
         e.preventDefault();
         if (this.state.submitting) return;
         const valid = this.state.email.includes("@") && (this.state.contactReason !== "message" || this.state.message.trim().length > 0);
         if (!valid) return;
+
+        // Honeypot filled in: almost certainly a bot. Show success without
+        // sending anything, so it has no reason to retry.
+        if (this.state.honey) {
+          this.setState({ submitted: true });
+          return;
+        }
 
         const reasonLabels = { waitlist: "Join the waitlist", updates: "Keep me posted on product updates", message: "Message" };
         const reasonLabel = reasonLabels[this.state.contactReason] || this.state.contactReason;

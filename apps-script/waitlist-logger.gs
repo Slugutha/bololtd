@@ -42,14 +42,34 @@ function sanitizeCell(value) {
 }
 
 function doPost(e) {
-  const data = JSON.parse(e.postData.contents);
+  let data;
+  try {
+    data = JSON.parse(e.postData.contents);
+  } catch (err) {
+    return reject();
+  }
+  // Drop junk from bots posting straight to this URL: unknown reasons,
+  // malformed emails, oversized fields.
+  const email = String(data.email || "").trim();
+  const message = String(data.message || "");
+  if (!SHEETS_BY_REASON[data.reason]) return reject();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) return reject();
+  if (message.length > 5000) return reject();
+  if (data.reason === "message" && !message.trim()) return reject();
+
   const sheet = getOrCreateSheet(data.reason);
 
-  const row = [new Date(), sanitizeCell(data.email)];
-  if (data.reason === "message") row.push(sanitizeCell(data.message));
+  const row = [new Date(), sanitizeCell(email)];
+  if (data.reason === "message") row.push(sanitizeCell(message));
   sheet.appendRow(row);
 
   return ContentService
     .createTextOutput(JSON.stringify({ result: "success" }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function reject() {
+  return ContentService
+    .createTextOutput(JSON.stringify({ result: "rejected" }))
     .setMimeType(ContentService.MimeType.JSON);
 }

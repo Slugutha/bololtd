@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="index, follow, noai, noimageai">
+<link rel="icon" href="./assets/Bolo_Logo_Icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
+<meta name="theme-color" content="#0A0A0A">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Bolo Ltd",
+  "url": "https://bolo.ltd/",
+  "logo": "https://bolo.ltd/assets/Bolo_Logo_Full.svg",
+  "email": "info@bolo.ltd",
+  "sameAs": ["https://www.instagram.com/bolo_ltd/"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "BoloTie",
+  "description": "The next-generation digitally-controlled motor for Bolex cameras \u2014 crystal-sync speeds, continuous running, and programmable exposure control.",
+  "brand": { "@type": "Brand", "name": "Bolo Ltd" },
+  "image": "https://bolo.ltd/assets/og-image-v2.jpg"
+}
+</script>
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>BoloTie &mdash; Digital Motor for Bolex Cameras</title>
+<meta name="description" content="BoloTie: a digitally-controlled motor for Bolex cameras &mdash; crystal-sync speeds, continuous running and programmable exposure. Coming early 2027.">
+<link rel="canonical" href="https://bolo.ltd/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Bolo Ltd">
+<meta property="og:title" content="BoloTie &mdash; Digital Motor for Bolex Cameras">
+<meta property="og:description" content="BoloTie: a digitally-controlled motor for Bolex cameras &mdash; crystal-sync speeds, continuous running and programmable exposure. Coming early 2027.">
+<meta property="og:url" content="https://bolo.ltd/">
+<meta property="og:image" content="https://bolo.ltd/assets/og-image-v2.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="BoloTie motor mounted on a Bolex H16 Reflex camera">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BoloTie &mdash; Digital Motor for Bolex Cameras">
+<meta name="twitter:description" content="BoloTie: a digitally-controlled motor for Bolex cameras &mdash; crystal-sync speeds, continuous running and programmable exposure. Coming early 2027.">
+<meta name="twitter:image" content="https://bolo.ltd/assets/og-image-v2.jpg">
+<meta name="twitter:image:alt" content="BoloTie motor mounted on a Bolex H16 Reflex camera">
+<link rel="preload" as="script" href="./vendor/react/react.production.min.js" integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z" crossorigin="anonymous">
+<link rel="preload" as="script" href="./vendor/react/react-dom.production.min.js" integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1" crossorigin="anonymous">
+<link rel="preload" as="image" href="./assets/hero-camera.webp" fetchpriority="high">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  a { color: #B8B6AC; text-decoration: underline; }
+  a:hover { color: #FFFFFF; }
+  ::placeholder { color: #8C8A82; }
+  three-d-stage:not(:defined) { visibility: hidden; }
+  :focus-visible { outline: 2px solid #FFFFFF; outline-offset: 3px; }
+  input:focus-visible, textarea:focus-visible { outline-offset: 0; border-color: #837F74 !important; }
+  button:disabled { opacity: 0.6; cursor: progress !important; }
+
+  /* Film grain: an oversized noise tile nudged around with transforms only,
+     so it stays on the compositor instead of repainting the page. */
+  .grain { position: fixed; inset: -50%; width: 200%; height: 200%; pointer-events: none; z-index: 50; opacity: 0.07;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 2.2 0 0 0 -0.75'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation: grain 0.9s steps(6) infinite; }
+  @keyframes grain {
+    0% { transform: translate(0, 0); } 17% { transform: translate(-4%, 3%); } 33% { transform: translate(3%, -5%); }
+    50% { transform: translate(-6%, -2%); } 67% { transform: translate(5%, 4%); } 83% { transform: translate(-2%, 6%); } 100% { transform: translate(0, 0); }
+  }
+
+  /* Drag-to-rotate hint on the 3D stage */
+  @keyframes drag-hint { 0%, 100% { transform: translateX(-26px); } 50% { transform: translateX(26px); } }
+  .drag-hint-dot { animation: drag-hint 1.8s ease-in-out infinite; }
+
+  /* Precision screenshot viewer */
+  @keyframes lightbox-fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes lightbox-pop { from { opacity: 0; transform: scale(0.94) translateY(12px); } to { opacity: 1; transform: none; } }
+
+  /* Hero entrance */
+  .rise { opacity: 0; animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) forwards; }
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+  /* Scroll reveal: only armed once JS has run, so nothing hides without it. */
+  .reveal-armed .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .reveal-armed .reveal.is-in { opacity: 1; transform: none; }
+
+  /* "What does it do?": images slide in from their side, text arrives line by line,
+     key phrases get an underline drawn in once the text has landed. */
+  .reveal-armed .reveal.from-left { transform: translateX(-64px) scale(0.96); }
+  .reveal-armed .reveal.from-right { transform: translateX(64px) scale(0.96); }
+  .reveal-armed .reveal.from-left, .reveal-armed .reveal.from-right { transition-duration: 1.2s; }
+  .reveal-armed .reveal.from-left.is-in, .reveal-armed .reveal.from-right.is-in { transform: none; }
+  .reveal-armed .reveal.stagger { opacity: 1; transform: none; }
+  .reveal-armed .reveal.stagger > * { opacity: 0; transform: translateY(22px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .reveal-armed .reveal.stagger.is-in > * { opacity: 1; transform: none; }
+  .reveal-armed .reveal.stagger > :nth-child(2) { transition-delay: 0.15s; }
+  .reveal-armed .reveal.stagger > :nth-child(3) { transition-delay: 0.3s; }
+  .reveal-armed .reveal.stagger > :nth-child(4) { transition-delay: 0.45s; }
+  .reveal-armed #bolo-what-section strong { background: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)) 0 100% / 0% 1px no-repeat; transition: background-size 0.9s cubic-bezier(0.6, 0, 0.2, 1) 0.7s; }
+  .reveal-armed #bolo-what-section .is-in strong { background-size: 100% 1px; }
+  [data-parallax] { will-change: transform; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+    .grain { animation: none !important; }
+    .rise { animation: none !important; opacity: 1; }
+  }
+</style>
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three/build/three.module.min.js",
+    "three/addons/controls/OrbitControls.js": "./vendor/three/examples/jsm/controls/OrbitControls.js",
+    "three/addons/environments/RoomEnvironment.js": "./vendor/three/examples/jsm/environments/RoomEnvironment.js",
+    "three/addons/exporters/OBJExporter.js": "./vendor/three/examples/jsm/exporters/OBJExporter.js",
+    "three/addons/exporters/GLTFExporter.js": "./vendor/three/examples/jsm/exporters/GLTFExporter.js",
+    "three/addons/loaders/GLTFLoader.js": "./vendor/three/examples/jsm/loaders/GLTFLoader.js",
+    "three/addons/loaders/DRACOLoader.js": "./vendor/three/examples/jsm/loaders/DRACOLoader.js"
+  }
+}
+</script>
+<script src="./three-d-stage.js?v=7" defer></script>
+<script src="./support.js?v=3"></script>
+</head>
+<body style="background:#0A0A0A;">
+<noscript>
+  <div style="max-width:720px;margin:0 auto;padding:64px 24px;color:#E4E4E2;font-family:'Inter',-apple-system,sans-serif;line-height:1.6;">
+    <img src="./assets/Bolo_Logo_Name.svg" alt="Bolo Ltd" style="height:64px;width:auto;filter:invert(1);">
+    <p style="font-family:'Oswald',sans-serif;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;font-size:0.75rem;margin:48px 0 8px;">Introducing BoloTie</p>
+    <h1 style="font-family:'Oswald',sans-serif;text-transform:uppercase;color:#FFFFFF;margin:0 0 16px;">Bolex, like never before</h1>
+    <p>BoloTie is the next-generation digitally-controlled motor for Bolex cameras: TCXO-referenced crystal-sync speeds from 0.01 to 64 fps, continuous running over a full roll, single-frame animation, intervalometer, auto-rewind superimpositions, an integrated light meter, and dual LEMO + USB-C power.</p>
+    <img src="./assets/hero-camera.webp" alt="BoloTie mounted on a Bolex H16 Reflex camera" style="width:100%;height:auto;border:1px solid #3D3D3D;margin:16px 0;">
+    <h2 style="font-family:'Oswald',sans-serif;text-transform:uppercase;color:#FFFFFF;">Pricing</h2>
+    <p>BoloTie with standard plate: under $1000. Accessory plate: pricing available soon.</p>
+    <h2 style="font-family:'Oswald',sans-serif;text-transform:uppercase;color:#FFFFFF;">Coming early 2027</h2>
+    <p>To join the waitlist or ask a question, email <a href="mailto:info@bolo.ltd">info@bolo.ltd</a>.</p>
+    <p style="font-size:0.75rem;color:#8C8A82;"><a href="./privacy.html">Privacy</a> · Bolex is a trademark of its owner. Not affiliated.</p>
+  </div>
+</noscript>
+<x-dc>
+
+  <div style="width:100%;background:linear-gradient(to bottom,#0A0A0A 0%,#0A0A0A 6%,#42413D 100%);color:#FFFFFF;font-family:'Inter',-apple-system,sans-serif;">
+  <div class="grain" aria-hidden="true"></div>
+
+  <section style="min-height:100vh;display:flex;flex-direction:column;">
+    <div style="height:{{ headerSpacerHeight }};"></div>
+    <header style="display:flex;align-items:center;justify-content:{{ headerJustify }};padding:{{ headerPadding }};border-bottom:1px solid {{ headerBorder }};position:fixed;top:0;left:0;right:0;z-index:10;background:{{ headerBg }};-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);transition:padding 0.25s ease,background 0.3s ease,border-color 0.3s ease;">
+      <a href="#" onClick="{{ scrollToTop }}" aria-label="Bolo Ltd — back to top" style="display:flex;cursor:{{ logoCursor }};">
+        <img src="./assets/Bolo_Logo_Name.svg" alt="Bolo Ltd" style="height:{{ headerLogoHeight }};width:auto;filter:invert(1);transition:height 0.25s ease;">
+      </a>
+      <sc-if value="{{ scrolled }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;gap:16px;">
+          <sc-if value="{{ showHeaderLaunch }}" hint-placeholder-val="{{ true }}">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:#A8A8A8;letter-spacing:0.02em;">{{ launchWindow }}</span>
+          </sc-if>
+          <div role="progressbar" aria-label="Page scrolled" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ footage }}" title="{{ footage }} ft of 100" style="display:flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:#A8A8A8;letter-spacing:0.02em;">
+            <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+              <circle cx="13" cy="13" r="11" fill="none" stroke="#3D3D3D" stroke-width="2"></circle>
+              <circle cx="13" cy="13" r="11" fill="none" stroke="#E4E4E2" stroke-width="2" stroke-dasharray="{{ footageDash }}" transform="rotate(-90 13 13)" style="transition:stroke-dasharray 0.15s linear;"></circle>
+              <line x1="13" y1="13" x2="13" y2="5" stroke="#C0463C" stroke-width="1.5" stroke-linecap="round" transform="rotate({{ footageAngle }} 13 13)" style="transition:transform 0.15s linear;"></line>
+              <circle cx="13" cy="13" r="1.6" fill="#E4E4E2"></circle>
+            </svg>
+            <span style="min-width:5ch;">{{ footage }} ft</span>
+          </div>
+          <a href="#bolo-contact-section" onClick="{{ scrollToContact }}" style="font-family:'Oswald',sans-serif;font-weight:600;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:#FFFFFF;text-decoration:none;border:1px solid #837F74;padding:8px 14px;transition:background 0.2s ease,color 0.2s ease;" style-hover="background:#FFFFFF;color:#0A0A0A;">Join waitlist</a>
+        </div>
+      </sc-if>
+    </header>
+
+    <main style="flex:1;display:grid;grid-template-columns:{{ mainColumns }};gap:{{ mainGap }};align-items:center;padding:{{ mainPad }};width:100%;margin:0 auto;">
+      <sc-if value="{{ imageOnRight }}" hint-placeholder-val="{{ true }}">
+        <section style="display:flex;flex-direction:column;gap:32px;order:{{ copyOrder }};min-width:0;">
+          <div>
+            <div style="font-family:'Oswald',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;margin-bottom:16px;animation-delay:0.15s;" class="rise">Introducing BoloTie</div>
+            <h1 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:{{ heroTitleSize }};line-height:1.05;letter-spacing:0.01em;text-transform:uppercase;margin:0 0 20px;animation-delay:0.3s;" class="rise">BOLEX, LIKE NEVER BEFORE</h1>
+            <p style="font-family:'Inter',sans-serif;font-size:1.25rem;line-height:1.6;color:#E4E4E2;max-width:44ch;margin:0;animation-delay:0.5s;" class="rise">Put on your BoloTie, the next-generation digitally-controlled motor for Bolex cameras. Sync speeds. Continuous running. Anything else you can imagine.</p>
+            <div class="rise" style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:28px;animation-delay:0.7s;">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.02em;color:#B8B6AC;">From under $1000 · {{ launchWindow }}</span>
+            </div>
+          </div>
+
+          <sc-if value="{{ denseSpecs }}" hint-placeholder-val="{{ true }}">
+            <div class="rise" style="display:grid;grid-template-columns:{{ specsColumns }};gap:0;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.02em;color:#B8B6AC;border-top:1px solid #262624;animation-delay:0.9s;">
+              <sc-for list="{{ specs }}" as="spec" hint-placeholder-count="5">
+                <a href="#bolo-what-section" onClick="{{ scrollToWhat }}" style="display:block;padding:12px 20px 12px 0;border-bottom:1px solid #262624;white-space:nowrap;color:#B8B6AC;text-decoration:none;cursor:pointer;transition:color 0.2s ease;" style-hover="color:#FFFFFF;">{{ spec }}</a>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ notDenseSpecs }}" hint-placeholder-val="{{ false }}">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:0.8125rem;letter-spacing:0.02em;color:#B8B6AC;border-top:1px solid #3D3D3D;padding-top:12px;">
+              Electronic speed control · Incident light meter · Dual power
+            </div>
+          </sc-if>
+        </section>
+
+        <section class="rise" style="order:{{ imageOrder }};position:relative;width:100%;min-width:0;aspect-ratio:1800/1564;max-height:84vh;animation-delay:0.2s;">
+          <img src="./assets/hero-camera.webp" alt="BoloTie mounted on a Bolex H16 Reflex camera" width="1800" height="1564" fetchpriority="high" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;">
+        </section>
+      </sc-if>
+    </main>
+  </section>
+
+  <section id="bolo-what-section" style="overflow-x:clip;padding:{{ sectionPad }};max-width:{{ contentMax }};width:100%;margin:0 auto;">
+    <div class="reveal" style="text-align:center;margin-bottom:{{ precisionHeadGap }};">
+      <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:{{ sectionTitleSize }};line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">What does it do?</h2>
+    </div>
+
+    <div style="display:grid;grid-template-columns:{{ precisionColumnsFlip }};gap:{{ precisionGap }};align-items:center;">
+      <div class="reveal from-left" style="min-width:0;order:{{ precisionFlipImageOrder }};">
+        <img data-parallax="0.08" src="./assets/camera-front.webp" alt="Front view of a Bolex H16 Reflex with BoloTie mounted on its side" width="1000" height="1702" loading="lazy" decoding="async" style="display:block;width:auto;max-width:100%;height:auto;max-height:{{ frontViewMaxHeight }};margin:0 auto;">
+      </div>
+      <div class="reveal stagger" style="min-width:0;display:flex;flex-direction:column;gap:18px;">
+        <h3 style="font-family:'Oswald',sans-serif;font-weight:500;font-size:1.375rem;letter-spacing:0.02em;text-transform:uppercase;margin:0 0 14px;">It runs. And keeps on running</h3>
+        <p style="font-family:'Inter',sans-serif;font-size:1.0625rem;line-height:1.65;color:#BDBBB2;max-width:48ch;margin:0;">Spring-wound Bolex cameras are among the most reliable and beloved tools in film history. Yet they're inherently limited by <strong style="font-weight:600;color:#FFFFFF;">the short duration of their spring mechanism</strong>, and the few existing motor drives are bulky, costly, and extremely rare.</p>
+        <p style="font-family:'Inter',sans-serif;font-size:1.0625rem;line-height:1.65;color:#BDBBB2;max-width:48ch;margin:0;">Enter BoloTie: an <strong style="font-weight:600;color:#FFFFFF;">ultra compact, computer-controlled motor</strong> that lets you run any Bolex for an <strong style="font-weight:600;color:#FFFFFF;">unlimited duration</strong> with <strong style="font-weight:600;color:#FFFFFF;">sound-sync accuracy</strong>. It gives new functionality to our favorite cameras, and can <strong style="font-weight:600;color:#FFFFFF;">bring worn or broken cameras back to life</strong>.</p>
+      </div>
+    </div>
+
+    <div class="reveal stagger" style="text-align:center;max-width:720px;margin:{{ precisionWideMargin }};margin-left:auto;margin-right:auto;">
+      <h3 style="font-family:'Oswald',sans-serif;font-weight:500;font-size:1.375rem;letter-spacing:0.02em;text-transform:uppercase;margin:0 0 14px;">Works on any model</h3>
+      <p style="font-family:'Inter',sans-serif;font-size:1.0625rem;line-height:1.65;color:#BDBBB2;margin:0;">It is also the only existing motor (to our knowledge) that achieves <strong style="font-weight:600;color:#FFFFFF;">crystal sync accuracy on the universal 8:1 shaft</strong>. What does that mean? BoloTie <strong style="font-weight:600;color:#FFFFFF;">works with <em>all</em> models of Bolex cameras</strong>, from the Rex 1 to the Rex 5 to the SBM.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:{{ precisionColumns }};gap:{{ precisionGap }};align-items:center;">
+      <div class="reveal stagger" style="min-width:0;display:flex;flex-direction:column;gap:18px;">
+        <h3 style="font-family:'Oswald',sans-serif;font-weight:500;font-size:1.375rem;letter-spacing:0.02em;text-transform:uppercase;margin:0 0 14px;">Same as ever, only more</h3>
+        <p style="font-family:'Inter',sans-serif;font-size:1.0625rem;line-height:1.65;color:#BDBBB2;max-width:48ch;margin:0;">The Bolex has always allowed filmmakers to create images that no other camera can. BoloTie is meant to follow in this spirit, allowing the camera to do what it does best: <strong style="font-weight:600;color:#FFFFFF;">frame-by-frame animations, superimpositions, time lapses and custom frame rates</strong>, all with total portability and simplicity of use.</p>
+        <p style="font-family:'Inter',sans-serif;font-size:1.0625rem;line-height:1.65;color:#BDBBB2;max-width:48ch;margin:0;">And it has <strong style="font-weight:600;color:#FFFFFF;">a few new tricks up the sleeve</strong>, to push filmmakers ever further.</p>
+      </div>
+      <div class="reveal from-right" style="min-width:0;">
+        <img data-parallax="-0.06" src="./assets/hero-standard.webp" alt="Close-up of BoloTie mounted on a Bolex H16 Reflex, showing its display and controls" width="2000" height="1500" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;-webkit-mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,#000 55%,transparent 100%);mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,#000 55%,transparent 100%);">
+      </div>
+    </div>
+  </section>
+
+  <section style="min-height:100vh;display:grid;grid-template-columns:{{ productColumns }};gap:{{ productGap }};align-items:center;padding:{{ productPad }};max-width:{{ contentMax }};width:100%;margin:0 auto;">
+    <div class="reveal" style="order:{{ productStageOrder }};display:flex;flex-direction:column;gap:8px;min-width:0;">
+      <div style="position:relative;width:100%;aspect-ratio:4/5;">
+        <three-d-stage ref="{{ stageRef }}" name="bolo-tie" background="transparent" autorotate="true" no-toolbar="true" aria-label="Interactive 3D model of BoloTie" style="position:absolute;top:0;bottom:0;left:{{ stageBleedLeft }};right:{{ stageBleedRight }};width:auto;height:auto;visibility:{{ stageVisibility }};--stage-bg:transparent;-webkit-mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent);"></three-d-stage>
+        <div aria-hidden="true" style="position:absolute;left:50%;bottom:12%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;pointer-events:none;opacity:{{ dragHintOpacity }};transition:opacity 0.6s ease;">
+          <div style="position:relative;width:96px;height:20px;display:flex;align-items:center;justify-content:space-between;color:#B8B6AC;font-family:'Inter',sans-serif;font-size:0.875rem;">
+            <span>‹</span>
+            <span class="drag-hint-dot" style="position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:#FFFFFF;box-shadow:0 0 0 6px rgba(255,255,255,0.15);"></span>
+            <span>›</span>
+          </div>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:0.6875rem;letter-spacing:0.08em;text-transform:uppercase;color:#B8B6AC;">{{ dragHintLabel }}</span>
+        </div>
+        <sc-if value="{{ modelLoading }}" hint-placeholder-val="{{ false }}">
+          <div role="status" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.02em;color:#8C8A82;pointer-events:none;">{{ modelStatus }}</div>
+        </sc-if>
+      </div>
+    </div>
+    <div class="reveal" style="display:flex;flex-direction:column;gap:24px;order:{{ productTextOrder }};min-width:0;">
+      <div>
+        <div style="font-family:'Oswald',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;margin-bottom:4px;">FEATURES</div>
+        <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:2.5rem;line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">SHOOT HOW YOU WANT</h2>
+      </div>
+
+      <div style="border-top:1px solid #262624;">
+        <sc-for list="{{ features }}" as="feature" hint-placeholder-count="5">
+          <div style="border-bottom:1px solid #262624;">
+            <button type="button" onClick="{{ feature.toggle }}" aria-expanded="{{ feature.expanded }}" aria-controls="{{ feature.panelId }}" style="display:flex;align-items:center;justify-content:space-between;width:100%;background:transparent;border:0;padding:18px 0;cursor:pointer;color:#FFFFFF;text-align:left;" style-hover="color:#B8B6AC;">
+              <span style="font-family:'Oswald',sans-serif;font-weight:500;font-size:1.25rem;letter-spacing:0.01em;text-transform:uppercase;transition:letter-spacing 0.2s ease,color 0.2s ease;" style-hover="letter-spacing:0.04em;color:#D8D6CC;">{{ feature.title }}</span>
+              <span aria-hidden="true" style="font-family:'Inter',sans-serif;font-size:1.25rem;color:#B8B6AC;transform:{{ feature.iconRotate }};transition:transform 0.2s ease,color 0.2s ease;">+</span>
+            </button>
+            <div id="{{ feature.panelId }}" style="overflow:hidden;max-height:{{ feature.maxHeight }};visibility:{{ feature.visibility }};transition:max-height 0.3s ease,visibility 0s linear {{ feature.visibilityDelay }};">
+              <ul style="list-style:none;margin:0 0 20px;padding:0;max-width:44ch;display:flex;flex-direction:column;gap:10px;">
+                <sc-for list="{{ feature.bullets }}" as="bullet" hint-placeholder-count="3">
+                  <li style="display:flex;gap:12px;font-family:'Inter',sans-serif;font-size:1rem;line-height:1.5;color:#E4E4E2;">
+                    <span aria-hidden="true" style="font-family:'IBM Plex Mono',monospace;color:#B8B6AC;flex-shrink:0;">—</span>
+                    <span>
+                      <sc-for list="{{ bullet.segments }}" as="seg" hint-placeholder-count="1">
+                        <sc-if value="{{ seg.italic }}" hint-placeholder-val="{{ false }}"><i>{{ seg.text }}</i></sc-if>
+                        <sc-if value="{{ seg.plain }}" hint-placeholder-val="{{ true }}">{{ seg.text }}</sc-if>
+                      </sc-for>
+                    </span>
+                  </li>
+                </sc-for>
+              </ul>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:0.8125rem;color:#8C8A82;margin:0;">{{ stageHint }}</p>
+    </div>
+  </section>
+
+  <div id="bolo-config-scroll" style="position:relative;height:{{ configSectionHeight }};">
+    <div style="position:sticky;top:0;height:100vh;display:flex;flex-direction:column;align-items:center;overflow:hidden;padding:{{ configPad }};">
+      <div style="text-align:center;flex:none;">
+        <div style="font-family:'Oswald',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;margin-bottom:10px;">A BoloTie for every occasion</div>
+        <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:{{ configTitleSize }};line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">Configurations</h2>
+      </div>
+
+      <div style="flex:1;min-height:0;width:100%;max-width:1200px;display:flex;align-items:center;justify-content:center;margin:{{ configStageMargin }};">
+        <div style="position:relative;height:100%;max-height:820px;aspect-ratio:3650/2678;max-width:100%;">
+          <sc-for list="{{ configSteps }}" as="step" hint-placeholder-count="2">
+            <img src="{{ step.img }}" alt="BoloTie with {{ step.title }}" aria-hidden="{{ step.hidden }}" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:{{ step.imgOpacity }};transition:opacity 0.8s ease;">
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="position:relative;flex:none;width:100%;max-width:560px;height:{{ configCaptionHeight }};">
+        <sc-for list="{{ configSteps }}" as="step" hint-placeholder-count="2">
+          <div aria-hidden="{{ step.hidden }}" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;opacity:{{ step.textOpacity }};transform:translateY({{ step.textShift }});transition:opacity 0.6s ease,transform 0.6s ease;pointer-events:none;">
+            <h3 style="font-family:'Oswald',sans-serif;font-weight:500;font-size:1.375rem;letter-spacing:0.02em;text-transform:uppercase;margin:0;">{{ step.title }}</h3>
+            <p style="font-family:'Inter',sans-serif;font-size:0.9375rem;line-height:1.55;color:#B8B6AC;max-width:44ch;margin:0;">{{ step.blurb }}</p>
+          </div>
+        </sc-for>
+      </div>
+
+      <div role="group" aria-label="Choose a configuration" style="position:relative;flex:none;display:grid;grid-template-columns:repeat({{ configCount }},1fr);padding:4px;border:1px solid #3D3D3D;border-radius:999px;background:rgba(255,255,255,0.03);margin-top:20px;">
+        <span aria-hidden="true" style="position:absolute;top:4px;bottom:4px;left:4px;width:calc((100% - 8px) / {{ configCount }});border-radius:999px;background:#FFFFFF;transform:translateX({{ configPillOffset }});transition:transform 0.5s cubic-bezier(0.2,0.7,0.2,1);"></span>
+        <sc-for list="{{ configSteps }}" as="step" hint-placeholder-count="2">
+          <button type="button" onClick="{{ step.select }}" aria-pressed="{{ step.current }}" style="position:relative;background:transparent;border:0;border-radius:999px;padding:{{ configPillPad }};cursor:pointer;white-space:nowrap;font-family:'IBM Plex Mono',monospace;font-size:0.6875rem;letter-spacing:0.08em;text-transform:uppercase;color:{{ step.pillColor }};transition:color 0.4s ease;">{{ step.label }}</button>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+
+  <section style="padding:{{ sectionPad }};max-width:{{ contentMax }};width:100%;margin:0 auto;">
+    <div class="reveal" style="text-align:center;margin-bottom:{{ precisionHeadGap }};">
+      <div style="font-family:'Oswald',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;margin-bottom:12px;">Tested &amp; calibrated</div>
+      <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:{{ sectionTitleSize }};line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">Very, very high precision</h2>
+    </div>
+
+    <div style="display:grid;grid-template-columns:{{ precisionColumns }};gap:{{ precisionGap }};align-items:center;">
+      <div class="reveal" style="min-width:0;">
+        <h3 style="font-family:'Oswald',sans-serif;font-weight:500;font-size:1.375rem;letter-spacing:0.02em;text-transform:uppercase;margin:0 0 14px;">Crystal sync, roll after roll</h3>
+        <p style="font-family:'Inter',sans-serif;font-size:1.0625rem;line-height:1.6;color:#E4E4E2;max-width:44ch;margin:0;">BoloTie has been tested and calibrated against an ultra-precise GPS clock, so it isn't just crystal-sync accurate in the moment, but over full rolls. At crystal speeds up to 64&nbsp;fps, the motor drifts less than a fraction of a frame over a 400&nbsp;ft roll &mdash; if you could even shoot that long!</p>
+      </div>
+      <figure class="reveal" style="margin:0;min-width:0;">
+        <button type="button" onClick="{{ openShot0 }}" aria-label="Enlarge 24 fps validation" style="display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in;">
+          <img src="./assets/precision-24fps.webp" alt="Tester report: crystal sync at 24 fps, &minus;5.5 ppm speed accuracy and 0.09 frames of drift over a 400 ft roll" width="2400" height="1350" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;border:1px solid #262624;border-radius:10px;">
+        </button>
+        <figcaption style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.02em;color:#8C8A82;margin-top:10px;">24 fps validation</figcaption>
+      </figure>
+    </div>
+
+    <figure class="reveal" style="margin:{{ precisionWideMargin }};">
+      <button type="button" onClick="{{ openShot1 }}" aria-label="Enlarge 64 fps validation" style="display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in;">
+        <img src="./assets/precision-64fps.webp" alt="BOLO Tester software recording a 64 fps continuous run: crystal-sync accurate for 400 ft rolls, drifting 0.03 frames over a full 400 ft" width="2400" height="1379" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
+      </button>
+      <figcaption style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.02em;color:#8C8A82;text-align:center;margin-top:4px;">64 fps validation</figcaption>
+    </figure>
+
+    <div style="display:grid;grid-template-columns:{{ precisionColumnsFlip }};gap:{{ precisionGap }};align-items:center;">
+      <figure class="reveal" style="margin:0;min-width:0;order:{{ precisionFlipImageOrder }};">
+        <button type="button" onClick="{{ openShot2 }}" aria-label="Enlarge Single frame validation" style="display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in;">
+          <img src="./assets/precision-single-frame.webp" alt="Tester report: single frame at 1/15 s, 30 of 30 frames flicker-free, with commanded and encoder motor velocity aligned to shutter opening and closing" width="2400" height="1500" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;border:1px solid #262624;border-radius:10px;">
+        </button>
+        <figcaption style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.02em;color:#8C8A82;margin-top:10px;">Single frame validation</figcaption>
+      </figure>
+      <div class="reveal" style="min-width:0;">
+        <h3 style="font-family:'Oswald',sans-serif;font-weight:500;font-size:1.375rem;letter-spacing:0.02em;text-transform:uppercase;margin:0 0 14px;">Exact exposure, every frame</h3>
+        <p style="font-family:'Inter',sans-serif;font-size:1.0625rem;line-height:1.6;color:#E4E4E2;max-width:44ch;margin:0;">Single-frame and animation modes have been calibrated by cross-referencing the driver signal, motor encoder and an optical sensor across the gate, so every exposure lands precisely in sync with the shutter's movement.</p>
+      </div>
+    </div>
+  </section>
+
+  <sc-if value="{{ showCommunity }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:{{ sectionPad }};max-width:{{ contentMax }};width:100%;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:40px;">
+      <div style="font-family:'Oswald',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;margin-bottom:12px;">In the field</div>
+      <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:2.5rem;line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">From the community</h2>
+    </div>
+
+    <div style="position:relative;max-width:900px;margin:0 auto;">
+      <div style="overflow:hidden;">
+        <div style="display:flex;transition:transform 0.5s cubic-bezier(0.65,0,0.35,1);transform:translateX({{ trackOffset }});width:{{ trackWidth }};">
+          <sc-for list="{{ slides }}" as="slide" hint-placeholder-count="3">
+            <div style="flex:0 0 {{ slideWidth }};box-sizing:border-box;padding:0 4px;">
+              <div style="position:relative;aspect-ratio:16/9;background:#1A1A1A;border:1px solid #3D3D3D;overflow:hidden;">
+                <sc-if value="{{ slide.hasVideo }}" hint-placeholder-val="{{ false }}">
+                  <iframe src="{{ slide.embedUrl }}" title="{{ slide.title }}" style="width:100%;height:100%;border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true"></iframe>
+                </sc-if>
+                <sc-if value="{{ slide.noVideo }}" hint-placeholder-val="{{ true }}">
+                  <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#8C8A82;">
+                    <div style="width:56px;height:56px;border:1px solid #837F74;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.25rem;color:#B8B6AC;">▶</div>
+                    <div style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.02em;">{{ slide.title }} — video coming soon</div>
+                  </div>
+                </sc-if>
+              </div>
+              <div style="margin-top:28px;text-align:center;max-width:640px;margin-left:auto;margin-right:auto;">
+                <p style="font-family:'Inter',sans-serif;font-size:1.125rem;line-height:1.6;color:#E4E4E2;margin:0 0 12px;">{{ slide.quote }}</p>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:#8C8A82;letter-spacing:0.02em;">{{ slide.author }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <button onClick="{{ prevSlide }}" aria-label="Previous video" style="position:absolute;top:0;bottom:0;left:{{ arrowOffset }};margin:auto;width:40px;height:40px;background:{{ arrowBg }};border:1px solid #3D3D3D;color:#FFFFFF;font-size:1.25rem;cursor:pointer;">‹</button>
+      <button onClick="{{ nextSlide }}" aria-label="Next video" style="position:absolute;top:0;bottom:0;right:{{ arrowOffset }};margin:auto;width:40px;height:40px;background:{{ arrowBg }};border:1px solid #3D3D3D;color:#FFFFFF;font-size:1.25rem;cursor:pointer;">›</button>
+
+      <div style="display:flex;justify-content:center;gap:10px;margin-top:24px;">
+        <sc-for list="{{ slides }}" as="slide" hint-placeholder-count="3">
+          <button onClick="{{ slide.select }}" aria-label="Go to slide" style="width:{{ slide.dotSize }};height:{{ slide.dotSize }};padding:0;border-radius:50%;border:1px solid #837F74;background:{{ slide.dotColor }};cursor:pointer;"></button>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <section style="padding:{{ sectionPad }};max-width:{{ contentMax }};width:100%;margin:0 auto;">
+    <div class="reveal" style="text-align:center;margin-bottom:48px;">
+      <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:{{ sectionTitleSize }};line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">Pricing</h2>
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.02em;color:#8C8A82;margin:8px 0 0;">Final release prices subject to change</p>
+    </div>
+    <div class="reveal" style="display:flex;flex-wrap:wrap;max-width:720px;margin:0 auto;font-family:'IBM Plex Mono',monospace;font-size:0.875rem;letter-spacing:0.02em;color:#B8B6AC;">
+      <sc-for list="{{ pricing }}" as="item" hint-placeholder-count="4">
+        <div style="display:flex;justify-content:space-between;gap:16px;padding:18px 0;border-bottom:1px solid #262624;flex:1 1 100%;">
+          <span>{{ item.name }}</span>
+          <span style="color:#FFFFFF;">{{ item.price }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <div class="reveal" style="width:100%;max-width:1400px;margin:0 auto;">
+    <img src="./assets/accessory-closeup.webp" alt="Close-up of BoloTie on the accessory plate, showing its display, controls and mounting holes" width="2400" height="1800" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;-webkit-mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,#000 55%,transparent 100%);mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,#000 55%,transparent 100%);">
+  </div>
+
+  <section id="bolo-contact-section" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:36px;padding:{{ sectionPad }};text-align:center;">
+    <div class="reveal">
+      <div style="font-family:'Oswald',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#B8B6AC;margin-bottom:12px;">Coming Early 2027</div>
+      <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:{{ sectionTitleSize }};line-height:1.1;letter-spacing:0.01em;text-transform:uppercase;margin:0;">Join the waitlist</h2>
+    </div>
+
+    <form class="reveal" style="display:flex;flex-direction:column;gap:12px;max-width:420px;width:100%;" onSubmit="{{ handleSubmit }}">
+      <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+        <div role="status" style="font-family:'IBM Plex Mono',monospace;font-size:0.875rem;color:#FFFFFF;border:1px solid #837F74;padding:14px 16px;">{{ confirmationMessage }}</div>
+      </sc-if>
+      <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+        <input type="email" name="email" autocomplete="email" aria-label="Email address" required="true" value="{{ email }}" onChange="{{ handleEmailChange }}" placeholder="you@email.com" style="background:#1A1A1A;border:1px solid #3D3D3D;color:#FFFFFF;font-family:'Inter',sans-serif;font-size:1rem;padding:14px 16px;outline:none;border-radius:0;width:100%;">
+        <input type="text" name="website" tabIndex="-1" autocomplete="off" aria-hidden="true" value="{{ honey }}" onChange="{{ handleHoneyChange }}" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
+
+        <div style="display:flex;flex-direction:column;gap:12px;text-align:left;font-family:'IBM Plex Mono',monospace;font-size:0.875rem;color:#E4E4E2;border:1px solid #3D3D3D;padding:16px;">
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+            <input type="radio" name="contactReason" value="waitlist" checked="{{ reasonIsWaitlist }}" onChange="{{ handleReasonChange }}" style="accent-color:#FFFFFF;width:16px;height:16px;cursor:pointer;flex:none;">
+            Join the waitlist
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+            <input type="radio" name="contactReason" value="updates" checked="{{ reasonIsUpdates }}" onChange="{{ handleReasonChange }}" style="accent-color:#FFFFFF;width:16px;height:16px;cursor:pointer;flex:none;">
+            Keep me posted on product updates
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+            <input type="radio" name="contactReason" value="message" checked="{{ reasonIsMessage }}" onChange="{{ handleReasonChange }}" style="accent-color:#FFFFFF;width:16px;height:16px;cursor:pointer;flex:none;">
+            Message
+          </label>
+          <sc-if value="{{ showMessageBox }}" hint-placeholder-val="{{ false }}">
+            <textarea name="message" aria-label="Your message" required="true" value="{{ message }}" onChange="{{ handleMessageChange }}" placeholder="Write your message…" rows="4" style="background:#1A1A1A;border:1px solid #3D3D3D;color:#FFFFFF;font-family:'Inter',sans-serif;font-size:0.9375rem;padding:12px 14px;outline:none;border-radius:0;resize:vertical;width:100%;"></textarea>
+          </sc-if>
+        </div>
+
+        <sc-if value="{{ showError }}" hint-placeholder-val="{{ false }}">
+          <div role="alert" style="font-family:'IBM Plex Mono',monospace;font-size:0.8125rem;line-height:1.5;color:#E4E4E2;border:1px solid #A0524A;padding:12px 16px;text-align:left;">Something went wrong sending that. Please try again, or email us directly at <a href="mailto:info@bolo.ltd">info@bolo.ltd</a>.</div>
+        </sc-if>
+        <button type="submit" disabled="{{ submitting }}" style="background:#FFFFFF;color:#0A0A0A;border:1px solid #FFFFFF;font-family:'Oswald',sans-serif;font-weight:600;font-size:0.8125rem;letter-spacing:0.08em;text-transform:uppercase;padding:14px 24px;cursor:pointer;">{{ ctaLabel }}</button>
+      </sc-if>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;line-height:1.6;color:#8C8A82;">{{ priceLine }}<br>We only use your email for BoloTie news, or to reply to you. No spam. <a href="./privacy.html" style="color:#8C8A82;">Privacy</a></div>
+    </form>
+    <a class="reveal" href="https://www.instagram.com/bolo_ltd/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;margin-top:-12px;font-family:'IBM Plex Mono',monospace;font-size:0.875rem;color:#E4E4E2;text-decoration:none;transition:color 0.2s ease;" style-hover="color:#FFFFFF;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" style="display:block;"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>Follow our updates on Instagram</a>
+  </section>
+
+  <footer style="display:flex;flex-direction:{{ footerDirection }};align-items:{{ footerAlign }};justify-content:{{ footerJustify }};gap:{{ footerGap }};padding:{{ footerPad }};border-top:1px solid #1C1C1B;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:#8C8A82;letter-spacing:0.02em;">
+    <span style="display:flex;flex-direction:column;gap:4px;text-align:{{ footerTextAlign }};">
+      <span>&copy; 2026 Bolo Ltd.</span>
+      <span><a href="mailto:info@bolo.ltd" style="color:#8C8A82;">info@bolo.ltd</a> · <a href="./privacy.html" style="color:#8C8A82;">Privacy</a></span>
+      <span style="font-size:0.6875rem;margin-top:8px;">Bolex is a trademark of its owner. Not affiliated.</span>
+    </span>
+    <span style="display:flex;align-items:center;gap:28px;">
+      <a href="https://www.instagram.com/bolo_ltd/" target="_blank" rel="noopener" aria-label="Bolo Ltd on Instagram" style="display:inline-flex;color:#B8B6AC;transition:color 0.2s ease;" style-hover="color:#FFFFFF;"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" style="display:block;"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+      <img src="./assets/Bolo_Logo_Full.svg" alt="Bolo Ltd" loading="lazy" style="height:80px;width:auto;filter:invert(1);opacity:0.85;">
+    </span>
+  </footer>
+  <sc-if value="{{ lightboxOpen }}" hint-placeholder-val="{{ false }}">
+    <div role="dialog" aria-modal="true" aria-label="{{ lightboxCaption }}" onClick="{{ closeShot }}" style="position:fixed;inset:0;z-index:60;background:rgba(10,10,10,0.3);-webkit-backdrop-filter:blur(16px) saturate(120%);backdrop-filter:blur(16px) saturate(120%);animation:lightbox-fade 0.25s ease;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:{{ lightboxPad }};">
+      <img src="{{ lightboxSrc }}" alt="{{ lightboxAlt }}" onClick="{{ nextShot }}" style="display:block;max-width:100%;max-height:calc(100vh - 140px);width:auto;height:auto;border-radius:10px;border:1px solid rgba(255,255,255,0.08);box-shadow:0 30px 80px rgba(0,0,0,0.6),0 8px 24px rgba(0,0,0,0.4);cursor:pointer;animation:lightbox-pop 0.35s cubic-bezier(0.2,0.7,0.2,1);">
+      <div style="display:flex;align-items:center;gap:16px;padding:6px;border-radius:999px;background:rgba(10,10,10,0.72);border:1px solid rgba(255,255,255,0.08);box-shadow:0 10px 30px rgba(0,0,0,0.4);font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.02em;color:#E4E4E2;">
+        <button type="button" onClick="{{ prevShot }}" aria-label="Previous image" style="width:36px;height:36px;border-radius:50%;background:transparent;border:1px solid #3D3D3D;color:#FFFFFF;font-size:1.25rem;cursor:pointer;">‹</button>
+        <span>{{ lightboxCaption }} · {{ lightboxCount }}</span>
+        <button type="button" onClick="{{ nextShot }}" aria-label="Next image" style="width:36px;height:36px;border-radius:50%;background:transparent;border:1px solid #3D3D3D;color:#FFFFFF;font-size:1.25rem;cursor:pointer;">›</button>
+      </div>
+      <button type="button" onClick="{{ closeShot }}" aria-label="Close" style="position:absolute;top:16px;right:16px;width:44px;height:44px;border-radius:50%;background:rgba(10,10,10,0.72);border:1px solid rgba(255,255,255,0.12);color:#FFFFFF;font-size:1.25rem;cursor:pointer;">×</button>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900},&quot;showCommunity&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;},&quot;imageSide&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;right&quot;,&quot;options&quot;:[&quot;right&quot;,&quot;left&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Layout&quot;},&quot;denseSpecs&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Layout&quot;},&quot;launchWindow&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Coming Early 2027&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;priceLine&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Get in touch for questions, information and orders&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { email: "", contactReason: "waitlist", message: "", honey: "", submitted: false, submitting: false, submitError: false, modelProgress: null, modelLoaded: false, modelFailed: false, scrolled: false, footage: 0, lightbox: null, dragHintDismissed: false, activeSlide: 0, openFeature: 0, configStep: 0, viewportWidth: typeof window !== "undefined" ? window.innerWidth : 1440, viewportHeight: typeof window !== "undefined" ? window.innerHeight : 900 };
+
+  // Google Apps Script Web App URL (apps-script/waitlist-logger.gs) — logs
+  // every submission to a Google Sheet. Replace after deploying.
+  sheetLogUrl = "https://script.google.com/macros/s/AKfycbwlnwgsMwQ5h6V_PNxAwAXKqOQCUpoK9fIcLzH4ulfKejnq1a4gt_Vmb0tBxWexKIA/exec";
+
+  // FormSubmit.co forwards each submission to info@bolo.ltd by email.
+  // Uses the activation token FormSubmit issued (instead of the naked
+  // email address) so the address isn't sitting in plain text client-side.
+  contactEmailEndpoint = "https://formsubmit.co/ajax/b53c4d56426895614c90909beb255920";
+
+  rawFeatures = [
+    { title: "Pro speeds", bullets: [
+      "TCXO-referenced crystal-sync frame rates from 0.01 to 64 fps",
+      "Continuous running over full roll length",
+      "Intervalometer with programmable exposure time, frequency, and duration",
+    ], view: [0, -0.1, 1.6, 0.81] },
+    { title: "Get experimental", bullets: [
+      "Frame-accurate superimpositions with auto-rewind-last-shot",
+      "Run at any speed, forward *and* backward",
+      "Single-frame animation mode",
+      "Programmable runs and ramps, with roll-out protection",
+    ], view: [0.57, -1.1, 1.02, 0.86] },
+    { title: "Extra features", bullets: [
+      "3.5mm sync-tone jack for triggering sync sound recording",
+      "Front-facing light meter, switchable between reflective and incident modes",
+    ], view: [1.53, -0.46, 0.09, 0.64] },
+    { title: "Room to grow", bullets: [
+      "Onboard WiFi and Bluetooth for future remote integration",
+      "Programmable 2.5mm I/O jack — remote trigger, flash sync, and more",
+      "Open-source firmware for community expansion",
+    ], view: [-1.12, 0.06, 1.14, 0.86] },
+    { title: "Smart power", bullets: [
+      "Dual power inputs: LEMO 2 (7.2–14.4 V) + USB-C PD",
+      "Auto-switching and hot-swappable sources",
+      "Intelligent power handling to maximize runtime",
+    ], view: [-1.57, 0.25, 0.16, 0.64] },
+    { title: "High quality", bullets: [
+      "Ultra-compact and lightweight",
+      "Professional-grade anodized aluminum body",
+      "Precision stainless steel drive shaft with zero play",
+      "Breakaway coupler protects the camera's internal mechanism",
+      "Authentic, industry-standard components and connectors — good for the long run",
+    ], view: [0.69, 0.02, -1.45, 0.78] },
+  ];
+
+  rawSlides = [
+    { videoId: "", title: "Example video 1", quote: "Replace with a real testimonial from a filmmaker using BoloTie.", author: "Name, Role — Production" },
+    { videoId: "", title: "Example video 2", quote: "Replace with a real testimonial from a filmmaker using BoloTie.", author: "Name, Role — Production" },
+    { videoId: "", title: "Example video 3", quote: "Replace with a real testimonial from a filmmaker using BoloTie.", author: "Name, Role — Production" },
+  ];
+  stageRef = React.createRef();
+  configRef = React.createRef();
+
+  rawConfigs = [
+    { label: "Standard plate", short: "Standard", title: "Standard plate", img: "./assets/config-standard.webp?v=2", blurb: "Precise electronic speed control in the smallest package possible." },
+    { label: "Accessory plate", short: "Plate", title: "Accessory plate", img: "./assets/config-accessory.webp?v=2", blurb: "Expand possibilities with a full-face cheese-plate, to mount monitors, batteries, receivers and more." },
+  ];
+
+  reducedMotion = typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  coarsePointer = typeof window !== "undefined" && window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+
+  scrollToTop = (e) => {
+    if (e) e.preventDefault();
+    if (this.state.scrolled) this.animateScrollTo(0, 1000);
+  };
+
+  scrollToWhat = (e) => {
+    if (e) e.preventDefault();
+    const el = document.getElementById("bolo-what-section");
+    if (el) this.animateScrollTo(el.getBoundingClientRect().top + window.scrollY, 1000);
+  };
+
+  scrollToContact = (e) => {
+    if (e) e.preventDefault();
+    const el = document.getElementById("bolo-contact-section");
+    if (el) this.animateScrollTo(el.getBoundingClientRect().top + window.scrollY, 1600);
+  };
+
+  // Builds a t(0..1) -> scrollY lookup that compresses the time spent crossing any sticky
+  // "dead zone" (e.g. the pinned configurations section) so it doesn't visually stall mid-scroll.
+  buildScrollPath = (startY, targetY) => {
+    const lo = Math.min(startY, targetY), hi = Math.max(startY, targetY);
+    const configEl = document.getElementById("bolo-config-scroll");
+    let dzStart = null, dzEnd = null;
+    if (configEl) {
+      const rect = configEl.getBoundingClientRect();
+      const top = rect.top + window.scrollY;
+      const bottom = top + configEl.offsetHeight;
+      const s = Math.max(lo, top), e = Math.min(hi, bottom);
+      if (e > s) { dzStart = s; dzEnd = e; }
+    }
+    const dir = targetY >= startY ? 1 : -1;
+    const segs = [];
+    if (dzStart == null) {
+      segs.push({ y0: startY, y1: targetY, w: Math.abs(targetY - startY) || 1 });
+    } else {
+      const a = dir === 1 ? startY : targetY;
+      const before = dzStart - a;
+      const zone = dzEnd - dzStart;
+      const after = (dir === 1 ? targetY : startY) - dzEnd;
+      let cursor = a;
+      if (before > 0) { segs.push({ y0: cursor, y1: cursor + before, w: before }); cursor += before; }
+      if (zone > 0) { segs.push({ y0: cursor, y1: cursor + zone, w: zone * 0.15 }); cursor += zone; }
+      if (after > 0) { segs.push({ y0: cursor, y1: cursor + after, w: after }); }
+      if (dir === -1) { segs.reverse(); segs.forEach(s => { const t = s.y0; s.y0 = s.y1; s.y1 = t; }); }
+    }
+    const totalW = segs.reduce((sum, s) => sum + s.w, 0) || 1;
+    let acc = 0;
+    segs.forEach(s => { s.t0 = acc / totalW; acc += s.w; s.t1 = acc / totalW; });
+    return (t) => {
+      const seg = segs.find(s => t <= s.t1) || segs[segs.length - 1];
+      const span = seg.t1 - seg.t0;
+      const local = span > 0 ? (t - seg.t0) / span : 0;
+      return seg.y0 + (seg.y1 - seg.y0) * Math.min(1, Math.max(0, local));
+    };
+  };
+
+  animateScrollTo = (targetY, duration = 700) => {
+    if (this.reducedMotion) {
+      window.scrollTo(0, targetY);
+      this.onScroll();
+      return;
+    }
+    const startY = window.scrollY;
+    const path = this.buildScrollPath(startY, targetY);
+    const startTime = performance.now();
+    const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+    this.isAnimatingScroll = true;
+    const step = (now) => {
+      const elapsed = now - startTime;
+      const t = Math.min(1, elapsed / duration);
+      window.scrollTo(0, path(easeOutQuart(t)));
+      if (t < 1) {
+        requestAnimationFrame(step);
+      } else {
+        this.isAnimatingScroll = false;
+        this.onScroll();
+      }
+    };
+    requestAnimationFrame(step);
+  };
+
+  // Gentle drift on marked images: offset follows the element's distance from viewport centre.
+  updateParallax = () => {
+    this.parallaxFrame = null;
+    const mid = window.innerHeight / 2;
+    this.parallaxEls.forEach((el) => {
+      const r = el.parentElement.getBoundingClientRect();
+      if (r.bottom < -200 || r.top > window.innerHeight + 200) return;
+      const offset = (r.top + r.height / 2 - mid) * parseFloat(el.dataset.parallax);
+      el.style.transform = `translate3d(0, ${offset.toFixed(1)}px, 0)`;
+    });
+  };
+
+  onScroll = () => {
+    if (this.parallaxEls && !this.parallaxFrame) this.parallaxFrame = requestAnimationFrame(this.updateParallax);
+    const y = window.scrollY;
+    if (!this.state.scrolled && y > 80) this.setState({ scrolled: true });
+    else if (this.state.scrolled && y < 20) this.setState({ scrolled: false });
+
+    // Header footage gauge: the page is a 100 ft roll. Only re-render on whole-foot changes.
+    const maxY = document.documentElement.scrollHeight - window.innerHeight;
+    const footage = maxY > 0 ? Math.round(Math.min(1, Math.max(0, y / maxY)) * 100) : 0;
+    if (footage !== this.state.footage) this.setState({ footage });
+
+    if (this.isAnimatingScroll) return;
+    const configEl = document.getElementById("bolo-config-scroll");
+    if (configEl) {
+      const rect = configEl.getBoundingClientRect();
+      const scrollable = rect.height - window.innerHeight;
+      const progress = scrollable > 0 ? Math.min(1, Math.max(0, -rect.top / scrollable)) : 0;
+      const step = Math.min(this.rawConfigs.length - 1, Math.floor(progress * this.rawConfigs.length));
+      if (step !== this.state.configStep) this.setState({ configStep: step });
+    }
+  };
+
+  selectConfig = (i) => {
+    const el = document.getElementById("bolo-config-scroll");
+    this.setState({ configStep: i });
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    const scrollable = el.offsetHeight - window.innerHeight;
+    this.animateScrollTo(top + ((i + 0.5) / this.rawConfigs.length) * scrollable, 700);
+  };
+
+  onResize = () => this.setState({ viewportWidth: window.innerWidth, viewportHeight: window.innerHeight });
+
+  componentDidMount() {
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+    if (!this.reducedMotion && "IntersectionObserver" in window) {
+      this.revealObserver = new IntersectionObserver(
+        (entries) => entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-in");
+            this.revealObserver.unobserve(e.target);
+          }
+        }),
+        { rootMargin: "0px 0px -12% 0px" }
+      );
+      document.querySelectorAll(".reveal").forEach((el) => this.revealObserver.observe(el));
+      document.documentElement.classList.add("reveal-armed");
+      this.parallaxEls = Array.from(document.querySelectorAll("[data-parallax]"));
+      this.updateParallax();
+    }
+    window.addEventListener("resize", this.onResize);
+    window.addEventListener("keydown", this.onKeyDown);
+    const stage = this.stageRef.current;
+    if (stage) stage.addEventListener("pointerdown", this.dismissDragHint, { once: true });
+    if (stage && "IntersectionObserver" in window) {
+      this.stageObserver = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            this.stageObserver.disconnect();
+            this.mount3D();
+          }
+        },
+        { rootMargin: "600px" }
+      );
+      this.stageObserver.observe(stage);
+    } else {
+      this.mount3D();
+    }
+  }
+
+  // Precision-section screenshots, in page order, for the enlarge-and-cycle viewer.
+  precisionShots = [
+    { src: "./assets/precision-24fps.webp", caption: "24 fps validation", alt: "Tester report: crystal sync at 24 fps" },
+    { src: "./assets/precision-64fps.webp", caption: "64 fps validation", alt: "BOLO Tester software recording a 64 fps continuous run" },
+    { src: "./assets/precision-single-frame.webp", caption: "Single frame validation", alt: "Tester report: single frame at 1/15 s" },
+  ];
+
+  openShot = (i) => {
+    document.documentElement.style.overflow = "hidden";
+    this.setState({ lightbox: i });
+  };
+
+  closeShot = () => {
+    document.documentElement.style.overflow = "";
+    this.setState({ lightbox: null });
+  };
+
+  stepShot = (dir) => {
+    const n = this.precisionShots.length;
+    this.setState({ lightbox: (this.state.lightbox + dir + n) % n });
+  };
+
+  onKeyDown = (e) => {
+    if (this.state.lightbox == null) return;
+    if (e.key === "Escape") this.closeShot();
+    else if (e.key === "ArrowRight") this.stepShot(1);
+    else if (e.key === "ArrowLeft") this.stepShot(-1);
+  };
+
+  dismissDragHint = () => {
+    if (!this.state.dragHintDismissed) this.setState({ dragHintDismissed: true });
+  };
+
+  componentWillUnmount() {
+    clearTimeout(this.dragHintTimer);
+    window.removeEventListener("scroll", this.onScroll);
+    window.removeEventListener("resize", this.onResize);
+    window.removeEventListener("keydown", this.onKeyDown);
+    if (this.stageObserver) this.stageObserver.disconnect();
+    if (this.revealObserver) this.revealObserver.disconnect();
+    if (this.parallaxFrame) cancelAnimationFrame(this.parallaxFrame);
+  }
+
+  async mount3D() {
+    const stage = this.stageRef.current;
+    if (!stage) return;
+    if (stage.shadowRoot) {
+      const tb = stage.shadowRoot.querySelector(".toolbar");
+      if (tb) tb.remove();
+    }
+    try {
+      await stage.ready;
+    } catch (err) {
+      // No WebGL (or three.js failed to load): hide the stage's developer
+      // error text and show a plain message instead.
+      console.error("3D viewer unavailable", err);
+      this.setState({ modelFailed: true });
+      return;
+    }
+    if (stage.shadowRoot) {
+      const tb = stage.shadowRoot.querySelector(".toolbar");
+      if (tb) tb.remove();
+    }
+    const { GLTFLoader } = await import("three/addons/loaders/GLTFLoader.js");
+    const { DRACOLoader } = await import("three/addons/loaders/DRACOLoader.js");
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath("./vendor/draco/");
+    const loader = new GLTFLoader();
+    loader.setDRACOLoader(dracoLoader);
+    loader.load(
+      "./assets/bolo-tie-model-v5.glb",
+      (gltf) => {
+        stage.setObject(gltf.scene);
+        this.setState({ modelLoaded: true });
+        this.dragHintTimer = setTimeout(() => this.setState({ dragHintDismissed: true }), 6000);
+      },
+      (e) => {
+        // GitHub Pages gzips the .glb, so e.total is the compressed size while e.loaded counts
+        // decompressed bytes. Measure against the uncompressed file size instead (update if the model changes).
+        const total = Math.max(e.total || 0, 3755804);
+        this.setState({ modelProgress: Math.min(99, Math.round((e.loaded / total) * 100)) });
+      },
+      (err) => {
+        console.error("Failed to load bolo-tie-model-v5.glb", err);
+        this.setState({ modelFailed: true });
+      }
+    );
+  }
+
+  renderVals() {
+    const imageSide = this.props.imageSide ?? "right";
+    const denseSpecs = this.props.denseSpecs ?? true;
+    const count = this.rawSlides.length;
+    const w = this.state.viewportWidth;
+    const isNarrow = w < 860;
+    const isTiny = w < 520;
+    const sectionPad = isNarrow ? "72px 24px" : "120px 48px";
+    const sectionGap = isNarrow ? "40px" : "96px";
+    // Side padding that keeps full-width bars (header, footer) aligned with
+    // the 1200px content column on wide screens.
+    const edgePad = isNarrow ? "24px" : "max(48px, calc((100% - 1104px) / 2))";
+    const arrowOffset = isNarrow ? "6px" : "-56px";
+    const slides = this.rawSlides.map((s, i) => ({
+      title: s.title,
+      quote: s.quote,
+      author: s.author,
+      hasVideo: !!s.videoId,
+      noVideo: !s.videoId,
+      embedUrl: `https://www.youtube.com/embed/${s.videoId}`,
+      dotSize: i === this.state.activeSlide ? "10px" : "8px",
+      dotColor: i === this.state.activeSlide ? "#FFFFFF" : "transparent",
+      select: () => this.setState({ activeSlide: i }),
+    }));
+    return {
+      stageRef: this.stageRef,
+      scrolled: this.state.scrolled,
+      slides: slides,
+      trackWidth: `${count * 100}%`,
+      slideWidth: `${100 / count}%`,
+      trackOffset: `-${(this.state.activeSlide * 100) / count}%`,
+      prevSlide: () => this.setState({ activeSlide: (this.state.activeSlide - 1 + count) % count }),
+      nextSlide: () => this.setState({ activeSlide: (this.state.activeSlide + 1) % count }),
+      headerJustify: this.state.scrolled ? "space-between" : "center",
+      headerPadding: this.state.scrolled ? (isNarrow ? `12px ${edgePad}` : `16px ${edgePad}`) : (isNarrow ? "24px" : `40px ${edgePad}`),
+      headerBg: this.state.scrolled ? "rgba(10,10,10,0.72)" : "#0A0A0A",
+      headerBorder: this.state.scrolled ? "rgba(255,255,255,0.08)" : "transparent",
+      contentMax: "1200px",
+      sectionTitleSize: isNarrow ? "2rem" : "2.5rem",
+      footerPad: `40px ${edgePad}`,
+      headerLogoHeight: this.state.scrolled ? (isNarrow ? "36px" : "48px") : (isNarrow ? "110px" : "200px"),
+      headerSpacerHeight: isNarrow ? "160px" : "280px",
+      showCommunity: this.props.showCommunity ?? false,
+      launchWindow: this.props.launchWindow ?? "Coming Early 2027",
+      showHeaderLaunch: !isTiny,
+      modelLoading: !this.state.modelLoaded,
+      stageVisibility: this.state.modelFailed ? "hidden" : "visible",
+      modelStatus: this.state.modelFailed ? "3D viewer unavailable on this device" : this.state.modelProgress != null ? `Loading 3D model… ${this.state.modelProgress}%` : "Loading 3D model…",
+      openShot0: () => this.openShot(0),
+      openShot1: () => this.openShot(1),
+      openShot2: () => this.openShot(2),
+      closeShot: this.closeShot,
+      nextShot: (e) => { e.stopPropagation(); this.stepShot(1); },
+      prevShot: (e) => { e.stopPropagation(); this.stepShot(-1); },
+      lightboxOpen: this.state.lightbox != null,
+      lightboxSrc: this.state.lightbox != null ? this.precisionShots[this.state.lightbox].src : "",
+      lightboxAlt: this.state.lightbox != null ? this.precisionShots[this.state.lightbox].alt : "",
+      lightboxCaption: this.state.lightbox != null ? this.precisionShots[this.state.lightbox].caption : "",
+      lightboxCount: this.state.lightbox != null ? `${this.state.lightbox + 1} / ${this.precisionShots.length}` : "",
+      lightboxPad: isNarrow ? "64px 12px 24px" : "56px 48px 32px",
+      frontViewMaxHeight: isNarrow ? "460px" : "600px",
+      scrollToWhat: this.scrollToWhat,
+      footage: this.state.footage,
+      footageDash: `${(this.state.footage / 100) * 69.12} 69.12`,
+      footageAngle: this.state.footage * 3.6,
+      dragHintOpacity: this.state.modelLoaded && !this.state.dragHintDismissed ? 1 : 0,
+      dragHintLabel: this.coarsePointer ? "Drag to spin" : "Drag to rotate",
+      stageHint: this.coarsePointer ? "Drag sideways to orbit · Double-tap to reset view" : "Drag to orbit · Shift+scroll to zoom · Double-click to reset view",
+      scrollToContact: this.scrollToContact,
+      scrollToTop: this.scrollToTop,
+      logoCursor: this.state.scrolled ? "pointer" : "default",
+      ctaLabel: this.state.submitting ? "Sending…" : ({ waitlist: "Join the waitlist", updates: "Keep me posted", message: "Send message" }[this.state.contactReason] || "Submit"),
+      submitting: this.state.submitting,
+      showError: this.state.submitError,
+      priceLine: this.props.priceLine ?? "Get in touch for questions, information and orders",
+      // Hero runs wider than the header (1280px vs 1104px) so the image can be big, but stays centered.
+      mainColumns: isNarrow ? "1fr" : (imageSide === "right" ? "minmax(0,1fr) minmax(0,1.5fr)" : "minmax(0,1.5fr) minmax(0,1fr)"),
+      mainGap: isNarrow ? "8px" : "32px",
+      mainPad: isNarrow ? "24px 24px 72px" : "40px max(32px, calc((100% - 1280px) / 2)) 120px",
+      imageOnRight: true,
+      copyOrder: isNarrow ? 1 : (imageSide === "right" ? 1 : 2),
+      imageOrder: isNarrow ? 2 : (imageSide === "right" ? 2 : 1),
+      heroTitleSize: isTiny ? "2rem" : isNarrow ? "2.375rem" : "3.0518rem",
+      productColumns: isNarrow ? "1fr" : "1.1fr 1fr",
+      productPad: sectionPad,
+      productGap: sectionGap,
+      productStageOrder: isNarrow ? 2 : 1,
+      // The 3D canvas bleeds past its column (into the page margin and the column gap) so the
+      // model has room when zoomed; height is unchanged, so the model's resting size stays the same.
+      stageBleedLeft: isNarrow ? "-24px" : "calc(-1 * min(160px, max(32px, (100vw - 1200px) / 2 + 32px)))",
+      stageBleedRight: isNarrow ? "-24px" : "-80px",
+      productTextOrder: isNarrow ? 1 : 2,
+      features: this.rawFeatures.map((f, i) => ({
+        title: f.title,
+        bullets: f.bullets.map((b) => ({
+          segments: b.split(/\*(.+?)\*/).map((part, i) => ({ text: part, italic: i % 2 === 1, plain: i % 2 === 0 })),
+        })),
+        iconRotate: this.state.openFeature === i ? "rotate(45deg)" : "rotate(0deg)",
+        expanded: this.state.openFeature === i ? "true" : "false",
+        panelId: `bolo-feature-${i}`,
+        maxHeight: this.state.openFeature === i ? `${f.bullets.length * (isTiny ? 84 : 64) + 24}px` : "0px",
+        // Delay hiding until the collapse finishes so closed panels drop out of the tab order.
+        visibility: this.state.openFeature === i ? "visible" : "hidden",
+        visibilityDelay: this.state.openFeature === i ? "0s" : "0.3s",
+        toggle: () => {
+          const opening = this.state.openFeature !== i;
+          this.setState({ openFeature: opening ? i : null });
+          if (opening && this.stageRef.current && this.stageRef.current.setView) {
+            this.stageRef.current.setView(...f.view);
+          }
+        },
+      })),
+      sectionPad: sectionPad,
+      arrowOffset: arrowOffset,
+      arrowBg: isNarrow ? "rgba(10,10,10,0.7)" : "transparent",
+      footerDirection: isNarrow ? "column" : "row",
+      footerGap: isNarrow ? "16px" : "0px",
+      footerAlign: "center",
+      footerJustify: isNarrow ? "center" : "space-between",
+      footerTextAlign: isNarrow ? "center" : "left",
+      denseSpecs: denseSpecs,
+      notDenseSpecs: !denseSpecs,
+      specsColumns: isNarrow ? "1fr" : "repeat(2,1fr)",
+      precisionHeadGap: isNarrow ? "40px" : "72px",
+      precisionColumns: isNarrow ? "1fr" : "1fr 1.4fr",
+      precisionColumnsFlip: isNarrow ? "1fr" : "1.4fr 1fr",
+      precisionGap: isNarrow ? "28px" : "56px",
+      precisionFlipImageOrder: isNarrow ? 1 : 0,
+      precisionWideMargin: isNarrow ? "48px 0" : "88px 0 96px",
+      configSectionHeight: `${100 + this.rawConfigs.length * 50}vh`,
+      configCount: this.rawConfigs.length,
+      configPad: isNarrow ? "84px 20px 28px" : "112px 48px 40px",
+      configTitleSize: isNarrow ? "1.75rem" : "2.5rem",
+      // Fixed, not height-based: mobile toolbars change innerHeight as you scroll, which resized the stage.
+      configStageMargin: "8px 0",
+      configCaptionHeight: isNarrow ? "120px" : "116px",
+      configPillPad: isTiny ? "9px 14px" : "10px 22px",
+      configPillOffset: `${this.state.configStep * 100}%`,
+      configSteps: this.rawConfigs.map((c, i) => {
+        const rel = i - this.state.configStep;
+        const active = rel === 0;
+        return {
+          label: isTiny ? c.short : c.label,
+          title: c.title,
+          blurb: c.blurb,
+          img: c.img,
+          current: active ? "true" : "false",
+          hidden: active ? "false" : "true",
+          imgOpacity: active ? 1 : 0,
+          textOpacity: active ? 1 : 0,
+          textShift: active ? "0" : rel > 0 ? "12px" : "-12px",
+          pillColor: active ? "#0A0A0A" : "#B8B6AC",
+          select: () => this.selectConfig(i),
+        };
+      }),
+      pricing: [
+        { name: "BoloTie, standard plate", price: "Under $1000" },
+        { name: "Accessory plate", price: "Pricing available soon" },
+      ],
+      specs: [
+        "TCXO-REF SPEED: 0.01–64.00 FPS",
+        "SINGLE-FRAME + INTERVALOMETER",
+        "AUTO-REWIND SUPERIMPOSITION",
+        "INTEGRATED LIGHT METER",
+        "LEMO + USB-C POWER",
+        "MACHINED 6061-T6 ALUMINUM BODY",
+      ],
+      email: this.state.email,
+      message: this.state.message,
+      submitted: this.state.submitted,
+      notSubmitted: !this.state.submitted,
+      reasonIsWaitlist: this.state.contactReason === "waitlist",
+      reasonIsUpdates: this.state.contactReason === "updates",
+      reasonIsMessage: this.state.contactReason === "message",
+      showMessageBox: this.state.contactReason === "message",
+      confirmationMessage: this.state.contactReason === "message" ? "Thanks — we'll get back to you soon." : "You're on the list. We'll be in touch before launch.",
+      handleEmailChange: (e) => this.setState({ email: e.target.value, submitError: false }),
+      handleReasonChange: (e) => this.setState({ contactReason: e.target.value, submitError: false }),
+      handleMessageChange: (e) => this.setState({ message: e.target.value, submitError: false }),
+      honey: this.state.honey,
+      handleHoneyChange: (e) => this.setState({ honey: e.target.value }),
+      handleSubmit: async (e) => {
+        e.preventDefault();
+        if (this.state.submitting) return;
+        const valid = this.state.email.includes("@") && (this.state.contactReason !== "message" || this.state.message.trim().length > 0);
+        if (!valid) return;
+
+        // Honeypot filled in: almost certainly a bot. Show success without
+        // sending anything, so it has no reason to retry.
+        if (this.state.honey) {
+          this.setState({ submitted: true });
+          return;
+        }
+
+        const reasonLabels = { waitlist: "Join the waitlist", updates: "Keep me posted on product updates", message: "Message" };
+        const reasonLabel = reasonLabels[this.state.contactReason] || this.state.contactReason;
+
+        this.setState({ submitting: true, submitError: false });
+
+        // Record keeping: log to the Google Sheet via Apps Script. A text/plain
+        // POST needs no CORS preflight, and the redirected response carries
+        // Access-Control-Allow-Origin: *, so we can read the result.
+        const logToSheet = fetch(this.sheetLogUrl, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain" },
+          body: JSON.stringify({
+            email: this.state.email,
+            reason: this.state.contactReason,
+            message: this.state.message,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => data.result === "success")
+          .catch(() => false);
+
+        // Notification: email info@bolo.ltd via FormSubmit.
+        const notifyByEmail = fetch(this.contactEmailEndpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({
+            email: this.state.email,
+            reason: reasonLabel,
+            message: this.state.message || "(no message)",
+            _subject: `BoloTie site — ${reasonLabel}`,
+          }),
+        })
+          .then(async (res) => {
+            const data = await res.json().catch(() => ({}));
+            return res.ok && String(data.success) !== "false";
+          })
+          .catch(() => false);
+
+        // Either channel landing means we have the submission, so only show
+        // the error (with its mailto fallback) when both fail.
+        const [logged, notified] = await Promise.all([logToSheet, notifyByEmail]);
+        const ok = logged || notified;
+        this.setState({ submitting: false, submitted: ok, submitError: !ok });
+      },
+    };
+  }
+}
+
+</script>
+</body>
+</html>
